@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, Image, ScrollView } from 'react-native'
+import { Text, View, Image, ScrollView, KeyboardAvoidingView } from 'react-native'
 import { styles } from './style'
 import guy from '../../assets/guy.png'
 import logo from '../../assets/logo'
@@ -14,7 +14,7 @@ const Login = () => {
 
     return (
         <View style={styles.login__container}>
-            <ScrollView contentContainerStyle={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1 }}>
                 <View style={styles.login__top}>
                     <Image style={styles.login__image} resizeMode={"cover"} source={guy} />
                     <View style={styles.login__logo}>

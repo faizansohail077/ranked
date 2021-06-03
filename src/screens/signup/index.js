@@ -10,35 +10,26 @@ import password from '../../assets/password'
 import email from '../../assets/email'
 import confirm from '../../assets/confirmPassword'
 
-
-
 const SignUp = () => {
     return (
-        <View style={styles.login__container}>
+        <View style={styles.signpup__container}>
             <ScrollView style={{ flex: 1 }}>
-                <View style={styles.login__top}>
-                    <Image style={styles.login__image} resizeMode={"cover"} source={guy} />
-                    <View style={styles.login__logo}>
+                <View style={styles.signpup__top}>
+                    <Image style={styles.signpup__image} resizeMode={"cover"} source={guy} />
+                    <View style={styles.signpup__logo}>
                         <SvgXml xml={logo} />
                     </View>
-                    <Text style={styles.login__heading}>Sign Up</Text>
-                    <View style={styles.login__inputContainer}>
-                        <Input icon={person} placeholder={"Username"} />
-                        <Input icon={email} placeholder={"Email"} />
-                        <Input icon={password} placeholder={"Password"} />
-                        <Input icon={confirm} placeholder={"Confirm Password"} />
-                        <View style={styles.login__button}>
-                            <Button customStyle={{ width: '70%' }} text="Login" />
-                            <Text style={styles.login__Text}>Don't have an accoung?</Text>
-                            <Text style={styles.login__subText}>Register</Text>
-                            <View style={styles.login__orContainer}>
-                                <View style={styles.login__orContainerTop} />
-                                <View>
-                                    <Text style={styles.login__orContainerCenter}>OR</Text>
-                                </View>
-                                <View style={styles.login__orContainerBottom} />
-                            </View>
-                            <Button icon={password} customStyle={styles.login__fbButton} text="Login with facebook" />
+                    <Text style={styles.signpup__heading}>Sign Up</Text>
+                    <View style={styles.signpup__inputContainer}>
+                        <Input customStyle={{ width: '90%' }} icon={person} placeholder={"Username"} />
+                        <Input customStyle={{ width: '90%' }} icon={email} placeholder={"Email"} />
+                        <Input customStyle={{ width: '90%' }} icon={password} placeholder={"Password"} />
+                        <Input customStyle={{ width: '90%' }} icon={confirm} placeholder={"Confirm Password"} />
+                        <View style={styles.signpup__button}>
+                            <Button customStyle={{ width: '70%' }} text="Register" />
+                            <Text style={styles.signpup__Text}>Already have an accoung?</Text>
+                            <Text style={styles.signpup__subText}>Register</Text>
+                            <Text style={styles.signpup__signInText}>Sign In</Text>
                         </View>
                     </View>
                 </View>
