@@ -6,6 +6,8 @@ import Onboarding from './src/screens/onboarding';
 import Splash from './src/screens/splash';
 import Login from './src/screens/login/login';
 import SignUp from './src/screens/signup';
+import PersonalData from './src/screens/personalScreen';
+import { Screen4 } from './src/screens/personalScreen/components';
 
 const Stack = createStackNavigator();
 
@@ -14,10 +16,11 @@ const App = () => {
     <NavigationContainer >
       <Stack.Navigator headerMode={false}>
         <Stack.Screen name="onBoard" component={Onboarding} />
+        <Stack.Screen name="personalData" component={PersonalData} />
+        <Stack.Screen name="screen4" component={Screen4} />
         <Stack.Screen name="splash" component={Splash} />
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={SignUp} />
-
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import { styles } from './style'
 import { SvgXml } from 'react-native-svg'
 
-const Button = ({ icon, onClick, text, customStyle }) => {
+const Button = ({ icon, onClick, text, customStyle, customTextStyle }) => {
     return (
         <TouchableOpacity onPress={onClick} style={[styles.button__container, customStyle]} >
             {icon && icon ?
@@ -13,7 +13,7 @@ const Button = ({ icon, onClick, text, customStyle }) => {
                         <Text style={styles.button__text}>{text}</Text>
                     </View>
                 </View> : <View>
-                    <Text style={styles.button__text}>{text}</Text>
+                    <Text style={[styles.button__text, customTextStyle]}>{text}</Text>
                 </View>
             }
         </TouchableOpacity>

@@ -4,5 +4,7 @@ export const colors = {
     white: '#ffffff',
     black: 'black',
     blue: '#4267B2',
-    placholder: 'rgba(255,255,255,0.5)'
+    placholder: 'rgba(255,255,255,0.5)',
+    gray: 'gray',
+    transparent: 'transparent'
 }

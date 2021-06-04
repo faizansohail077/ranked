@@ -9,13 +9,15 @@ import person from '../../assets/person'
 import password from '../../assets/password'
 import email from '../../assets/email'
 import confirm from '../../assets/confirmPassword'
+import { useNavigation } from '@react-navigation/native';
 
 const SignUp = () => {
+    const navigation = useNavigation()
     return (
         <View style={styles.signpup__container}>
             <ScrollView style={{ flex: 1 }}>
                 <View style={styles.signpup__top}>
-                    <Image style={styles.signpup__image} resizeMode={"cover"} source={guy} />
+                    <Image style={styles.signpup__image} source={guy} />
                     <View style={styles.signpup__logo}>
                         <SvgXml xml={logo} />
                     </View>
@@ -26,7 +28,7 @@ const SignUp = () => {
                         <Input customStyle={{ width: '90%' }} icon={password} placeholder={"Password"} />
                         <Input customStyle={{ width: '90%' }} icon={confirm} placeholder={"Confirm Password"} />
                         <View style={styles.signpup__button}>
-                            <Button customStyle={{ width: '70%' }} text="Register" />
+                            <Button customStyle={{ width: '70%' }} onClick={() => navigation.navigate("personalData")} text="Register" />
                             <Text style={styles.signpup__Text}>Already have an accoung?</Text>
                             <Text style={styles.signpup__subText}>Register</Text>
                             <Text style={styles.signpup__signInText}>Sign In</Text>

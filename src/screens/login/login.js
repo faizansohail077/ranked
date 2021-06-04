@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, Image, ScrollView, KeyboardAvoidingView } from 'react-native'
+import { Text, View, Image, ScrollView } from 'react-native'
 import { styles } from './style'
 import guy from '../../assets/guy.png'
 import logo from '../../assets/logo'

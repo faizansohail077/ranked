@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
         opacity: 0.3,
         backgroundColor: colors.black,
         height: '100%',
-        width: '100%'
+        width: '100%',
     },
     signpup__logo: {
         alignItems: 'center',

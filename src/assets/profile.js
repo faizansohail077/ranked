@@ -1,4 +1,4 @@
-<svg id="Group_374" data-name="Group 374" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45.62" height="45.62" viewBox="0 0 45.62 45.62">
+export default `<svg id="Group_374" data-name="Group 374" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45.62" height="45.62" viewBox="0 0 45.62 45.62">
   <defs>
     <clipPath id="clip-path">
       <rect id="Rectangle_358" data-name="Rectangle 358" width="45.62" height="45.62" fill="none"/>
@@ -11,3 +11,4 @@
   </g>
   <path id="Path_1115" data-name="Path 1115" d="M112.3,311.626a7.6,7.6,0,1,0,7.6,7.6,7.6,7.6,0,0,0-7.6-7.6Zm0,13.686a6.082,6.082,0,1,1,6.083-6.083,6.082,6.082,0,0,1-6.083,6.083Zm0,0" transform="translate(-89.489 -305.543)" fill="#fcfcfc"/>
 </svg>
+`

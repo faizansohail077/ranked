@@ -4,7 +4,7 @@ import { colors } from '../../style/color'
 export const styles = StyleSheet.create({
     input__container: {
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         marginTop: 20
     },
     input__field: {
