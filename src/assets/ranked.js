@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="39.297" height="36.376" viewBox="0 0 39.297 36.376">
+export default `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="39.297" height="36.376" viewBox="0 0 39.297 36.376">
   <defs>
     <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
       <stop offset="0" stop-color="#001e2a"/>
@@ -17,3 +17,4 @@
     <path id="Path_191" data-name="Path 191" d="M351.245,1288.2l9.2.034a1.108,1.108,0,0,0,1.153-1.059l.007-2.128a5.555,5.555,0,0,0-5.731-5.34,5.62,5.62,0,0,0-5.842,5.3l-.007,2.127a1.18,1.18,0,0,0,1.223,1.068Z" transform="translate(-0.015 -7.319)" fill="url(#linear-gradient)"/>
   </g>
 </svg>
+`

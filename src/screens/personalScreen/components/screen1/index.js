@@ -8,7 +8,6 @@ import path from '../../../../assets/path'
 import location from '../../../../assets/location'
 import calender from '../../../../assets/calender'
 
-
 const Screen1 = ({ onPress }) => {
     return (
         <View style={styles.screen1__container}>

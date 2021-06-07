@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="33.902" height="35.376" viewBox="0 0 33.902 35.376">
+export default `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="33.902" height="35.376" viewBox="0 0 33.902 35.376">
   <defs>
     <clipPath id="clip-path">
       <rect id="Rectangle_83" data-name="Rectangle 83" width="33.902" height="35.376" fill="none"/>
@@ -20,3 +20,4 @@
     </g>
   </g>
 </svg>
+`

@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
         position: 'absolute'
     },
     screen4__bottomImageView: {
-        height: '30%',
+        height: '40%',
         width: '100%',
         position: 'relative'
     },
