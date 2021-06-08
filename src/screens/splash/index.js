@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Image, View } from 'react-native'
-import guy from '../../assets/guy.png'
+import guy from '../../assets/1stguy.jpeg'
 import logo from '../../assets/logo'
 import { SvgXml } from 'react-native-svg'
 import { styles } from './style'
@@ -16,7 +16,7 @@ const Splash = () => {
     return (
         <View style={styles.splash__container}>
             <View style={styles.splash__imageContainer}>
-                <Image style={styles.splash__backgroundImage} source={guy} />
+                <Image style={styles.splash__backgroundImage} resizeMode={"cover"} source={guy} />
                 <View style={styles.splash__logo}>
                     <SvgXml xml={logo} />
                 </View>

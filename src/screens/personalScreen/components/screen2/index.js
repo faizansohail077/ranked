@@ -5,7 +5,7 @@ import male from '../../../../assets/male.png'
 import female from '../../../../assets/female.png'
 import other from '../../../../assets/other.png'
 import DropDownPicker from 'react-native-dropdown-picker';
-import { Button } from '../../../../components'
+import { Button, Typo } from '../../../../components'
 import { colors } from '../../../../style/color'
 
 const Screen2 = ({ onPress }) => {
@@ -18,9 +18,15 @@ const Screen2 = ({ onPress }) => {
     return (
         <View style={styles.screen2__container}>
             <ScrollView style={{ flex: 1 }}>
-                <View style={{ flexDirection: 'row' }}>
-                    <Image source={male} />
-                    <Image source={female} />
+                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                    <View>
+                        <Image source={male} />
+                        <Text style={styles.screen2_textFont}>Male</Text>
+                    </View>
+                    <View>
+                        <Image source={female} />
+                        <Text style={styles.screen2_textFont}>Female</Text>
+                    </View>
                 </View>
                 <View style={styles.screen2__orContainer}>
                     <View style={styles.screen2__orContainerTop} />
@@ -32,12 +38,12 @@ const Screen2 = ({ onPress }) => {
                 <View style={styles.screen2__dropDownContainer} >
                     <Image source={other} />
                     <DropDownPicker
+                        arrowIconStyle={{ tintColor: 'white' }}
                         style={styles.screen2__dropDown}
                         open={open}
-                        placeholder="Select answer"
+                        placeholder="Select others...."
                         placeholderStyle={{ color: colors.gray, fontSize: 20 }}
                         textStyle={{ color: colors.gray, fontSize: 20 }}
-                        // badgeColors={"green"}
                         value={value}
                         items={items}
                         setOpen={setOpen}
@@ -46,7 +52,7 @@ const Screen2 = ({ onPress }) => {
                     />
                 </View>
                 <View style={{ marginVertical: 30, width: '100%', alignItems: 'center' }}>
-                    <Button onClick={() => onPress()} text="Next" />
+                    <Button onClick={() => onPress()} text={<Typo children={"Next"} />} />
                 </View>
             </ScrollView>
         </View>

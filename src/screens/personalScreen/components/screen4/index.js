@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, Image } from 'react-native'
-import { Button } from '../../../../components'
+import { Button, Typo } from '../../../../components'
 import { styles } from './style'
 import bg from '../../../../assets/roundbg.png'
 import { useNavigation } from '@react-navigation/native';
@@ -18,7 +18,7 @@ const Screen4 = ({ route }) => {
                         <Image style={styles.screen4__bottomImage} source={bg} />
                         <Text style={styles.screen4__bottomViewText} >Score your self</Text>
                         <View style={{ alignItems: 'center' }}>
-                            <Button onClick={() => navigation.navigate("bottomTab")} customTextStyle={{ fontSize: 20 }} customStyle={{ width: '50%' }} text="Finish...!" />
+                            <Button onClick={() => navigation.navigate("bottomTab")} customTextStyle={{ fontSize: 20 }} customStyle={{ width: '50%' }} text={<Typo children="Finish...!" />} />
                         </View>
                     </View>
                 </View>

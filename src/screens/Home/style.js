@@ -58,5 +58,18 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-end'
     },
+    home__bottomView: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginVertical: 20
+    },
+    home__bottomButton:
+    {
+        width: '50%',
+        marginLeft: 30,
+        backgroundColor: 'transparent',
+        borderWidth: 2, borderColor: colors.white
+    }
 
 })

@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native'
+import { colors } from '../../../style/color'
 
 export const styles = StyleSheet.create({
     modal__container: {
         marginHorizontal: 20,
-        backgroundColor: 'white',
+        backgroundColor: colors.white,
         height: 400,
         opacity: 0.7,
         width: 300,
@@ -17,10 +18,10 @@ export const styles = StyleSheet.create({
     modal__btnContainer: {
         width: '100%',
         alignItems: 'center',
-        marginVertical: 30
+        marginVertical: 30,
     },
     modal__chipStyle: {
-        backgroundColor: 'gray',
+        backgroundColor: colors.gray,
         margin: 5
     }
 })

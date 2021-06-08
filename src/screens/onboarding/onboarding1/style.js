@@ -18,6 +18,11 @@ export const styles = StyleSheet.create({
         padding: 10,
         textAlign: 'center',
         lineHeight: 25
+    },
+    typo__style: {
+        color: 'black',
+        fontSize: 22,
+        fontWeight: '600'
     }
 })
 

@@ -3,7 +3,7 @@ import { Text, View, Image, ScrollView } from 'react-native'
 import { styles } from './style'
 import guy from '../../assets/guy.png'
 import logo from '../../assets/logo'
-import { Button, Input } from '../../components'
+import { Button, Input, Typo } from '../../components'
 import { SvgXml } from 'react-native-svg'
 import person from '../../assets/person'
 import password from '../../assets/password'
@@ -20,12 +20,12 @@ const Login = () => {
                     <View style={styles.login__logo}>
                         <SvgXml xml={logo} />
                     </View>
-                    <Text style={styles.login__heading}>Sign In</Text>
+                    <Text style={styles.login__heading}><Typo style={{ fontSize: 32 }} children={"Sign In"} /></Text>
                     <View style={styles.login__inputContainer}>
                         <Input icon={person} placeholder={"Username"} />
                         <Input icon={password} placeholder={"Password"} />
                         <View style={styles.login__button}>
-                            <Button onClick={() => navigation.navigate('signup')} customStyle={{ width: '70%' }} text="Login" />
+                            <Button onClick={() => navigation.navigate('signup')} customStyle={{ width: '70%' }} text={<Typo children={"Login"} />} />
                             <Text style={styles.login__Text}>Don't have an accoung?</Text>
                             <Text style={styles.login__subText}>Register</Text>
                             <View style={styles.login__orContainer}>
@@ -35,7 +35,7 @@ const Login = () => {
                                 </View>
                                 <View style={styles.login__orContainerBottom} />
                             </View>
-                            <Button icon={password} customStyle={styles.login__fbButton} text="Login with facebook" />
+                            <Button icon={password} customStyle={styles.login__fbButton} text={<Typo children={"Login with facebook"} />} />
                         </View>
                     </View>
                 </View>

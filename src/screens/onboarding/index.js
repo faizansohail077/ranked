@@ -59,9 +59,9 @@ const Onboarding = ({ navigation }) => {
             />
             <View style={{ height: screenHeight - 200, marginTop: 20 }}>
                 <ImageBackground style={{ height: '100%', width: '100%' }} resizeMode="cover" source={bg} >
-                    {currentPosition === 0 && <Onboarding1 image={onboard1} onPress={onPageChange} text="next" title={'Create a Profile'} />}
-                    {currentPosition === 1 && <Onboarding1 image={onboard3} onPress={onPageChange} text="next" title={'Get Ranking'} />}
-                    {currentPosition === 2 && <Onboarding1 image={onboard2} onPress={() => navigation.navigate("splash")} title={'Your Scores'} text="submit" />}
+                    {currentPosition === 0 && <Onboarding1 image={onboard1} onPress={onPageChange} text="Next" title={'Create a Profile'} />}
+                    {currentPosition === 1 && <Onboarding1 image={onboard3} onPress={onPageChange} text="Next" title={'Get Ranking'} />}
+                    {currentPosition === 2 && <Onboarding1 image={onboard2} onPress={() => navigation.navigate("splash")} title={'Your Scores'} text="Let's Start" />}
                 </ImageBackground>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate("splash")} style={styles.onboard__button} >

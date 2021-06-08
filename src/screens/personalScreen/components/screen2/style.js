@@ -4,7 +4,7 @@ import { colors } from '../../../../style/color'
 export const styles = StyleSheet.create({
     screen2__container: {
         flex: 1,
-        margin: 20,
+        margin: 10,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -16,10 +16,16 @@ export const styles = StyleSheet.create({
         width: '90%',
         alignSelf: 'center'
     },
+    screen2_textFont: {
+        color: colors.gray,
+        textAlign: 'center',
+        fontFamily: 'MyriadPro-LightSemiCn',
+        fontSize: 18
+    },
     screen2__dropDown: {
         backgroundColor: colors.transparent,
         borderBottomWidth: 2,
-        borderBottomColor: colors.gray,
+        borderBottomColor: colors.white,
         width: '80%',
     },
     screen2__orContainer: {

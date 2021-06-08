@@ -1,7 +1,7 @@
 import React from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import { styles } from './style'
-import { Button, Input } from '../../../../components'
+import { Button, Input, Typo } from '../../../../components'
 import zip from '../../../../assets/zip'
 import profile from '../../../../assets/profile'
 import path from '../../../../assets/path'
@@ -20,7 +20,7 @@ const Screen1 = ({ onPress }) => {
                     <Input customStyle={{ width: '65%' }} customContainerStyle={{ width: '50%' }} icon={zip} placeholder={'Zip code'} />
                 </View>
                 <View style={styles.screen1__btnContainer}>
-                    <Button onClick={() => onPress()} text="Next" />
+                    <Button onClick={() => onPress()} text={<Typo children={"Next"} />} />
                 </View>
             </ScrollView>
         </View>

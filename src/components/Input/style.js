@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
     input__field: {
         color: colors.white,
         marginHorizontal: 10,
+        fontFamily: 'MyriadPro-LightSemiCn',
         width: '80%',
         fontSize: 25,
         borderBottomWidth: 3,

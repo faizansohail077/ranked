@@ -5,7 +5,7 @@ import { SvgXml } from 'react-native-svg';
 import { styles } from './style'
 import report from '../../../assets/report2'
 import { Chip } from 'react-native-paper';
-import { Button } from '../../../components'
+import { Button, Typo } from '../../../components'
 function ModalTester({ isModalVisible, toggleModal }) {
     const data = [{ id: 1, title: 'Violence' },
     { id: 2, title: 'Harassment' },
@@ -24,7 +24,9 @@ function ModalTester({ isModalVisible, toggleModal }) {
                 </View>
                 <View style={styles.modal__chips}>
                     {data.map(i => {
-                        return <Chip key={i?.id} style={styles.modal__chipStyle}>{i?.title}</Chip>
+                        return <Chip key={i?.id} style={styles.modal__chipStyle}>
+                            <Typo style={{ fontSize: 18, fontFamily: 'MyriadPro-LightSemiCn' }} children={i?.title} />
+                        </Chip>
                     })}
                 </View>
                 <View style={styles.modal__btnContainer}>

@@ -3,7 +3,7 @@ import { Text, View, Image, ScrollView } from 'react-native'
 import { styles } from './style'
 import guy from '../../assets/guy.png'
 import logo from '../../assets/logo'
-import { Button, Input } from '../../components'
+import { Button, Input, Typo } from '../../components'
 import { SvgXml } from 'react-native-svg'
 import person from '../../assets/person'
 import password from '../../assets/password'
@@ -28,7 +28,7 @@ const SignUp = () => {
                         <Input customStyle={{ width: '90%' }} icon={password} placeholder={"Password"} />
                         <Input customStyle={{ width: '90%' }} icon={confirm} placeholder={"Confirm Password"} />
                         <View style={styles.signpup__button}>
-                            <Button customStyle={{ width: '70%' }} onClick={() => navigation.navigate("personalData")} text="Register" />
+                            <Button customStyle={{ width: '70%' }} onClick={() => navigation.navigate("personalData")} text={<Typo children={"Register"} />} />
                             <Text style={styles.signpup__Text}>Already have an accoung?</Text>
                             <Text style={styles.signpup__subText}>Register</Text>
                             <Text style={styles.signpup__signInText}>Sign In</Text>
