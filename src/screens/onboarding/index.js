@@ -34,6 +34,15 @@ const customStyles = {
     currentStepLabelColor: 'white'
 }
 
+
+
+const para1 = 'Create a 100% anonymous profile, upload an honest picture of yourself and give it a score. Filters are great but dare to be bold & remember no one can see'
+const para2 = 'Start Ranking those around you.Give your honest real feedback.There are no benefits to your scores asno one will no you gave it'
+const para3 = ' Check your results see what people truly think when they have nothing to go on other than your picture. Give it a shot and Rank our creator Sai first. Remember honesty counts!'
+
+
+
+
 const Onboarding = ({ navigation }) => {
     const [currentPosition, setCurrentPosition] = useState(0)
     const screenHeight = Dimensions.get('screen').height
@@ -59,9 +68,9 @@ const Onboarding = ({ navigation }) => {
             />
             <View style={{ height: screenHeight - 200, marginTop: 20 }}>
                 <ImageBackground style={{ height: '100%', width: '100%' }} resizeMode="cover" source={bg} >
-                    {currentPosition === 0 && <Onboarding1 image={onboard1} onPress={onPageChange} text="Next" title={'Create a Profile'} />}
-                    {currentPosition === 1 && <Onboarding1 image={onboard3} onPress={onPageChange} text="Next" title={'Get Ranking'} />}
-                    {currentPosition === 2 && <Onboarding1 image={onboard2} onPress={() => navigation.navigate("splash")} title={'Your Scores'} text="Let's Start" />}
+                    {currentPosition === 0 && <Onboarding1 para={para1} image={onboard1} onPress={onPageChange} text="Next" title={'Create a Profile'} />}
+                    {currentPosition === 1 && <Onboarding1 para={para2} image={onboard3} onPress={onPageChange} text="Next" title={'Get Ranking'} />}
+                    {currentPosition === 2 && <Onboarding1 para={para3} image={onboard2} onPress={() => navigation.navigate("splash")} title={'Your Scores'} text="Let's Start" />}
                 </ImageBackground>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate("splash")} style={styles.onboard__button} >

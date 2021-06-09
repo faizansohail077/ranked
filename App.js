@@ -23,6 +23,7 @@ const App = () => {
         <Stack.Screen name="splash" component={Splash} />
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={SignUp} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

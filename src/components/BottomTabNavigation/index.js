@@ -2,12 +2,12 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../../screens/Home';
 import Analytics from '../../screens/Analytics';
-
 import analytics from '../../assets/analytics'
 import analyticsdark from '../../assets/analyticsdark'
 import ranked from '../../assets/ranked'
 import rankedlight from '../../assets/rankedLight'
 import { SvgXml } from 'react-native-svg';
+import DrawerNav from '../DrawerNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +39,8 @@ const BottomTabNavigation = () => {
                     paddingVertical: 10,
                 }
             }}>
-            <Tab.Screen name="Ranked" component={Home} />
+
+            <Tab.Screen name="Ranked" component={DrawerNav} />
             <Tab.Screen name="Analytics" component={Analytics} />
         </Tab.Navigator>
     )

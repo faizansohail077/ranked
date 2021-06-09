@@ -12,47 +12,15 @@ import report from '../../assets/report'
 import { Button, Typo } from '../../components';
 import ModalTester from './Modal';
 import { FloatingAction } from "react-native-floating-action";
+import { useNavigation } from '@react-navigation/core';
 
 const Home = () => {
     const [entries, setEntries] = useState([{}, {}, {}, {}, {}])
     const [isModalVisible, setModalVisible] = useState(false);
-
+    const navigation = useNavigation()
     const sliderWidth = Dimensions.get('screen').width
     const CarouselRef = useRef(null)
     const images = [{ id: 2, title: guy }, { id: 1, title: man }]
-
-
-
-    const actions = [
-        {
-            text: "Accessibility",
-            icon: require("../../assets/guy.png"),
-            name: "bt_accessibility",
-            position: 2
-        },
-        {
-            text: "Accessibility1",
-            icon: require("../../assets/guy.png"),
-            name: "bt_accessibility1",
-            position: 3
-        },
-        {
-            text: "Accessibility2",
-            icon: require("../../assets/guy.png"),
-            name: "bt_accessibility12",
-            position: 4
-        },
-        {
-            text: "Language",
-            icon: require("../../assets/guy.png"),
-            name: "bt_language",
-            position: 1
-        },
-    ];
-
-
-
-
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -71,7 +39,7 @@ const Home = () => {
                 <Image style={styles.home__Image} resizeMode={"cover"} source={man} />
                 <View style={styles.hone__header}>
                     <View>
-                        <SvgXml xml={humBurger} />
+                        <SvgXml onPress={() => navigation.openDrawer()} xml={humBurger} />
                     </View>
                     <View>
                         <Carousel
@@ -99,13 +67,6 @@ const Home = () => {
                     </View>
                 </View>
             </View>
-            {/* <FloatingAction
-                actions={actions}
-                actionsPaddingTopBottom={30}
-                onPressItem={name => {
-                    console.log(`selected button: ${name}`);
-                }}
-            /> */}
             <ModalTester toggleModal={toggleModal} isModalVisible={isModalVisible} />
 
         </>

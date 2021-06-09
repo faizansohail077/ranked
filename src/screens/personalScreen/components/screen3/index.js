@@ -11,7 +11,7 @@ const Screen3 = () => {
 
     const uploadImage = () => {
         launchImageLibrary({ noData: true }, (response) => {
-            if (response && response?.assets[0]?.uri) {
+            if (response && response?.assets && response?.assets[0]?.uri) {
                 navigation.navigate('screen4', { uri: response?.assets[0]?.uri })
             }
         });

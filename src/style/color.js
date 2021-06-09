@@ -6,5 +6,8 @@ export const colors = {
     blue: '#4267B2',
     placholder: 'rgba(255,255,255,0.5)',
     gray: 'gray',
-    transparent: 'transparent'
+    transparent: 'transparent',
+    analyticsBg: '#011629',
+    borderGray: 'rgba(169,169,169,0.7)',
+    yellow: 'yellow'
 }
