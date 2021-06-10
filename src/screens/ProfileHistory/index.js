@@ -16,9 +16,6 @@ const ProfileHistory = () => {
     const width = Dimensions.get("screen").width
     const height = Dimensions.get("screen").height
 
-
-
-
     useEffect(() => {
         navigation.dangerouslyGetParent().setOptions({
             tabBarVisible: false
@@ -29,17 +26,14 @@ const ProfileHistory = () => {
     { id: 2, tag: 'Updated 1st Dec ,2020', image: person2, score: 2, subscore: 3, scoreTitle: 'Overall Score', subScoreTitle: 'Self Score' },
     { id: 3, tag: 'Updated 1st Dec ,2020', image: person2, score: 2, subscore: 3, scoreTitle: 'Overall Score', subScoreTitle: 'Self Score' },
     { id: 5, tag: 'Updated 1st Dec ,2020', image: person2, score: 2, subscore: 3, scoreTitle: 'Overall Score', subScoreTitle: 'Self Score' },
-    { id: 6, tag: 'Updated 1st Dec ,2020', image: person2, score: 2, subscore: 3, scoreTitle: 'Overall Score', subScoreTitle: 'Self Score' },
-    { id: 4, tag: 'Updated 1st Dec ,2020', image: person2, score: 2, subscore: 3, scoreTitle: 'Overall Score', subScoreTitle: 'Self Score' },
-
 
     ]
     return (
-        <View style={{ backgroundColor: 'black', flex: 1 }}>
-            <View style={{ margin: 15 }}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <View style={styles.profile__container}>
+            <View style={{ marginBottom: 15 }}>
+                <View style={styles.profile__header}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <View style={{ padding: 10 }}>
+                        <View style={styles.profile__headerLeft}>
                             <SvgXml xml={arrow} />
                         </View>
                     </TouchableOpacity>
@@ -61,12 +55,10 @@ const ProfileHistory = () => {
                             <View style={styles.profile__bottomLeft}>
                                 <Typo style={styles.profilt__bottomText} children={item?.score} />
                             </View>
-
                             <View style={styles.profile__bottomRight}>
                                 <Typo style={styles.profilt__bottomText} children={item?.subscore} />
                             </View>
                         </View>
-
                     </View>
                 )
             }} />

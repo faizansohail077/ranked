@@ -50,7 +50,7 @@ const EditProfile = () => {
                         <Input customStyle={{ width: '65%' }} customContainerStyle={{ width: '50%' }} icon={zip} placeholder={'Zip code'} />
                     </View>
                     <View style={styles.edit__btnContainer}>
-                        <Button onClick={() => onPress()} text={<Typo children={"Update"} />} />
+                        <Button text={<Typo children={"Update"} />} />
                     </View>
                 </View>
             </ScrollView>

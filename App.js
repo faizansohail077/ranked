@@ -9,6 +9,9 @@ import SignUp from './src/screens/signup';
 import PersonalData from './src/screens/personalScreen';
 import { Screen4 } from './src/screens/personalScreen/components';
 import BottomTabNavigation from './src/components/BottomTabNavigation';
+import Query from './src/screens/Query';
+import Accounts from './src/screens/Accounts';
+import SelfScore from './src/screens/SelfScore';
 
 const Stack = createStackNavigator();
 
@@ -16,14 +19,16 @@ const App = () => {
   return (
     <NavigationContainer >
       <Stack.Navigator headerMode={false}>
-        <Stack.Screen name="onBoard" component={Onboarding} />
         <Stack.Screen name="bottomTab" component={BottomTabNavigation} />
+        <Stack.Screen name="onBoard" component={Onboarding} />
         <Stack.Screen name="personalData" component={PersonalData} />
         <Stack.Screen name="screen4" component={Screen4} />
         <Stack.Screen name="splash" component={Splash} />
         <Stack.Screen name="login" component={Login} />
+        <Stack.Screen name="query" component={Query} />
         <Stack.Screen name="signup" component={SignUp} />
-
+        <Stack.Screen name="accounts" component={Accounts} />
+        <Stack.Screen name="selfscore" component={SelfScore} />
       </Stack.Navigator>
     </NavigationContainer>
   );

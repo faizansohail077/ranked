@@ -15,11 +15,14 @@ export const styles = StyleSheet.create({
         position: 'relative'
     },
     onboard__button: {
-        alignItems: 'flex-end'
+        position: 'absolute',
+        right: 15,
+        bottom: 15,
     },
     onboard__buttonText: {
         color: colors.white,
         padding: 10,
-        fontSize: 20
+        fontSize: 20,
+
     }
 })

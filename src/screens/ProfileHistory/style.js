@@ -5,12 +5,27 @@ const width = Dimensions.get("screen").width
 const height = Dimensions.get("screen").height
 
 export const styles = StyleSheet.create({
+    profile__container: {
+        backgroundColor: colors.black,
+        flex: 1
+    },
+    profile__header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    profile__headerLeft: {
+        padding: 15,
+        borderBottomRightRadius: 40,
+        backgroundColor: colors.analyticsBg
+    },
     profile__ImageContainer: {
         marginHorizontal: 15,
         marginVertical: 10,
         height: height / 2.8,
         width: 150,
-        borderRadius: 30
+        borderRadius: 30,
+        position: 'relative',
     },
     profile__image: {
         position: 'absolute',
@@ -31,26 +46,33 @@ export const styles = StyleSheet.create({
         borderTopLeftRadius: 30,
         padding: 5,
         borderTopRightRadius: 30,
-        flex: 1,
-        backgroundColor: colors.analyticsBg,
-        opacity: 0.7,
+        backgroundColor: colors.lightanalyticsBg,
+        // opacity: 0.7,
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        position: 'absolute',
+        bottom: 0,
+        height: height / 7,
+
+
     },
     profile__bottomLeft: {
         justifyContent: 'center',
         backgroundColor: colors.white,
-        height: height / 10,
+        height: height / 12,
         width: '50%',
         borderRadius: 100,
-        marginRight: 5
+        marginRight: 5,
+        marginTop: 10,
     },
     profile__bottomRight: {
         justifyContent: 'center',
         backgroundColor: colors.white,
-        height: height / 10,
+        height: height / 12,
         width: '50%',
         borderRadius: 100,
+        marginTop: 10,
+
     },
     profilt__bottomText: {
         textAlign: 'center',

@@ -9,5 +9,6 @@ export const colors = {
     transparent: 'transparent',
     analyticsBg: '#011629',
     borderGray: 'rgba(169,169,169,0.7)',
-    yellow: 'yellow'
+    yellow: 'yellow',
+    lightanalyticsBg: 'rgba(1,22,41,0.6)'
 }

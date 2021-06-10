@@ -51,7 +51,7 @@ const Analytics = () => {
                 </View>
 
                 <View>
-                    <Progress.Circle thickness={3} unfilledColor="gray" color="yellow" textStyle={{ color: 'white', textAlign: 'center' }} formatText={(progress) => `${progress}`} borderColor="gray" showsText={true} progress={0.1} size={110} />
+                    <Progress.Circle thickness={3} unfilledColor="gray" color="yellow" textStyle={{ color: 'white', textAlign: 'center' }} formatText={(progress) => `${progress}`} borderColor="gray" showsText={true} progress={0.3} size={110} />
                 </View>
             </View>
 
