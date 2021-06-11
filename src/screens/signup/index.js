@@ -30,7 +30,6 @@ const SignUp = () => {
                         <View style={styles.signpup__button}>
                             <Button customStyle={{ width: '70%' }} onClick={() => navigation.navigate("personalData")} text={<Typo children={"Register"} />} />
                             <Text style={styles.signpup__Text}>Already have an accoung?</Text>
-                            <Text style={styles.signpup__subText}>Register</Text>
                             <Text style={styles.signpup__signInText}>Sign In</Text>
                         </View>
                     </View>

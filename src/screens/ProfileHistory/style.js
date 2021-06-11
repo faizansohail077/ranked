@@ -34,10 +34,13 @@ export const styles = StyleSheet.create({
         borderRadius: 20
     },
     profile__topText: {
-        fontSize: 16,
+        fontSize: 11,
         borderBottomRightRadius: 50,
-        borderTopLeftRadius: 20,
-        padding: 3,
+        borderTopLeftRadius: 70,
+        borderTopRightRadius: 25,
+        padding: 7,
+        textAlign: 'center',
+        textAlignVertical: 'center',
         backgroundColor: 'red',
         width: '70%',
         height: "60%"

@@ -10,9 +10,9 @@ export const styles = StyleSheet.create({
         marginVertical: 50,
         alignItems: 'center'
     },
-    edit__header:
-    {
-        flexDirection: 'row'
-        , justifyContent: 'space-between', marginVertical: 10
+    edit__header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 10
     }
 })

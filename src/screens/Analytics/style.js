@@ -16,15 +16,15 @@ export const styles = StyleSheet.create({
         marginHorizontal: 20
     },
     analytics__view: {
-        height: height / 2.7,
+        height: height / 2.9,
         alignItems: 'center'
     },
     analytics__viewMain: {
-        borderWidth: 4,
-        borderColor: colors.borderGray,
-        backgroundColor: 'white',
+        borderWidth: 6,
+        borderColor: colors.white,
+        backgroundColor: '#F2F2F3',
         flex: 1,
-        width: width / 1.2,
+        width: width / 1.3,
         borderRadius: 200,
         justifyContent: 'center',
         alignItems: 'center'
@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
     analytics__porgressTop: {
         alignItems: 'center',
         flexDirection: 'row',
-        width: '30%'
+        width: '10%'
     },
     analytics__porgressTopLeft: {
         borderColor: colors.yellow,
@@ -72,19 +72,27 @@ export const styles = StyleSheet.create({
         borderColor: colors.analyticsBg,
         borderBottomColor: colors.yellow,
         borderWidth: 2,
-        width: 80,
-        height: 10
+        width: 30,
     },
     analytics__bottomView: {
         position: 'relative',
         flexDirection: 'row',
-        flex: 1
+        justifyContent: 'space-evenly',
+        flex: 1,
+        borderRadius: 30
+    },
+    analytics__bottomSubView: {
+        backgroundColor: colors.black2,
+        borderTopLeftRadius: 30,
+        height: '80%',
+        alignSelf: 'flex-end',
+        borderTopRightRadius: 30,
+        width: '100%'
     },
     analytics__bottomViewBottom: {
-        alignItems: 'center',
-        marginTop: 10,
+        alignItems: 'flex-end',
         flexDirection: 'row',
-        height: '100%',
+        height: '90%',
         width: '100%',
         justifyContent: 'space-around'
     }

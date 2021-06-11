@@ -44,15 +44,10 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         marginVertical: 20
     },
-    signpup__subText: {
-        color: colors.white,
-        textAlign: 'center',
-        borderBottomWidth: 2,
-        borderBottomColor: colors.white
-    },
+
     signpup__signInText: {
         fontSize: 28,
-        marginVertical: 20,
+        marginVertical: 10,
         color: colors.white,
         borderBottomColor: colors.white,
         borderBottomWidth: 2

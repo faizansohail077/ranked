@@ -6,6 +6,8 @@ import logo from '../../assets/logo'
 import { Button, Input, Typo } from '../../components'
 import { SvgXml } from 'react-native-svg'
 import person from '../../assets/person'
+import facebook from '../../assets/facebook'
+
 import password from '../../assets/password'
 import { useNavigation } from '@react-navigation/native';
 
@@ -27,7 +29,7 @@ const Login = () => {
                         <View style={styles.login__button}>
                             <Button onClick={() => navigation.navigate('signup')} customStyle={{ width: '70%' }} text={<Typo children={"Login"} />} />
                             <Text style={styles.login__Text}>Don't have an accoung?</Text>
-                            <Text style={styles.login__subText}>Register</Text>
+                            <Text onPress={() => navigation.navigate('signup')} style={styles.login__subText}>Register</Text>
                             <View style={styles.login__orContainer}>
                                 <View style={styles.login__orContainerTop} />
                                 <View>
@@ -35,7 +37,7 @@ const Login = () => {
                                 </View>
                                 <View style={styles.login__orContainerBottom} />
                             </View>
-                            <Button icon={password} customStyle={styles.login__fbButton} text={<Typo children={"Login with facebook"} />} />
+                            <Button icon={facebook} customStyle={styles.login__fbButton} text={<Typo children={"Login with facebook"} />} />
                         </View>
                     </View>
                 </View>

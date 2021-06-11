@@ -56,11 +56,21 @@ const Analytics = () => {
             </View>
 
             <View style={styles.analytics__bottomView}>
-                <Image style={{ position: 'absolute' }} source={bg} />
-                <View style={styles.analytics__bottomViewBottom}>
-                    <SvgXml style={{ height: 30, width: 30 }} xml={other} />
-                    <SvgXml xml={multiple} />
-                    <SvgXml xml={calender} />
+                <View style={styles.analytics__bottomSubView}>
+                    <View style={styles.analytics__bottomViewBottom}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <SvgXml xml={other} />
+                            <Typo children="Male" style={{ fontSize: 12 }} />
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <SvgXml xml={calender} />
+                            <Typo children="< 34" style={{ paddingLeft: 2, fontSize: 12 }} />
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <SvgXml xml={multiple} />
+                            <Typo children="50 Miles" style={{ paddingLeft: 2, fontSize: 12 }} />
+                        </View>
+                    </View>
                 </View>
             </View>
 

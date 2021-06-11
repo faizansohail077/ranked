@@ -1,8 +1,10 @@
 export const colors = {
+    black2: 'rgba(0,0,0,0.2)',
     bg: '#001c27',
     red: '#f90629',
     white: '#ffffff',
-    black: 'black',
+    lightwhite: 'rgba(255,255,255,0.7)',
+    black: '#011629',
     blue: '#4267B2',
     placholder: 'rgba(255,255,255,0.5)',
     gray: 'gray',

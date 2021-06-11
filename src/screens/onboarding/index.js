@@ -74,7 +74,7 @@ const Onboarding = ({ navigation }) => {
                 </ImageBackground>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate("splash")} style={styles.onboard__button} >
-                <Text style={styles.onboard__buttonText}>skip</Text>
+                <Text style={styles.onboard__buttonText}>Skip</Text>
             </TouchableOpacity>
         </View>
     )

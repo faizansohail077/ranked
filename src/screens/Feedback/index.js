@@ -8,7 +8,7 @@ import { SvgXml } from 'react-native-svg'
 
 import arrow from '../../assets/arrow'
 import email from '../../assets/message2'
-import edit from '../../assets/edit'
+import edit from '../../assets/edit2'
 import feedback from '../../assets/feedback2'
 
 const FeedBack = () => {

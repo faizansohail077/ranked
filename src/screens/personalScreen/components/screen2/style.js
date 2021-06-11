@@ -31,11 +31,12 @@ export const styles = StyleSheet.create({
     screen2__orContainer: {
         width: '90%',
         marginVertical: 30,
+        marginHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
     },
     screen2__orContainerTop: {
-        flexGrow: 1,
+        flexGrow: 0.5,
         borderWidth: 0.8,
         borderColor: colors.white,
         marginRight: 10
@@ -45,7 +46,7 @@ export const styles = StyleSheet.create({
         fontSize: 20
     },
     screen2__orContainerBottom: {
-        flexGrow: 1,
+        flexGrow: 0.5,
         borderWidth: 0.8,
         borderColor: colors.white,
         marginLeft: 10

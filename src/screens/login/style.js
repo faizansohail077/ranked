@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
     login__container: {
         flex: 1,
         position: 'relative',
-        // backgroundColor: 'red',
     },
     login__top: {
         height: '100%',
@@ -14,7 +13,7 @@ export const styles = StyleSheet.create({
     },
     login__image: {
         position: 'absolute',
-        opacity: 0.3,
+        opacity: 0.4,
         backgroundColor: colors.black,
         height: '100%',
         width: '100%'
@@ -43,12 +42,14 @@ export const styles = StyleSheet.create({
     login__Text: {
         color: colors.white,
         textAlign: 'center',
-        marginTop: 20
+        marginTop: 20,
+        fontSize: 16
     },
     login__subText: {
         color: colors.white,
         textAlign: 'center',
         borderBottomWidth: 2,
+        fontSize: 14,
         borderBottomColor: colors.white
     },
 
@@ -62,16 +63,17 @@ export const styles = StyleSheet.create({
         flexGrow: 1,
         borderWidth: 0.8,
         borderColor: colors.white,
-        marginRight: 10
+        marginRight: 3
     },
     login__orContainerCenter: {
-        color: colors.white
+        color: colors.white,
+        fontSize: 20
     },
     login__orContainerBottom: {
         flexGrow: 1,
         borderWidth: 0.8,
         borderColor: colors.white,
-        marginLeft: 10
+        marginLeft: 3
     },
     login__fbButton: {
         width: '100%',

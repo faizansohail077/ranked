@@ -20,7 +20,7 @@ const Screen1 = ({ onPress }) => {
                     <Input customStyle={{ width: '65%' }} customContainerStyle={{ width: '50%' }} icon={zip} placeholder={'Zip code'} />
                 </View>
                 <View style={styles.screen1__btnContainer}>
-                    <Button onClick={() => onPress()} text={<Typo children={"Next"} />} />
+                    <Button customStyle={{ width: '60%' }} onClick={() => onPress()} text={<Typo children={"Next"} />} />
                 </View>
             </ScrollView>
         </View>

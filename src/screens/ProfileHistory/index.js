@@ -54,9 +54,18 @@ const ProfileHistory = () => {
                         <View style={styles.profile__bottomConatiner}>
                             <View style={styles.profile__bottomLeft}>
                                 <Typo style={styles.profilt__bottomText} children={item?.score} />
+
                             </View>
                             <View style={styles.profile__bottomRight}>
                                 <Typo style={styles.profilt__bottomText} children={item?.subscore} />
+                            </View>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', position: 'absolute', bottom: 10 }}>
+                            <View style={{ flexGrow: 1 }}>
+                                <Typo style={{ textAlign: 'center', fontSize: 10 }} children={item?.scoreTitle} />
+                            </View>
+                            <View style={{ flexGrow: 1 }}>
+                                <Typo style={{ textAlign: 'center', fontSize: 10 }} children={item?.subScoreTitle} />
                             </View>
                         </View>
                     </View>

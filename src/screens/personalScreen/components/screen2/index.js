@@ -12,11 +12,14 @@ const Screen2 = ({ onPress }) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
-        { label: 'Apple', value: 'apple' },
-        { label: 'Banana', value: 'banana' }
+        { label: 'Androgynous', value: 'androgynous' },
+        { label: 'Androgyne', value: 'androgyne' }
     ]);
     return (
         <View style={styles.screen2__container}>
+            <View style={{ marginBottom: 20 }}>
+                <Typo children="Select Gender" />
+            </View>
             <ScrollView style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <View>
@@ -52,7 +55,7 @@ const Screen2 = ({ onPress }) => {
                     />
                 </View>
                 <View style={{ marginVertical: 30, width: '100%', alignItems: 'center' }}>
-                    <Button onClick={() => onPress()} text={<Typo children={"Next"} />} />
+                    <Button customStyle={{ width: '50%' }} onClick={() => onPress()} text={<Typo children={"Next"} />} />
                 </View>
             </ScrollView>
         </View>

@@ -3,9 +3,9 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import { styles } from './style'
 import { SvgXml } from 'react-native-svg'
 
-const Button = ({ icon, onClick, text, customStyle, customTextStyle }) => {
+const Button = ({ icon, onClick, text, customStyle, customTextStyle, disable }) => {
     return (
-        <TouchableOpacity onPress={onClick} style={[styles.button__container, customStyle]} >
+        <TouchableOpacity disabled={disable} onPress={onClick} style={[styles.button__container, customStyle]} >
             {icon && icon ?
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <SvgXml xml={icon} />

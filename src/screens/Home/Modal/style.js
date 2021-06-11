@@ -4,9 +4,8 @@ import { colors } from '../../../style/color'
 export const styles = StyleSheet.create({
     modal__container: {
         marginHorizontal: 20,
-        backgroundColor: colors.white,
+        backgroundColor: colors.lightwhite,
         height: 400,
-        opacity: 0.7,
         width: 300,
         borderRadius: 50,
         alignItems: 'center'
