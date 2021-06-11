@@ -58,6 +58,7 @@ const Home = () => {
                 <View style={styles.home__bottomContainer}>
                     <View style={styles.home__bottomImageView}>
                         <Image style={styles.home__bottomImage} source={roundbg} />
+
                         <View style={styles.home__subBottomContainer}>
                             <View style={styles.home__bottomView}>
                                 <SvgXml onPress={() => toggleModal()} xml={report} />

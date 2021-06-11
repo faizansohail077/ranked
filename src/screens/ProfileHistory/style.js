@@ -6,7 +6,7 @@ const height = Dimensions.get("screen").height
 
 export const styles = StyleSheet.create({
     profile__container: {
-        backgroundColor: colors.black,
+        backgroundColor: 'black',
         flex: 1
     },
     profile__header: {
@@ -31,7 +31,9 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         height: '100%',
         width: '100%',
-        borderRadius: 20
+        // borderRadius: 20,
+        borderTopLeftRadius: 60,
+
     },
     profile__topText: {
         fontSize: 11,

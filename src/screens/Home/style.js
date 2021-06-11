@@ -36,9 +36,12 @@ export const styles = StyleSheet.create({
         borderColor: colors.gray
     },
     home__bottomImageView: {
-        height: '40%',
+        height: '45%',
         width: '100%',
-        position: 'relative'
+        position: 'relative',
+        // borderTopRightRadius: 200,
+        // borderTopLeftRadius: 200,
+        // backgroundColor: colors.lightanalyticsBg2
     },
     home__bottomImage: {
         height: '100%',
@@ -52,7 +55,8 @@ export const styles = StyleSheet.create({
     },
     home__bottomContainer: {
         flex: 1,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+
     },
     home__subBottomContainer: {
         flex: 1,
