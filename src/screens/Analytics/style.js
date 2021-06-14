@@ -83,10 +83,10 @@ export const styles = StyleSheet.create({
     },
     analytics__bottomSubView: {
         backgroundColor: colors.black2,
-        borderTopLeftRadius: 30,
+        borderTopLeftRadius: 50,
         height: '80%',
         alignSelf: 'flex-end',
-        borderTopRightRadius: 30,
+        borderTopRightRadius: 50,
         width: '100%'
     },
     analytics__bottomViewBottom: {

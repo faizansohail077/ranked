@@ -1,4 +1,4 @@
-export default `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="46" height="46" viewBox="0 0 46 46">
+const other = ({ color }) => `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="46" height="46" viewBox="0 0 46 46">
   <defs>
     <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
       <stop offset="0" stop-color="#ee56ff"/>
@@ -21,7 +21,7 @@ export default `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.
       <g id="Group_9282" data-name="Group 9282">
         <g id="Group_9281" data-name="Group 9281">
           <g transform="matrix(1, 0, 0, 1, -222.5, 741.5)" filter="url(#Ellipse_47)">
-            <circle id="Ellipse_47-2" data-name="Ellipse 47" cx="18.5" cy="18.5" r="18.5" transform="translate(1.5 1.5)" opacity="0.97" fill="url(#linear-gradient)"/>
+            <circle id="Ellipse_47-2" data-name="Ellipse 47" cx="18.5" cy="18.5" r="18.5" transform="translate(1.5 1.5)" opacity="0.97" fill=${color}/>
           </g>
           <g id="Group_348" data-name="Group 348" transform="translate(-215.729 750.454)">
             <rect id="Rectangle_332" data-name="Rectangle 332" width="26" height="26" transform="translate(-0.271 -0.454)" opacity="0.11" fill="url(#pattern)" style="mix-blend-mode: multiply;isolation: isolate"/>
@@ -37,3 +37,4 @@ export default `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.
   </g>
 </svg>
 `
+export default other

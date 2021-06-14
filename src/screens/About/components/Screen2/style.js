@@ -18,7 +18,13 @@ export const styles = StyleSheet.create({
     },
     screen2__centerHeading: {
         textAlign: 'center',
-        marginVertical: 20,
+        marginVertical: 10,
         fontSize: 30
     },
+    slider__container: {
+        position: 'relative',
+        flexDirection: 'row',
+        width: '90%',
+        marginHorizontal: 10
+    }
 })

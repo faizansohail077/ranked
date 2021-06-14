@@ -27,6 +27,7 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomColor: colors.white,
         width: '80%',
+        borderColor: colors.black
     },
     screen2__orContainer: {
         width: '90%',

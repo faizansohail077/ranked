@@ -12,7 +12,6 @@ import { launchImageLibrary } from 'react-native-image-picker';
 
 const ChangeProfile = () => {
     const [photo, setPhoto] = useState("")
-    console.log("TCL ~ file: index.js ~ line 15 ~ ChangeProfile ~ photo", photo)
 
     const navigation = useNavigation()
     useEffect(() => {
@@ -41,18 +40,18 @@ const ChangeProfile = () => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.change__profileBottomView}>
-                        <View style={styles.change__profileBottomImage}>
-                            <TouchableOpacity onPress={() => uploadImage()}>
-                                <SvgXml height={30} xml={camera} />
-                            </TouchableOpacity>
-                        </View>
+
                         <View style={styles.change__profileBottomText}>
                             <Typo children={"Change Profile Photo"} />
                         </View>
                     </View>
-
                 </View>
             </ImageBackground>
+            <View style={styles.change__profileBottomImage}>
+                <TouchableOpacity onPress={() => uploadImage()}>
+                    <SvgXml height={30} xml={camera} />
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }

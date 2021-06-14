@@ -1,4 +1,4 @@
-export default`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48" height="48" viewBox="0 0 48 48">
+const all = ({ color }) => `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48" height="48" viewBox="0 0 48 48">
   <defs>
     <filter id="Ellipse_48" x="0" y="0" width="48" height="48" filterUnits="userSpaceOnUse">
       <feOffset dx="3" dy="3" input="SourceAlpha"/>
@@ -13,7 +13,7 @@ export default`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w
   </defs>
   <g id="Group_352" data-name="Group 352" transform="translate(1217.5 198.557)">
     <g transform="matrix(1, 0, 0, 1, -1217.5, -198.56)" filter="url(#Ellipse_48)">
-      <circle id="Ellipse_48-2" data-name="Ellipse 48" cx="19.5" cy="19.5" r="19.5" transform="translate(1.5 1.5)" fill="#00a6d1"/>
+      <circle id="Ellipse_48-2" data-name="Ellipse 48" cx="19.5" cy="19.5" r="19.5" transform="translate(1.5 1.5)" fill=${color}/>
     </g>
     <g id="Group_351" data-name="Group 351" transform="translate(-1206.03 -191.213)">
       <path id="Path_1068" data-name="Path 1068" d="M-1114.571-167.5a2.185,2.185,0,0,0,2.186-2.187,2.188,2.188,0,0,0-2.186-2.19,2.192,2.192,0,0,0-2.191,2.19,2.19,2.19,0,0,0,2.191,2.187Zm0,0" transform="translate(1129.802 171.908)" fill="#f8f8f8"/>
@@ -28,3 +28,4 @@ export default`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w
   </g>
 </svg>
 `
+export default all

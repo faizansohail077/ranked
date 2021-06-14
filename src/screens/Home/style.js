@@ -12,8 +12,17 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         width: 60,
         height: 60,
+        // borderColor: colors.black,
+        // borderWidth: 1,
         overflow: 'hidden',
-        borderRadius: 100
+        borderRadius: 100,
+        backgroundColor: 'black'
+    },
+    home__carouselImage: {
+        height: '100%',
+        width: '100%',
+        // borderWidth: 4,
+        // borderColor: colors.black
     },
     home__Image: {
         width: '100%',
@@ -26,27 +35,30 @@ export const styles = StyleSheet.create({
         marginVertical: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingBottom: 20,
+        // paddingBottom: 20,
         alignItems: 'center'
     },
-    home__carouselImage: {
-        height: '100%',
-        width: '100%',
-        borderWidth: 4,
-        borderColor: colors.gray
+    home__subHeader: {
+        alignItems: 'flex-end'
     },
+    home__subHeaderIcon: {
+        marginHorizontal: 10,
+        marginVertical: 5,
+        height: 30,
+        width: 30
+    },
+
     home__bottomImageView: {
         height: '45%',
         width: '100%',
         position: 'relative',
-        // borderTopRightRadius: 200,
-        // borderTopLeftRadius: 200,
-        // backgroundColor: colors.lightanalyticsBg2
     },
     home__bottomImage: {
-        height: '100%',
+        // height: '100%',
         width: '100%',
-        position: 'absolute'
+        position: 'absolute',
+        bottom: 0,
+        zIndex: 1
     },
     actionButtonIcon: {
         fontSize: 20,
@@ -56,11 +68,15 @@ export const styles = StyleSheet.create({
     home__bottomContainer: {
         flex: 1,
         justifyContent: 'flex-end',
+        position: 'relative'
 
     },
     home__subBottomContainer: {
         flex: 1,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        position: 'absolute',
+        bottom: 0,
+        zIndex: 1
     },
     home__bottomView: {
         alignItems: 'center',
@@ -68,9 +84,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         marginVertical: 20
     },
-    home__bottomButton:
-    {
-        width: '50%',
+    home__bottomButton: {
+        width: '60%',
         marginLeft: 30,
         backgroundColor: 'transparent',
         borderWidth: 2, borderColor: colors.white
