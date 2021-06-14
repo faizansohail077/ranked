@@ -16,7 +16,7 @@ import female2 from '../../assets/female'
 import male from '../../assets/male'
 import other from '../../assets/other'
 import all from '../../assets/all'
-
+import { Slider } from '../../components'
 
 const Home = () => {
     const [entries, setEntries] = useState([{}, {}, {}, {}, {}])
@@ -112,6 +112,7 @@ const Home = () => {
                     <View style={styles.home__bottomImageView}>
                         <Image style={styles.home__bottomImage} source={roundbg} />
                         <View style={styles.home__subBottomContainer}>
+                            {/* <Slider /> */}
                             <View style={styles.home__bottomView}>
                                 <SvgXml onPress={() => toggleModal()} xml={report} />
                                 <Button customStyle={styles.home__bottomButton} text={<Typo children={"Summit"} />} />
@@ -127,7 +128,3 @@ const Home = () => {
 }
 
 export default Home
-
-//#00a6d1
-
-// "url(#linear-gradient)"

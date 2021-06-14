@@ -76,6 +76,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         position: 'absolute',
         bottom: 0,
+        width: '100%',
         zIndex: 1
     },
     home__bottomView: {
