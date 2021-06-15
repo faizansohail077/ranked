@@ -4,6 +4,7 @@ import { Button, Typo } from '../../../../components'
 import { styles } from './style'
 import bg from '../../../../assets/roundbg.png'
 import { useNavigation } from '@react-navigation/native';
+import SliderComponent from '../../../../components/Slider'
 
 const Screen4 = ({ route }) => {
     const { uri } = route?.params
@@ -17,6 +18,9 @@ const Screen4 = ({ route }) => {
                     <View style={styles.screen4__bottomImageView}>
                         <Image style={styles.screen4__bottomImage} source={bg} />
                         <Text style={styles.screen4__bottomViewText} >Score your self</Text>
+                        <View style={{ marginBottom: 50 }}>
+                            <SliderComponent />
+                        </View>
                         <View style={{ alignItems: 'center' }}>
                             <Button onClick={() => navigation.navigate("bottomTab")} customTextStyle={{ fontSize: 20 }} customStyle={{ width: '50%' }} text={<Typo children="Finish...!" />} />
                         </View>

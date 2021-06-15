@@ -5,7 +5,6 @@ import filter from '../../assets/filter2'
 import { Typo } from '../../components'
 import { styles } from './style'
 import * as Progress from 'react-native-progress';
-import bg from '../../assets/roundbg.png'
 import other from '../../assets/other2'
 import multiple from '../../assets/multiple'
 import calender from '../../assets/starCalender'
@@ -51,7 +50,7 @@ const Analytics = () => {
                 </View>
 
                 <View>
-                    <Progress.Circle thickness={3} unfilledColor="gray" color="yellow" textStyle={{ color: 'white', textAlign: 'center' }} formatText={(progress) => `${progress}`} borderColor="gray" showsText={true} progress={0.3} size={110} />
+                    <Progress.Circle thickness={5} unfilledColor="gray" fill="white" color="yellow" textStyle={{ color: 'black', textAlign: 'center' }} formatText={(progress) => `${progress}`} borderColor="gray" showsText={true} progress={5} size={110} />
                 </View>
             </View>
 

@@ -112,7 +112,7 @@ const Home = () => {
                     <View style={styles.home__bottomImageView}>
                         <Image style={styles.home__bottomImage} source={roundbg} />
                         <View style={styles.home__subBottomContainer}>
-                            {/* <Slider /> */}
+                            <Slider />
                             <View style={styles.home__bottomView}>
                                 <SvgXml onPress={() => toggleModal()} xml={report} />
                                 <Button customStyle={styles.home__bottomButton} text={<Typo children={"Summit"} />} />

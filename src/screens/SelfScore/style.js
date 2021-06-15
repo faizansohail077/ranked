@@ -30,7 +30,9 @@ export const styles = StyleSheet.create({
         position: 'absolute'
     },
     selfScore__bottomViewText: {
-        margin: 30,
+        marginTop: 30,
+        marginBottom: 30,
+
         textAlign: 'center',
         fontWeight: 'bold',
         color: colors.white,

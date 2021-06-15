@@ -73,7 +73,7 @@ export const styles = StyleSheet.create({
     },
     home__subBottomContainer: {
         flex: 1,
-        justifyContent: 'flex-end',
+        // justifyContent: 'flex-end',
         position: 'absolute',
         bottom: 0,
         width: '100%',
@@ -83,7 +83,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'center',
-        marginVertical: 20
+        marginBottom: 10,
+        marginTop: 40
     },
     home__bottomButton: {
         width: '60%',

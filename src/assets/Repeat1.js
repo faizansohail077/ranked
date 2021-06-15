@@ -1,4 +1,4 @@
-<svg id="Group_160" data-name="Group 160" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45.142" height="51.35" viewBox="0 0 45.142 51.35">
+export default `<svg id="Group_160" data-name="Group 160" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45.142" height="51.35" viewBox="0 0 45.142 51.35">
   <defs>
     <linearGradient id="linear-gradient" x1="0.5" y1="0.916" x2="0.5" y2="0.077" gradientUnits="objectBoundingBox">
       <stop offset="0.065" stop-color="#fdffff"/>
@@ -284,3 +284,4 @@
     </g>
   </g>
 </svg>
+`
