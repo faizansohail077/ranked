@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Text, View, Image, ScrollView } from 'react-native'
 import { styles } from './style'
 import guy from '../../assets/guy.png'
@@ -7,16 +7,57 @@ import { Button, Input, Typo } from '../../components'
 import { SvgXml } from 'react-native-svg'
 import person from '../../assets/person'
 import facebook from '../../assets/facebook'
-
-import password from '../../assets/password'
+import passwordIcon from '../../assets/password'
+import * as actions from '../../store/actions'
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 const Login = () => {
     const navigation = useNavigation()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState(false)
+    const [disable, setDisable] = useState(false)
+    const dispatch = useDispatch()
+    const action = bindActionCreators(actions, dispatch)
+
+    const login = () => {
+        let reg = /^\s*$/
+        let emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+        if (email == '' || emailReg.test(email) === false) {
+            setError(true)
+            setTimeout(() => {
+                setError(false)
+            }, 3000)
+        }
+        if (password == '' || password.length > 10) {
+            setError(true)
+            setTimeout(() => {
+                setError(false)
+            }, 3000)
+        }
+        else {
+            setDisable(true)
+            action.logIn(email, password).then(() => {
+                console.log('login working')
+                navigation.navigate("bottomTab")
+                setEmail("")
+                setPassword("")
+                setDisable(false)
+            }).catch(err => {
+                console.log("TCL ~ file: login.js ~ line 46 ~ action.logIn ~ err", err)
+                setDisable(false)
+            })
+
+        }
+    }
+
 
     return (
         <View style={styles.login__container}>
             <ScrollView style={{ flex: 1 }}>
+                {error && alert("something went wrong")}
                 <View style={styles.login__top}>
                     <Image style={styles.login__image} resizeMode={"cover"} source={guy} />
                     <View style={styles.login__logo}>
@@ -24,10 +65,10 @@ const Login = () => {
                     </View>
                     <Text style={styles.login__heading}><Typo style={{ fontSize: 32 }} children={"Sign In"} /></Text>
                     <View style={styles.login__inputContainer}>
-                        <Input icon={person} placeholder={"Username"} />
-                        <Input icon={password} placeholder={"Password"} />
+                        <Input value={email} onChangeText={(e) => setEmail(e)} icon={person} placeholder={"Username"} />
+                        <Input value={password} onChangeText={(e) => setPassword(e)} icon={passwordIcon} placeholder={"Password"} />
                         <View style={styles.login__button}>
-                            <Button onClick={() => navigation.navigate('signup')} customStyle={{ width: '70%' }} text={<Typo children={"Login"} />} />
+                            <Button disable={disable} onClick={() => login()} customStyle={{ width: '70%' }} text={<Typo children={"Login"} />} />
                             <Text style={styles.login__Text}>Don't have an accoung?</Text>
                             <Text onPress={() => navigation.navigate('signup')} style={styles.login__subText}>Register</Text>
                             <View style={styles.login__orContainer}>

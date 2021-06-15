@@ -1,5 +1,6 @@
-import { signUp } from './auth'
+import { signUp, logIn } from './auth'
 
 export {
-    signUp
+    signUp,
+    logIn
 }
