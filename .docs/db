@@ -1,0 +1,35 @@
+{
+    users : {
+      {
+          email, 
+          username,
+          fullname
+          date_od_birth
+          country
+          city
+          zip_code
+          gender : 'male' | 'female' | 'others'
+          profile_picture
+          selfies : [selfie_id, selfie_id]
+          user_id
+      }
+    },
+    selfies : {
+        selfie_url : '',
+        user_id
+        rating : [{
+                rating : 0-10,
+                user_id : '',
+            }]
+        self_score : 0  -  10
+        reports : ['fake account']
+    }
+}
+
+
+users : {
+    profiles 1,,
+}
+selfies :{
+    selfie
+}
