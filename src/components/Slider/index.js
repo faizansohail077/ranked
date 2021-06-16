@@ -6,9 +6,12 @@ import Repeat1 from '../../assets/Repeat1'
 import { Typo } from '../../components'
 import Slider from 'react-native-custom-slider';
 import circle from '../../assets/circle'
+import { useEffect } from 'react'
 
-const SliderComponent = () => {
+const SliderComponent = ({ setSelfScore }) => {
     const [value, setValue] = useState(2);
+    // console.log("TCL ~ file: index.js ~ line 16 ~ useEffect ~ setSelfScore(value)", setSelfScore)
+
 
     return (
         <View>
@@ -107,7 +110,7 @@ const SliderComponent = () => {
                         step={1}
                         style={{ position: 'absolute', width: '110%', backgroundColor: 'transparent', bottom: 10, height: '100%' }}
                         maximumValue={10}
-                        onValueChange={(value) => setValue(value)}
+                        onValueChange={(value) => setSelfScore(value)}
                         thumbStyle={{ justifyContent: 'center', alignItems: 'center', width: 45 }}
                         minimumTrackTintColor="transparent"
                         customThumb={

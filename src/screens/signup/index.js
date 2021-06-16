@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View, Image, ScrollView } from 'react-native'
+import { Text, View, Image, ScrollView, ActivityIndicator } from 'react-native'
 import { styles } from './style'
 import guy from '../../assets/guy.png'
 import logo from '../../assets/logo'
@@ -21,6 +21,7 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [error, setError] = useState(false)
     const [disable, setDisable] = useState(false)
+    const [loader, setLoader] = useState(false)
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
     const navigation = useNavigation()
@@ -54,8 +55,10 @@ const SignUp = () => {
         }
         else {
             setDisable(true)
+            setLoader(true)
             action.signUp(email, password, username).then(() => {
                 setDisable(false)
+                setLoader(false)
                 setUserName("")
                 setConfirmPassword("")
                 setPassword("")
@@ -64,8 +67,8 @@ const SignUp = () => {
                 console.log('working')
             }).catch(e => {
                 setDisable(false)
+                setLoader(false)
                 console.log("TCL ~ file: index.js ~ line 63 ~ action.signUp ~ e", e)
-
             })
         }
     }
@@ -87,7 +90,7 @@ const SignUp = () => {
                         <Input value={password} onChangeText={(e) => setPassword(e)} customStyle={{ width: '90%' }} icon={passwordIcon} placeholder={"Password"} />
                         <Input value={confirmPassword} onChangeText={(e) => setConfirmPassword(e)} customStyle={{ width: '90%' }} icon={confirm} placeholder={"Confirm Password"} />
                         <View style={styles.signpup__button}>
-                            <Button disable={disable} customStyle={{ width: '70%' }} onClick={() => SignUp()} text={<Typo children={"Register"} />} />
+                            <Button disable={disable} customStyle={{ width: '70%' }} onClick={() => SignUp()} text={<Typo children={loader ? <ActivityIndicator color="white" size="large" /> : "Register"} />} />
                             <Text style={styles.signpup__Text}>Already have an accoung?</Text>
                             <Text style={styles.signpup__signInText}>Sign In</Text>
                         </View>
@@ -99,4 +102,3 @@ const SignUp = () => {
 }
 
 export default SignUp
-// onClick={() => navigation.navigate("personalData")}

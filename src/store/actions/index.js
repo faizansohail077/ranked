@@ -1,6 +1,10 @@
-import { signUp, logIn } from './auth'
+import { signUp, logIn, profileData, genderData, profileImage, getUser } from './auth'
 
 export {
     signUp,
-    logIn
+    logIn,
+    profileData,
+    genderData,
+    profileImage,
+    getUser
 }

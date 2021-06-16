@@ -23,8 +23,8 @@ const App = () => {
       <NavigationContainer >
         <Stack.Navigator headerMode={false}>
           <Stack.Screen name="onBoard" component={Onboarding} />
-          <Stack.Screen name="bottomTab" component={BottomTabNavigation} />
           <Stack.Screen name="personalData" component={PersonalData} />
+          <Stack.Screen name="bottomTab" component={BottomTabNavigation} />
           <Stack.Screen name="screen4" component={Screen4} />
           <Stack.Screen name="splash" component={Splash} />
           <Stack.Screen name="login" component={Login} />

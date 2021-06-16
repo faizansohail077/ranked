@@ -3,7 +3,7 @@ import { Text, View, Image, ScrollView } from 'react-native'
 import { styles } from './style'
 import guy from '../../assets/guy.png'
 import logo from '../../assets/logo'
-import { Button, Input, Typo } from '../../components'
+import { Button, Input, Typo, ActivityIndicator } from '../../components'
 import { SvgXml } from 'react-native-svg'
 import person from '../../assets/person'
 import facebook from '../../assets/facebook'
@@ -19,6 +19,7 @@ const Login = () => {
     const [password, setPassword] = useState("")
     const [error, setError] = useState(false)
     const [disable, setDisable] = useState(false)
+    const [loader, setLoader] = useState(false)
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
 
@@ -78,7 +79,7 @@ const Login = () => {
                                 </View>
                                 <View style={styles.login__orContainerBottom} />
                             </View>
-                            <Button icon={facebook} customStyle={styles.login__fbButton} text={<Typo children={"Login with facebook"} />} />
+                            <Button icon={facebook} customStyle={styles.login__fbButton} text={<Typo children={loader ? <ActivityIndicator color="white" size="large" /> : "Login with facebook"} />} />
                         </View>
                     </View>
                 </View>
