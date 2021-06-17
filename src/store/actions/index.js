@@ -1,4 +1,4 @@
-import { signUp, logIn, profileData, genderData, profileImage, getUser } from './auth'
+import { signUp, logIn, profileData, genderData, profileImage, getUser, logOut } from './auth'
 
 export {
     signUp,
@@ -6,5 +6,6 @@ export {
     profileData,
     genderData,
     profileImage,
-    getUser
+    getUser,
+    logOut
 }

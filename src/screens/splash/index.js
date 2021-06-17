@@ -6,6 +6,7 @@ import { SvgXml } from 'react-native-svg'
 import { styles } from './style'
 import { useNavigation } from '@react-navigation/native';
 
+
 const Splash = () => {
     const navigation = useNavigation()
     useEffect(() => {
@@ -16,9 +17,11 @@ const Splash = () => {
     return (
         <View style={styles.splash__container}>
             <View style={styles.splash__imageContainer}>
-                <Image style={styles.splash__backgroundImage} resizeMode={"cover"} source={guy} />
-                <View style={styles.splash__logo}>
-                    <SvgXml xml={logo} />
+                <View style={{ position: 'relative', flex: 1, backgroundColor: 'black' }}>
+                    <Image style={styles.splash__backgroundImage} resizeMode={"cover"} source={guy} />
+                    <View style={styles.splash__logo}>
+                        <SvgXml xml={logo} />
+                    </View>
                 </View>
             </View>
         </View>

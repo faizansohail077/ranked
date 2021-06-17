@@ -79,20 +79,22 @@ const SignUp = () => {
             <ScrollView style={{ flex: 1 }}>
                 {error && alert('something went wrong')}
                 <View style={styles.signpup__top}>
-                    <Image style={styles.signpup__image} source={guy} />
-                    <View style={styles.signpup__logo}>
-                        <SvgXml xml={logo} />
-                    </View>
-                    <Text style={styles.signpup__heading}>Sign Up</Text>
-                    <View style={styles.signpup__inputContainer}>
-                        <Input value={username} onChangeText={(e) => setUserName(e)} customStyle={{ width: '90%' }} icon={person} placeholder={"Username"} />
-                        <Input value={email} onChangeText={(e) => setEmail(e)} customStyle={{ width: '90%' }} icon={emailIcon} placeholder={"Email"} />
-                        <Input value={password} onChangeText={(e) => setPassword(e)} customStyle={{ width: '90%' }} icon={passwordIcon} placeholder={"Password"} />
-                        <Input value={confirmPassword} onChangeText={(e) => setConfirmPassword(e)} customStyle={{ width: '90%' }} icon={confirm} placeholder={"Confirm Password"} />
-                        <View style={styles.signpup__button}>
-                            <Button disable={disable} customStyle={{ width: '70%' }} onClick={() => SignUp()} text={<Typo children={loader ? <ActivityIndicator color="white" size="large" /> : "Register"} />} />
-                            <Text style={styles.signpup__Text}>Already have an accoung?</Text>
-                            <Text style={styles.signpup__signInText}>Sign In</Text>
+                    <View style={{ flex: 1, backgroundColor: 'black', opacity: 0.7 }}>
+                        <Image style={styles.signpup__image} source={guy} />
+                        <View style={styles.signpup__logo}>
+                            <SvgXml xml={logo} />
+                        </View>
+                        <Text style={styles.signpup__heading}>Sign Up</Text>
+                        <View style={styles.signpup__inputContainer}>
+                            <Input value={username} onChangeText={(e) => setUserName(e)} customStyle={{ width: '90%' }} icon={person} placeholder={"Username"} />
+                            <Input value={email} onChangeText={(e) => setEmail(e)} customStyle={{ width: '90%' }} icon={emailIcon} placeholder={"Email"} />
+                            <Input value={password} onChangeText={(e) => setPassword(e)} customStyle={{ width: '90%' }} icon={passwordIcon} placeholder={"Password"} />
+                            <Input value={confirmPassword} onChangeText={(e) => setConfirmPassword(e)} customStyle={{ width: '90%' }} icon={confirm} placeholder={"Confirm Password"} />
+                            <View style={styles.signpup__button}>
+                                <Button disable={disable} customStyle={{ width: '70%' }} onClick={() => SignUp()} text={<Typo children={loader ? <ActivityIndicator color="white" size="large" /> : "Register"} />} />
+                                <Text style={styles.signpup__Text}>Already have an accoung?</Text>
+                                <Text style={styles.signpup__signInText}>Sign In</Text>
+                            </View>
                         </View>
                     </View>
                 </View>

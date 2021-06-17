@@ -21,7 +21,7 @@ const Screen1 = ({ onPress }) => {
     const [disable, setDisable] = useState(false)
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
-    const [date, setDate] = useState(Date.now())
+    const [date, setDate] = useState(1999 + "/" + 9 + "/" + 28)
     const [loader, setLoader] = useState(false)
     const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 
@@ -34,7 +34,7 @@ const Screen1 = ({ onPress }) => {
         let date_year = myDate.getFullYear()
         let date_month = myDate.getMonth()
 
-        let fullDate = `${date_year}-${months[date_month]}-${date_date}`
+        let fullDate = `${date_year}/${months[date_month]}/${date_date}`
 
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
@@ -71,6 +71,12 @@ const Screen1 = ({ onPress }) => {
             }, 3000);
         }
         if (zipCode == "" || zipReg.test(zipCode) == false) {
+            setError(true)
+            setTimeout(() => {
+                setError(false)
+            }, 3000)
+        }
+        if (date == 1999 + "/" + 9 + "/" + 28) {
             setError(true)
             setTimeout(() => {
                 setError(false)

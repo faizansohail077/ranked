@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { Dimensions, Image, Animated, View, TouchableOpacity, ImageBackground } from 'react-native'
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 import { styles } from './style'
 import Carousel from 'react-native-snap-carousel';
 import man from '../../assets/902.png'
@@ -8,7 +10,9 @@ import roundbg from '../../assets/roundbg.png'
 import humBurger from '../../assets/hamburger'
 import { SvgXml } from 'react-native-svg';
 import filter from '../../assets/filter'
+import filterBlack from '../../assets/filterBlack'
 import report from '../../assets/report'
+import reportlight from '../../assets/reportlight'
 import { Button, Typo } from '../../components';
 import ModalTester from './Modal';
 import { useNavigation } from '@react-navigation/core';
@@ -17,9 +21,11 @@ import male from '../../assets/male'
 import other from '../../assets/other'
 import all from '../../assets/all'
 import { Slider } from '../../components'
+import { useEffect } from 'react';
 
 const Home = () => {
     const [entries, setEntries] = useState([{}, {}, {}, {}, {}])
+    const [score, setScore] = useState(2)
     const [filterValue, setFilterValue] = useState(false)
     const [isModalVisible, setModalVisible] = useState(false);
     const [activeMale, setActiveMale] = useState(false)
@@ -30,6 +36,19 @@ const Home = () => {
     const sliderWidth = Dimensions.get('screen').width
     const CarouselRef = useRef(null)
     const images = [{ id: 2, title: guy }, { id: 1, title: man }]
+
+    useEffect(() => {
+        const userDocument = firestore().collection('Users').doc(auth().currentUser.uid);
+        userDocument.get()
+            .then(querySnapshot => {
+                console.log('Total users: ', querySnapshot.exists);
+                if (querySnapshot.exists) {
+                    console.log('User data: ', querySnapshot.data());
+                }
+            });
+    }, [])
+
+
 
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
@@ -71,11 +90,10 @@ const Home = () => {
                             renderItem={() => _renderItem(images)}
                             sliderWidth={sliderWidth / 2}
                             itemWidth={sliderWidth / 8}
-                        // layout={"default"}
                         />
                     </View>
                     <View>
-                        <SvgXml onPress={() => setFilterValue(!filterValue)} xml={filter} />
+                        <SvgXml onPress={() => setFilterValue(!filterValue)} xml={!filterValue ? filterBlack : filter} />
                     </View>
                 </View>
                 {filterValue &&
@@ -88,21 +106,21 @@ const Home = () => {
                         </View>
                         <View style={{ alignItems: 'center' }}>
                             <TouchableOpacity>
-                                <SvgXml onPress={() => setActiveMale(!activeMale)} style={styles.home__subHeaderIcon} xml={male({ color: activeMale ? '#00a6d1' : "url(#linear-gradient)" })} />
+                                <SvgXml onPress={() => setActiveOther(!activeOther)} style={styles.home__subHeaderIcon} xml={other({ color: activeOther ? '#00a6d1' : "url(#linear-gradient)" })} />
                             </TouchableOpacity>
                             <Typo children="Male" style={{ fontSize: 12, color: 'black' }} />
                         </View>
 
                         <View style={{ alignItems: 'center' }}>
                             <TouchableOpacity>
-                                <SvgXml onPress={() => setActiveFemale(!activeFemale)} style={styles.home__subHeaderIcon} xml={female2({ color: activeFemale ? '#00a6d1' : "url(#linear-gradient)" })} />
+                                <SvgXml onPress={() => setActiveMale(!activeMale)} style={styles.home__subHeaderIcon} xml={male({ color: activeMale ? '#00a6d1' : "url(#linear-gradient)" })} />
                             </TouchableOpacity>
                             <Typo children="Female" style={{ fontSize: 12, color: 'black' }} />
                         </View>
 
                         <View style={{ alignItems: 'center' }}>
                             <TouchableOpacity>
-                                <SvgXml onPress={() => setActiveOther(!activeOther)} style={styles.home__subHeaderIcon} xml={other({ color: activeOther ? '#00a6d1' : "url(#linear-gradient)" })} />
+                                <SvgXml onPress={() => setActiveFemale(!activeFemale)} style={styles.home__subHeaderIcon} xml={female2({ color: activeFemale ? '#00a6d1' : "url(#linear-gradient)" })} />
                             </TouchableOpacity>
                             <Typo children="Other" style={{ fontSize: 12, color: 'black' }} />
                         </View>
@@ -112,9 +130,9 @@ const Home = () => {
                     <View style={styles.home__bottomImageView}>
                         <Image style={styles.home__bottomImage} source={roundbg} />
                         <View style={styles.home__subBottomContainer}>
-                            <Slider />
+                            <Slider Score={score} setSelfScore={(id) => setScore(id)} />
                             <View style={styles.home__bottomView}>
-                                <SvgXml onPress={() => toggleModal()} xml={report} />
+                                <SvgXml onPress={() => toggleModal()} xml={isModalVisible ? reportlight : report} />
                                 <Button customStyle={styles.home__bottomButton} text={<Typo children={"Summit"} />} />
                             </View>
                         </View>
@@ -122,7 +140,6 @@ const Home = () => {
                 </View>
             </View>
             <ModalTester toggleModal={toggleModal} isModalVisible={isModalVisible} />
-
         </>
     )
 }

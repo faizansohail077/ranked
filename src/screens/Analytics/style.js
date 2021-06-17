@@ -36,6 +36,7 @@ export const styles = StyleSheet.create({
     },
     analytics__viewText: {
         color: colors.analyticsBg,
+        fontFamily: "unicodeimpact",
         fontSize: 200
     },
     analytics__subTextView: {

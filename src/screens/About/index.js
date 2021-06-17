@@ -11,22 +11,30 @@ import img3 from '../../assets/img3.png'
 import Screen1 from './components/Screen1'
 import Screen2 from './components/Screen3'
 import Screen3 from './components/Screen2'
+import checked1 from '../../assets/checked1.png'
+import checked2 from '../../assets/checked2.png'
+import checked3 from '../../assets/checked3.png'
+
 
 const screens = [
     {
         name: 'screen1',
         image: img1,
+        image2: checked1,
         active: true
 
     },
     {
         name: 'screen3',
         image: img3,
-        active: false
+        active: false,
+        image2: checked2,
+
     },
     {
         name: 'screen2',
         image: img2,
+        image2: checked3,
         active: false
     }
 ]
@@ -60,7 +68,7 @@ const About = () => {
             <View style={styles.about__top}>
                 {
                     screens.map((screen) => (
-                        <TouchableOpacity style={{ position: 'relative' }} onPress={() => {
+                        <TouchableOpacity activeOpacity={0.9} style={{ position: 'relative' }} onPress={() => {
                             setActiveTrue(screen.name)
                             setActiveScreen(screen.name)
                         }
@@ -68,12 +76,9 @@ const About = () => {
                             <View>
                                 <View style={{ height: 110 }}>
                                     {screen.name === activeTrue ?
-                                        <Image style={{ height: '100%' }} resizeMode={"contain"} source={screen?.image} /> :
+                                        <Image resizeMode={"contain"} source={screen?.image2} /> :
                                         <Image source={screen?.image} />
                                     }
-                                </View>
-                                <View style={{ position: 'absolute', top: 15, left: 20 }}>
-                                    {screen.name === activeTrue && <SvgXml xml={checkbox} />}
                                 </View>
                             </View>
                         </TouchableOpacity>

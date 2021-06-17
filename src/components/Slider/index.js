@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { View, Image } from 'react-native'
 import { SvgXml } from 'react-native-svg'
 import Repeat from '../../assets/Repeat'
 import Repeat1 from '../../assets/Repeat1'
@@ -7,8 +7,9 @@ import { Typo } from '../../components'
 import Slider from 'react-native-custom-slider';
 import circle from '../../assets/circle'
 import { useEffect } from 'react'
+import slider from '../../assets/slider.png'
 
-const SliderComponent = ({ setSelfScore }) => {
+const SliderComponent = ({ setSelfScore, Score }) => {
     const [value, setValue] = useState(2);
     // console.log("TCL ~ file: index.js ~ line 16 ~ useEffect ~ setSelfScore(value)", setSelfScore)
 
@@ -25,21 +26,21 @@ const SliderComponent = ({ setSelfScore }) => {
 
                         <SvgXml xml={circle} />
                         <View style={{ position: 'absolute', bottom: -30 }}>
-                            {value == 1 ? null :
+                            {Score == 1 ? null :
                                 <Typo children="1" style={{ fontSize: 15 }} />}
                         </View>
                     </View>
                     <View style={{ flexGrow: 1, justifyContent: 'center' }}>
                         <SvgXml xml={circle} />
                         <View style={{ position: 'absolute', bottom: -30 }}>
-                            {value == 2 ? null :
+                            {Score == 2 ? null :
                                 <Typo children="2" style={{ fontSize: 15 }} />}
                         </View>
                     </View>
                     <View style={{ flexGrow: 1, justifyContent: 'center' }}>
                         <SvgXml xml={circle} />
                         <View style={{ position: 'absolute', bottom: -30 }}>
-                            {value == 3 ? null :
+                            {Score == 3 ? null :
 
                                 <Typo children="3" style={{ fontSize: 15 }} />
                             }
@@ -48,7 +49,7 @@ const SliderComponent = ({ setSelfScore }) => {
                     <View style={{ flexGrow: 1, justifyContent: 'center' }}>
                         <SvgXml xml={circle} />
                         <View style={{ position: 'absolute', bottom: -30 }}>
-                            {value == 4 ? null :
+                            {Score == 4 ? null :
 
                                 <Typo children="4" style={{ fontSize: 15 }} />
                             }
@@ -57,7 +58,7 @@ const SliderComponent = ({ setSelfScore }) => {
                     <View style={{ flexGrow: 1, justifyContent: 'center' }}>
                         <SvgXml xml={circle} />
                         <View style={{ position: 'absolute', bottom: -30 }}>
-                            {value == 5 ? null :
+                            {Score == 5 ? null :
 
                                 <Typo children="5" style={{ fontSize: 15 }} />
                             }
@@ -66,7 +67,7 @@ const SliderComponent = ({ setSelfScore }) => {
                     <View style={{ flexGrow: 1, justifyContent: 'center' }}>
                         <SvgXml xml={circle} />
                         <View style={{ position: 'absolute', bottom: -30 }}>
-                            {value == 6 ? null :
+                            {Score == 6 ? null :
 
                                 <Typo children="6" style={{ fontSize: 15 }} />}
                         </View>
@@ -74,21 +75,21 @@ const SliderComponent = ({ setSelfScore }) => {
                     <View style={{ flexGrow: 1, justifyContent: 'center' }}>
                         <SvgXml xml={circle} />
                         <View style={{ position: 'absolute', bottom: -30 }}>
-                            {value == 7 ? null :
+                            {Score == 7 ? null :
                                 <Typo children="7" style={{ fontSize: 15 }} />}
                         </View>
                     </View>
                     <View style={{ flexGrow: 1, justifyContent: 'center' }}>
                         <SvgXml xml={circle} />
                         <View style={{ position: 'absolute', bottom: -30 }}>
-                            {value == 8 ? null :
+                            {Score == 8 ? null :
                                 <Typo children="8" style={{ fontSize: 15 }} />}
                         </View>
                     </View>
                     <View style={{ flexGrow: 1, justifyContent: 'center' }}>
                         <SvgXml xml={circle} />
                         <View style={{ position: 'absolute', bottom: -30 }}>
-                            {value == 9 ? null :
+                            {Score == 9 ? null :
 
                                 <Typo children="9" style={{ fontSize: 15 }} />
                             }
@@ -97,14 +98,14 @@ const SliderComponent = ({ setSelfScore }) => {
                     <View style={{ flexGrow: 1, justifyContent: 'center' }}>
                         <SvgXml xml={circle} />
                         <View style={{ position: 'absolute', bottom: -30 }}>
-                            {value == 10 ? null :
+                            {Score == 10 ? null :
                                 <Typo children="10" style={{ fontSize: 15 }} />
                             }
                         </View>
                     </View>
 
                     <Slider
-                        value={value}
+                        value={Score}
                         trackStyle={{ width: '100%', backgroundColor: 'transparent' }}
                         minimumValue={1}
                         step={1}
@@ -116,18 +117,13 @@ const SliderComponent = ({ setSelfScore }) => {
                         customThumb={
                             <View
                                 style={{
-                                    width: 45,
+                                    width: '100%',
                                     height: 55,
-                                    overflow: 'hidden',
-                                    borderTopLeftRadius: 100,
-                                    borderTopRightRadius: 100,
-                                    borderBottomLeftRadius: 100,
-                                    borderBottomRightRadius: 100,
-                                    backgroundColor: '#458ecc',
-                                    justifyContent: 'center'
+                                    position: 'relative'
                                 }}
                             >
-                                <Typo children={value} style={{ textAlign: 'center', fontSize: 18 }} />
+                                <Image style={{ width: '90%', height: '100%', resizeMode: "stretch", position: 'absolute' }} source={slider} />
+                                <Typo children={Score ? Score : value} style={{ textAlign: 'center', fontSize: 18, top: 15, right: 5 }} />
                             </View>
                         }
                     />

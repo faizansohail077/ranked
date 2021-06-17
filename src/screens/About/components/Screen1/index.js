@@ -23,7 +23,7 @@ const Screen1 = () => {
                     thumbOffStyle={{ color: 'black', backgroundColor: 'gray', opacity: 0.3 }}
                     onToggle={isOn => setToggle(isOn)}
                 />
-                <Typo children={!toggle ? "disable" : 'Applied'} style={{ fontSize: 14, paddingTop: 10 }} />
+                <Typo children={!toggle ? "disable" : 'Applied'} style={{ fontSize: 10, paddingTop: 10 }} />
             </View>
             <View style={toggle ? styles.screen1__center : styles.screen1__disable}>
                 <Typo style={styles.screen1__centerHeading} children={"Who can rank you?"} />

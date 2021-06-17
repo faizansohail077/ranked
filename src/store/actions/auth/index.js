@@ -33,7 +33,18 @@ export const signUp = (email, password, username) => {
         })
     }
 }
-
+export const logOut = () => {
+    return dispatch => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await auth().signOut()
+                resolve()
+            } catch (e) {
+                reject(e)
+            }
+        })
+    }
+}
 export const logIn = (email, password) => {
     return dispatch => {
         return new Promise((resolve, reject) => {
@@ -53,7 +64,10 @@ export const logIn = (email, password) => {
                             reject('That email address is invalid!')
                             console.log('That email address is invalid!');
                         }
-                        console.error(error);
+
+                        reject(error)
+
+
                     });
             } catch (e) {
                 reject(e)

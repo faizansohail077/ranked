@@ -90,7 +90,7 @@ export const styles = StyleSheet.create({
         width: '60%',
         marginLeft: 30,
         backgroundColor: 'transparent',
-        borderWidth: 2, borderColor: colors.white
+        borderWidth: 1, borderColor: colors.white
     }
 
 })
