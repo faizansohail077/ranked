@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     onboard__container: {
         backgroundColor: colors.bg,
         flex: 1,
-        position: 'relative'
+        position: 'relative',
     },
     onboard__button: {
         position: 'absolute',

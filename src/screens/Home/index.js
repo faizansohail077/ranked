@@ -56,7 +56,16 @@ const Home = () => {
     const _renderItem = (item, index) => {
         return (
             <View style={styles.home__carousel}>
-                <Image style={styles.home__carouselImage} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsj7e0UFTEaWkuKIk__YXeQpDgi8BOQq3CUg&usqp=CAU' }} />
+                <Image style={styles.home__carouselImage} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8FuEJbKwDdaz1h387130xmYkAIQbZpahhbQ&usqp=CAU' }} />
+            </View>
+        )
+    }
+
+    const _renderProfileImage = (item, index) => {
+        return (
+            <View style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'none' }}>
+                <Image style={{ flex: 1, resizeMode: 'cover' }}
+                    source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8FuEJbKwDdaz1h387130xmYkAIQbZpahhbQ&usqp=CAU' }} />
             </View>
         )
     }
@@ -78,7 +87,6 @@ const Home = () => {
     return (
         <>
             <View style={styles.home__container}>
-                <Image style={styles.home__Image} resizeMode={"cover"} source={man} />
                 <View style={styles.hone__header}>
                     <View>
                         <SvgXml onPress={() => navigation.openDrawer()} xml={humBurger} />
@@ -89,13 +97,29 @@ const Home = () => {
                             data={entries}
                             renderItem={() => _renderItem(images)}
                             sliderWidth={sliderWidth / 2}
-                            itemWidth={sliderWidth / 8}
+                            itemWidth={sliderWidth / 10.1}
+                            inactiveSlideOpacity={0.6}
+                            inactiveSlideScale={0.7}
+                            slideStyle={{ justifyContent: 'center', alignItems: 'center' }}
                         />
                     </View>
                     <View>
                         <SvgXml onPress={() => setFilterValue(!filterValue)} xml={!filterValue ? filterBlack : filter} />
                     </View>
                 </View>
+
+                <View style={{ flex: 1, }}>
+
+                    <Carousel
+                        ref={CarouselRef}
+                        data={entries}
+                        renderItem={() => _renderProfileImage(images)}
+                        sliderWidth={sliderWidth}
+                        itemWidth={sliderWidth}
+                        slideStyle={{ justifyContent: 'center', alignItems: 'center' }}
+                    />
+                </View>
+
                 {filterValue &&
                     <View style={styles.home__subHeader}>
                         <View style={{ alignItems: 'center' }}>
@@ -127,18 +151,25 @@ const Home = () => {
                     </View>
                 }
                 <View style={styles.home__bottomContainer}>
-                    <View style={styles.home__bottomImageView}>
-                        <Image style={styles.home__bottomImage} source={roundbg} />
-                        <View style={styles.home__subBottomContainer}>
-                            <Slider Score={score} setSelfScore={(id) => setScore(id)} />
-                            <View style={styles.home__bottomView}>
-                                <SvgXml onPress={() => toggleModal()} xml={isModalVisible ? reportlight : report} />
-                                <Button customStyle={styles.home__bottomButton} text={<Typo children={"Summit"} />} />
+                    <Image style={styles.home__bottomImage} source={roundbg} />
+                    <View style={styles.home__subBottomContainer}>
+                        <View>
+                            <Slider />
+                        </View>
+                        <View style={styles.home__bottomView}>
+                            <View style={{ flex: 2, alignItems: 'center' }}>
+                                <SvgXml onPress={() => toggleModal()} xml={report} />
                             </View>
+                            <View style={{ flex: 7, alignItems: 'center', }}>
+                                <Button customStyle={styles.home__bottomButton}
+                                    text={<Typo children={"Summit"} />} />
+                            </View>
+                            <View style={{ flex: 2 }} />
                         </View>
                     </View>
                 </View>
             </View>
+
             <ModalTester toggleModal={toggleModal} isModalVisible={isModalVisible} />
         </>
     )
