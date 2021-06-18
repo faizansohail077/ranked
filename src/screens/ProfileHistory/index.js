@@ -13,14 +13,15 @@ import { useNavigation } from '@react-navigation/core'
 
 const ProfileHistory = () => {
     const navigation = useNavigation()
-    const width = Dimensions.get("screen").width
-    const height = Dimensions.get("screen").height
 
     useEffect(() => {
-        navigation.dangerouslyGetParent().setOptions({
-            tabBarVisible: false
-        });
+        navigation.addListener(() => {
+            dangerouslyGetParent().setOptions({
+                tabBarVisible: false
+            });
+        })
     }, [])
+
 
     const data = [{ id: 1, tag: 'Updated 1st Dec ,2020', image: person1, score: 1, subscore: 2, scoreTitle: 'Overall Score', subScoreTitle: 'Self Score' },
     { id: 2, tag: 'Updated 1st Dec ,2020', image: person2, score: 2, subscore: 3, scoreTitle: 'Overall Score', subScoreTitle: 'Self Score' },
