@@ -131,6 +131,7 @@ export const profileImage = (image, score) => {
                 });
 
             } catch (error) {
+                console.log('error', error)
                 reject(error)
             }
         })
@@ -162,13 +163,27 @@ export const getUser = () => {
 export const createSelfie = (url, self_score) => {
     return new Promise(async (resolve, reject) => {
         try {
-
-            let result = await firestore().collection('selfies').doc().set({
-                selfie_url: url,
-                user_id: auth().currentUser.uid,
-                self_score: self_score,
-                created_at: firestore.Timestamp.fromDate(new Date())
-            });
+            if (url && !self_score) {
+                let result = await firestore().collection('selfies').doc().set({
+                    selfie_url: url,
+                    user_id: auth().currentUser.uid,
+                    created_at: firestore.Timestamp.fromDate(new Date())
+                });
+            }
+            if (self_score && !url) {
+                let result = await firestore().collection('selfies').where("user_id" == auth().currentUser.uid).update({
+                    self_score: self_score,
+                    created_at: firestore.Timestamp.fromDate(new Date())
+                });
+            }
+            else {
+                let result = await firestore().collection('selfies').doc().set({
+                    selfie_url: url,
+                    user_id: auth().currentUser.uid,
+                    self_score: { ...self_score, self_score },
+                    created_at: firestore.Timestamp.fromDate(new Date())
+                });
+            }
             console.log('result', result)
         } catch (e) {
             console.log("TCL ~ file: index.js ~ line 160 ~ returnnewPromise ~ e", e)

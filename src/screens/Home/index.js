@@ -22,6 +22,7 @@ import other from '../../assets/other'
 import all from '../../assets/all'
 import { Slider } from '../../components'
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Home = () => {
     const [entries, setEntries] = useState([{}, {}, {}, {}, {}])
@@ -33,6 +34,7 @@ const Home = () => {
     const [activeOther, setActiveOther] = useState(false)
     const [activeAll, setActiveAll] = useState(false)
     const navigation = useNavigation()
+    const dispatch = useDispatch()
     const sliderWidth = Dimensions.get('screen').width
     const CarouselRef = useRef(null)
     const images = [{ id: 2, title: guy }, { id: 1, title: man }]
@@ -44,6 +46,7 @@ const Home = () => {
                 console.log('Total users: ', querySnapshot.exists);
                 if (querySnapshot.exists) {
                     console.log('User data: ', querySnapshot.data());
+                    dispatch({ type: 'USER', payload: querySnapshot.data() })
                 }
             });
     }, [])
@@ -134,7 +137,6 @@ const Home = () => {
                             </TouchableOpacity>
                             <Typo children="Male" style={{ fontSize: 12, color: 'black' }} />
                         </View>
-
                         <View style={{ alignItems: 'center' }}>
                             <TouchableOpacity>
                                 <SvgXml onPress={() => setActiveMale(!activeMale)} style={styles.home__subHeaderIcon} xml={male({ color: activeMale ? '#00a6d1' : "url(#linear-gradient)" })} />
@@ -154,7 +156,7 @@ const Home = () => {
                     <Image style={styles.home__bottomImage} source={roundbg} />
                     <View style={styles.home__subBottomContainer}>
                         <View>
-                            <Slider />
+                            <Slider setSelfScore={setScore} Score={score} />
                         </View>
                         <View style={styles.home__bottomView}>
                             <View style={{ flex: 2, alignItems: 'center' }}>
