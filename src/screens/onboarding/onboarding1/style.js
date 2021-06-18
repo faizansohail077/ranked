@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     onboarding__image: {
         alignItems: 'center',
         marginTop: 20,
+        height: '50%'
     },
     onboarding__para: {
         padding: 10,

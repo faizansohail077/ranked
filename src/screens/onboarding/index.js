@@ -91,19 +91,16 @@ const Onboarding = () => {
                 stepCount={3}
                 renderStepIndicator={(position) => steps(position)}
             />
-            {loader ? <ActivityIndicator color="white" size="large" style={{ flex: 1 }} /> : <>
-                <View style={{ height: screenHeight - 200, marginTop: 20 }}>
-                    <ImageBackground style={{ height: '100%', width: '100%' }} resizeMode="cover" source={bg} >
-                        {currentPosition === 0 && <Onboarding1 para={para1} image={onboard1} onPress={onPageChange} text="Next" title={'Create a Profile'} />}
-                        {currentPosition === 1 && <Onboarding1 para={para2} image={onboard3} onPress={onPageChange} text="Next" title={'Get Ranking'} />}
-                        {currentPosition === 2 && <Onboarding1 para={para3} image={onboard2} onPress={() => navigation.navigate("splash")} title={'Your Scores'} text="Let's Start" />}
-                    </ImageBackground>
-                </View>
-                <TouchableOpacity onPress={() => navigation.navigate("splash")} style={styles.onboard__button} >
-                    <Text style={styles.onboard__buttonText}>Skip</Text>
-                </TouchableOpacity>
-            </>
-            }
+            <View style={{ height: "80%", marginTop: 20 }}>
+                <ImageBackground style={{ height: '100%', width: '100%' }} resizeMode="stretch" source={bg} >
+                    {currentPosition === 0 && <Onboarding1 para={para1} image={onboard1} onPress={onPageChange} text="Next" title={'Create a Profile'} />}
+                    {currentPosition === 1 && <Onboarding1 para={para2} image={onboard3} onPress={onPageChange} text="Next" title={'Get Ranking'} />}
+                    {currentPosition === 2 && <Onboarding1 para={para3} image={onboard2} onPress={() => navigation.navigate("splash")} title={'Your Scores'} text="Let's Start" />}
+                </ImageBackground>
+            </View>
+            <TouchableOpacity onPress={() => navigation.navigate("splash")} style={styles.onboard__button} >
+                <Text style={styles.onboard__buttonText}>Skip</Text>
+            </TouchableOpacity>
         </View>
     )
 }
