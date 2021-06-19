@@ -11,7 +11,7 @@ import onboard3 from '../../assets/onboard3.png'
 import { useEffect } from 'react';
 import auth from '@react-native-firebase/auth';
 import { ActivityIndicator } from 'react-native-paper';
-
+import firestore from '@react-native-firebase/firestore';
 
 const customStyles = {
     stepIndicatorSize: 25,
@@ -62,26 +62,59 @@ const Onboarding = () => {
             )
         }
     }
-    function onAuthStateChanged(user) {
+    async function onAuthStateChanged(user) {
+        console.log("TCL ~ file: index.js ~ line 66 ~ onAuthStateChanged ~ user", user)
+        const result = await firestore().collection("Users").doc(user?.uid).get()
+            .then(querySnapshot => {
+                if (querySnapshot.exists) {
+                    console.log(querySnapshot.data().step)
+                    if (querySnapshot.data().step == 0) {
+                        console.log('login workin1')
+                        navigation.dispatch(
+                            CommonActions.reset({
+                                index: 0,
+                                routes: [{ name: 'personalData', steps: 0 }],
+                            })
+                        );
+                    }
+                    if (querySnapshot.data().step == 1) {
+                        console.log('login working2')
+                        navigation.dispatch(
+                            CommonActions.reset({
+                                index: 0,
+                                routes: [{ name: 'personalData', steps: 1 }],
+                            })
+                        );
+                    }
+                    if (querySnapshot.data().step == 2) {
+                        console.log('login working3')
+                        navigation.dispatch(
+                            CommonActions.reset({
+                                index: 0,
+                                routes: [{ name: 'personalData', steps: 2 }],
+                            })
+                        );
+                    }
+                    if (querySnapshot.data().step == null) {
+                        console.log('login working')
+                        navigation.dispatch(
+                            CommonActions.reset({
+                                index: 0,
+                                routes: [{ name: 'bottomTab', steps: null }],
+                            })
+                        );
+                    }
+                }
+            });
+
         setUser(user);
-        if (user?.email) {
-            navigation.dispatch(
-                CommonActions.reset({
-                    index: 0,
-                    routes: [{ name: 'bottomTab' }],
-                })
-            );
-        }
-        else {
-            setLoader(false)
-        }
         if (initializing) setInitializing(false);
     }
 
     useEffect(() => {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber;
-    })
+    }, [])
 
     return (
         <View style={styles.onboard__container}>

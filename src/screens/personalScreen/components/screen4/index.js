@@ -14,7 +14,6 @@ const Screen4 = ({ route }) => {
     const { uri } = route?.params
     const [score, setScore] = useState(2)
     const [loader, setLoader] = useState(false)
-    console.log("TCL ~ file: index.js ~ line 13 ~ Screen4 ~ score", score)
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
@@ -30,12 +29,10 @@ const Screen4 = ({ route }) => {
                         routes: [{ name: 'bottomTab' }],
                     })
                 );
-
             })
             .catch(err => {
                 console.log("TCL ~ file: index.js ~ line 23 ~ submit ~ err", err)
                 setLoader(false)
-
             })
     }
 
@@ -52,7 +49,7 @@ const Screen4 = ({ route }) => {
                             <SliderComponent Score={score} setSelfScore={(id) => setScore(id)} />
                         </View>
                         <View style={{ alignItems: 'center' }}>
-                            <Button onClick={() => submit()} customTextStyle={{ fontSize: 20 }} customStyle={{ width: '50%' }} text={<Typo children={loader ? <ActivityIndicator color="white" size="large" /> : "Finish...!"} />} />
+                            <Button onClick={() => submit()} customTextStyle={{ fontSize: 20 }} customStyle={{ width: '50%' }} text={<Typo children={loader ? <ActivityIndicator color="white" size="small" /> : "Finish...!"} />} />
                         </View>
                     </View>
                 </View>

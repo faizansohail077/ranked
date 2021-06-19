@@ -2,30 +2,33 @@ import React, { useState } from 'react'
 import { ImageBackground, Text, View, Image, Slider } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SvgXml } from 'react-native-svg'
-import { useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 import { Button, Typo } from '../../components'
 import { styles } from './style'
 import arrow from '../../assets/arrow'
 import bg from '../../assets/roundbg.png'
 import SliderComponent from '../../components/Slider';
 import { useDispatch, useSelector } from 'react-redux';
-import * as action from '../../store/actions'
+import * as actions from '../../store/actions'
 import { ActivityIndicator } from 'react-native-paper';
+import { bindActionCreators } from 'redux'
 
-const SelfScore = () => {
+const SelfScore = ({ route }) => {
+    const { uri } = route?.params
+    console.log("TCL ~ file: index.js ~ line 18 ~ SelfScore ~ uri", uri)
     const navigation = useNavigation()
     const [score, setScore] = useState(2)
     const { user } = useSelector(state => state.authReducer)
     const [disable, setDisable] = useState(false)
     const [loader, setLoader] = useState(false)
     const dispatch = useDispatch()
+    const action = bindActionCreators(actions, dispatch)
 
     const submit = () => {
         setDisable(true)
         setLoader(true)
-        dispatch(action.profileImage({ score: score }))
+        action.profileImage(uri, score)
             .then((res) => {
-                console.log("TCL ~ file: index.js ~ line 45 ~ .then ~ res", res)
                 setLoader(false)
                 setDisable(false)
                 navigation.dispatch(
@@ -39,12 +42,9 @@ const SelfScore = () => {
                 console.log("TCL ~ file: index.js ~ line 23 ~ submit ~ err", err)
                 setLoader(false)
                 setDisable(false)
+
             })
     }
-
-
-
-
 
 
     return (
@@ -65,7 +65,7 @@ const SelfScore = () => {
                             <SliderComponent Score={score} setSelfScore={(id) => setScore(id)} />
                         </View>
                         <View style={{ alignItems: 'center' }}>
-                            <Button disable={disable} onClick={() => submit()} customTextStyle={{ fontSize: 20 }} customStyle={{ width: '50%' }} text={<Typo children={loader ? <ActivityIndicator color="white" size="large" /> : "Update"} />} />
+                            <Button disable={disable} onClick={() => submit()} customTextStyle={{ fontSize: 20 }} customStyle={{ width: '50%' }} text={<Typo children={loader ? <ActivityIndicator color="white" size="small" /> : "Update"} />} />
                         </View>
                     </View>
                 </View>

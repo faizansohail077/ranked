@@ -12,7 +12,8 @@ export const signUp = (email, password, username) => {
                         console.log('User account created & signed in!');
                         let result = await firestore().collection('Users').doc(auth().currentUser.uid).set({
                             email: email,
-                            username: username
+                            username: username,
+                            step: 0
                         });
                         resolve(result)
                     })
@@ -45,6 +46,7 @@ export const logOut = () => {
         })
     }
 }
+
 export const logIn = (email, password) => {
     return dispatch => {
         return new Promise((resolve, reject) => {
@@ -52,7 +54,6 @@ export const logIn = (email, password) => {
                 auth()
                     .signInWithEmailAndPassword(email, password)
                     .then(async () => {
-                        console.log("signed in")
                         resolve()
                     })
                     .catch(error => {
@@ -64,10 +65,7 @@ export const logIn = (email, password) => {
                             reject('That email address is invalid!')
                             console.log('That email address is invalid!');
                         }
-
                         reject(error)
-
-
                     });
             } catch (e) {
                 reject(e)
@@ -87,6 +85,7 @@ export const profileData = (username, dob, country, city, zipCode) => {
                     country: country,
                     city: city,
                     zipCode: zipCode,
+                    step: 1,
                     user_id: auth().currentUser.uid,
 
                 });
@@ -104,6 +103,7 @@ export const genderData = (gender) => {
                 console.log('User gender updated');
                 let result = await firestore().collection('Users').doc(auth().currentUser.uid).update({
                     gender: gender,
+                    step: 2
                 });
                 resolve(result)
             } catch (error) {
@@ -122,7 +122,8 @@ export const profileImage = (image, score) => {
                 await task
                 task.snapshot.ref.getDownloadURL().then(async (e) => {
                     let upload = await firestore().collection("Users").doc(auth().currentUser.uid).update({
-                        profile_picture: e
+                        profile_picture: e,
+                        step: null
                     })
                     createSelfie(e, score)
                     resolve(upload)
@@ -163,27 +164,12 @@ export const getUser = () => {
 export const createSelfie = (url, self_score) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (url && !self_score) {
-                let result = await firestore().collection('selfies').doc().set({
-                    selfie_url: url,
-                    user_id: auth().currentUser.uid,
-                    created_at: firestore.Timestamp.fromDate(new Date())
-                });
-            }
-            if (self_score && !url) {
-                let result = await firestore().collection('selfies').where("user_id" == auth().currentUser.uid).update({
-                    self_score: self_score,
-                    created_at: firestore.Timestamp.fromDate(new Date())
-                });
-            }
-            else {
-                let result = await firestore().collection('selfies').doc().set({
-                    selfie_url: url,
-                    user_id: auth().currentUser.uid,
-                    self_score: { ...self_score, self_score },
-                    created_at: firestore.Timestamp.fromDate(new Date())
-                });
-            }
+            let result = await firestore().collection('Selfies').doc().set({
+                selfie_url: url,
+                user_id: auth().currentUser.uid,
+                self_score: self_score,
+                created_at: firestore.Timestamp.fromDate(new Date())
+            });
             console.log('result', result)
         } catch (e) {
             console.log("TCL ~ file: index.js ~ line 160 ~ returnnewPromise ~ e", e)
@@ -192,3 +178,8 @@ export const createSelfie = (url, self_score) => {
     })
 
 }
+
+
+// await firestore().collection('stories').doc(story_id).update({
+//     likes: flag ? firestore.FieldValue.arrayUnion(uid) : firestore.FieldValue.arrayRemove(uid)
+// })

@@ -22,7 +22,7 @@ import other from '../../assets/other'
 import all from '../../assets/all'
 import { Slider } from '../../components'
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const Home = () => {
     const [entries, setEntries] = useState([{}, {}, {}, {}, {}])
@@ -43,14 +43,11 @@ const Home = () => {
         const userDocument = firestore().collection('Users').doc(auth().currentUser.uid);
         userDocument.get()
             .then(querySnapshot => {
-                console.log('Total users: ', querySnapshot.exists);
                 if (querySnapshot.exists) {
-                    console.log('User data: ', querySnapshot.data());
                     dispatch({ type: 'USER', payload: querySnapshot.data() })
                 }
             });
     }, [])
-
 
 
     const toggleModal = () => {

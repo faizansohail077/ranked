@@ -42,19 +42,15 @@ const Login = () => {
         else {
             setDisable(true)
             setLoader(true)
-            action.logIn(email, password).then(() => {
-                console.log('login working')
-                setLoader(false)
+            action.logIn(email, password).then((res) => {
                 navigation.dispatch(
                     CommonActions.reset({
                         index: 0,
                         routes: [{ name: 'bottomTab' }],
                     })
                 );
-                setEmail("")
-                setPassword("")
-                setDisable(false)
-            }).catch(err => {
+            }
+            ).catch(err => {
                 setLoader(false)
                 console.log("TCL ~ file: login.js ~ line 46 ~ action.logIn ~ err", err)
                 setDisable(false)
@@ -76,9 +72,9 @@ const Login = () => {
                         <Text style={styles.login__heading}><Typo style={{ fontSize: 32 }} children={"Sign In"} /></Text>
                         <View style={styles.login__inputContainer}>
                             <Input value={email} onChangeText={(e) => setEmail(e)} icon={person} placeholder={"Username"} />
-                            <Input value={password} onChangeText={(e) => setPassword(e)} icon={passwordIcon} placeholder={"Password"} />
+                            <Input secure={true} value={password} onChangeText={(e) => setPassword(e)} icon={passwordIcon} placeholder={"Password"} />
                             <View style={styles.login__button}>
-                                <Button disable={disable} onClick={() => submit()} customStyle={{ width: '70%' }} text={<Typo children={loader ? <ActivityIndicator color="white" size="large" /> : "Login"} />} />
+                                <Button disable={disable} onClick={() => submit()} customStyle={{ width: '70%' }} text={<Typo children={loader ? <ActivityIndicator color="white" size="small" /> : "Login"} />} />
                                 <Text style={styles.login__Text}>Don't have an accoung?</Text>
                                 <Text onPress={() => navigation.navigate('signup')} style={styles.login__subText}>Register</Text>
                                 <View style={styles.login__orContainer}>

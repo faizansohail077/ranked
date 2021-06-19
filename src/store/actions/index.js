@@ -7,5 +7,5 @@ export {
     genderData,
     profileImage,
     getUser,
-    logOut
+    logOut,
 }

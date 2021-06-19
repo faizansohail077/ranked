@@ -28,8 +28,9 @@ const customStyles = {
     currentStepLabelColor: 'red'
 }
 
-const PersonalData = () => {
-    const [currentPosition, setCurrentPosition] = useState(0)
+const PersonalData = ({ route }) => {
+    const [currentPosition, setCurrentPosition] = useState(route?.steps)
+
     const onPageChange = () => {
         setCurrentPosition(currentPosition + 1);
     }

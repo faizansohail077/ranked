@@ -19,12 +19,7 @@ const ChangeProfile = () => {
     const [loader, setLoader] = useState(false)
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
-
-
-
-    console.log("TCL ~ file: index.js ~ line 19 ~ ChangeProfile ~ user", user?.profile_picture)
     const navigation = useNavigation()
-
 
     useEffect(() => {
         navigation.dangerouslyGetParent().setOptions({
@@ -35,23 +30,9 @@ const ChangeProfile = () => {
     const uploadImage = () => {
         launchImageLibrary({ noData: true }, (response) => {
             if (response && response?.assets && response?.assets[0]?.uri) {
-                setLoader(true)
+                console.log("TCL ~ file: index.js ~ line 38 ~ launchImageLibrary ~  response?.assets[0]?.uri", response?.assets[0]?.uri)
                 setPhoto(response?.assets[0]?.uri)
-                action.profileImage(response?.assets[0]?.uri)
-                    .then((res) => {
-                        console.log("TCL ~ file: index.js ~ line 45 ~ .then ~ res", res)
-                        setLoader(false)
-                        navigation.dispatch(
-                            CommonActions.reset({
-                                index: 0,
-                                routes: [{ name: 'bottomTab' }],
-                            })
-                        );
-                    })
-                    .catch(err => {
-                        console.log("TCL ~ file: index.js ~ line 23 ~ submit ~ err", err)
-                        setLoader(false)
-                    })
+                navigation.navigate("selfscore", { uri: response?.assets[0]?.uri })
             }
         });
     };

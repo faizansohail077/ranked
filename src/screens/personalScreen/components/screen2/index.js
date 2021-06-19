@@ -42,8 +42,6 @@ const Screen2 = ({ onPress }) => {
             })
     }
 
-
-
     return (
         <View style={styles.screen2__container}>
             <View style={{ marginBottom: 20 }}>
@@ -89,7 +87,7 @@ const Screen2 = ({ onPress }) => {
                     />
                 </View>
                 <View style={{ marginVertical: 30, width: '100%', alignItems: 'center' }}>
-                    <Button disable={disable} customStyle={{ width: '50%' }} onClick={() => submit()} text={<Typo children={loader ? <ActivityIndicator color="white" size="large" /> : "Next"} />} />
+                    <Button disable={disable} customStyle={{ width: '50%' }} onClick={() => submit()} text={<Typo children={loader ? <ActivityIndicator color="white" size="small" /> : "Next"} />} />
                 </View>
             </ScrollView>
         </View>

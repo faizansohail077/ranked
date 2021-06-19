@@ -115,7 +115,7 @@ const Screen1 = ({ onPress }) => {
                 </View>
                 <View style={styles.screen1__btnContainer}>
                     {/* {error && <Typo children={"Next"} />} */}
-                    <Button disable={disable} customStyle={{ width: '60%' }} onClick={() => submit()} text={<Typo children={loader ? <ActivityIndicator color="white" size="large" /> : "Next"} />} />
+                    <Button disable={disable} customStyle={{ width: '60%' }} onClick={() => submit()} text={<Typo children={loader ? <ActivityIndicator color="white" size="small" /> : "Next"} />} />
                 </View>
                 {show && (
                     <DateTimePicker
