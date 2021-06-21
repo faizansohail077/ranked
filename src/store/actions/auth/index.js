@@ -164,13 +164,17 @@ export const getUser = () => {
 export const createSelfie = (url, self_score) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let result = await firestore().collection('Selfies').doc().set({
+            let docId = firestore().collection('Selfies').doc().id
+            let result = await firestore().collection('Selfies').doc(docId).set({
                 selfie_url: url,
                 user_id: auth().currentUser.uid,
                 self_score: self_score,
                 created_at: firestore.Timestamp.fromDate(new Date())
+            })
+
+            let update = await firestore().collection('Users').doc(auth().currentUser.uid).update({
+                selfies: firestore.FieldValue.arrayUnion(docId),
             });
-            console.log('result', result)
         } catch (e) {
             console.log("TCL ~ file: index.js ~ line 160 ~ returnnewPromise ~ e", e)
             reject(e, "error")
@@ -179,7 +183,26 @@ export const createSelfie = (url, self_score) => {
 
 }
 
-
-// await firestore().collection('stories').doc(story_id).update({
-//     likes: flag ? firestore.FieldValue.arrayUnion(uid) : firestore.FieldValue.arrayRemove(uid)
-// })
+export const getProfilePhoto = () => {
+    return dispatch => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let profileData = []
+                const data = await firestore().collection("Selfies").where("user_id", "==", auth().currentUser.uid)
+                data.get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            profileData.push(doc.data())
+                        });
+                        resolve(profileData)
+                    })
+                    .catch((error) => {
+                        console.log("Error getting documents: ", error);
+                    });
+            } catch (e) {
+                console.log("TCL ~ file: index.js ~ line 160 ~ returnnewPromise ~ e", e)
+                reject(e, "error")
+            }
+        })
+    }
+}

@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         height: '100%',
         width: '100%',
-        // borderRadius: 20,
+        borderRadius: 50,
         borderTopLeftRadius: 60,
 
     },
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
         padding: 5,
         borderTopRightRadius: 30,
         backgroundColor: colors.lightanalyticsBg,
-        // opacity: 0.7,
+        width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-around',
         position: 'absolute',
@@ -64,8 +64,8 @@ export const styles = StyleSheet.create({
     profile__bottomLeft: {
         justifyContent: 'center',
         backgroundColor: colors.white,
-        height: height / 12,
-        width: '50%',
+        height: height / 13,
+        width: '45%',
         borderRadius: 100,
         marginRight: 5,
         marginTop: 10,
@@ -73,16 +73,17 @@ export const styles = StyleSheet.create({
     profile__bottomRight: {
         justifyContent: 'center',
         backgroundColor: colors.white,
-        height: height / 12,
-        width: '50%',
+        height: height / 13,
+        width: '45%',
         borderRadius: 100,
         marginTop: 10,
 
     },
     profilt__bottomText: {
         textAlign: 'center',
-        fontSize: 40,
-        color: colors.black
+        fontSize: 35,
+        color: colors.black,
+        fontFamily: 'unicodeimpact'
     }
 
 })

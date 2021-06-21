@@ -29,7 +29,8 @@ const customStyles = {
 }
 
 const PersonalData = ({ route }) => {
-    const [currentPosition, setCurrentPosition] = useState(route?.steps)
+
+    const [currentPosition, setCurrentPosition] = useState(route?.steps || 0)
 
     const onPageChange = () => {
         setCurrentPosition(currentPosition + 1);

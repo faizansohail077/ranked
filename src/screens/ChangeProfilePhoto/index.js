@@ -37,9 +37,6 @@ const ChangeProfile = () => {
         });
     };
 
-
-
-
     return (
         <View style={styles.change__profileContainer}>
             <ImageBackground style={styles.profilr__backgroundImage} source={{ uri: photo ? photo : null }}>

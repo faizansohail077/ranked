@@ -41,9 +41,9 @@ export const styles = StyleSheet.create({
     },
     analytics__subTextView: {
         position: 'absolute',
-        left: 110,
+        left: 100,
         flexDirection: 'row',
-        bottom: 30
+        bottom: 45
     },
     analytics__subText: {
         color: colors.analyticsBg,

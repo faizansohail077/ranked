@@ -14,15 +14,18 @@ const Screen4 = ({ route }) => {
     const { uri } = route?.params
     const [score, setScore] = useState(2)
     const [loader, setLoader] = useState(false)
+    const [disable, setDisable] = useState(false)
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
 
     const submit = () => {
         setLoader(true)
+        setDisable(true)
         action.profileImage(uri, score)
             .then((res) => {
                 setLoader(false)
+                setDisable(false)
                 navigation.dispatch(
                     CommonActions.reset({
                         index: 0,
@@ -33,6 +36,7 @@ const Screen4 = ({ route }) => {
             .catch(err => {
                 console.log("TCL ~ file: index.js ~ line 23 ~ submit ~ err", err)
                 setLoader(false)
+                setDisable(false)
             })
     }
 
@@ -49,7 +53,7 @@ const Screen4 = ({ route }) => {
                             <SliderComponent Score={score} setSelfScore={(id) => setScore(id)} />
                         </View>
                         <View style={{ alignItems: 'center' }}>
-                            <Button onClick={() => submit()} customTextStyle={{ fontSize: 20 }} customStyle={{ width: '50%' }} text={<Typo children={loader ? <ActivityIndicator color="white" size="small" /> : "Finish...!"} />} />
+                            <Button disable={disable} onClick={() => submit()} customTextStyle={{ fontSize: 20 }} customStyle={{ width: '50%' }} text={<Typo children={loader ? <ActivityIndicator color="white" size="small" /> : "Finish...!"} />} />
                         </View>
                     </View>
                 </View>

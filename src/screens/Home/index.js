@@ -49,7 +49,6 @@ const Home = () => {
             });
     }, [])
 
-
     const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };

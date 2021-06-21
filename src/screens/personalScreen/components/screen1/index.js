@@ -7,52 +7,55 @@ import profile from '../../../../assets/profile'
 import path from '../../../../assets/path'
 import location from '../../../../assets/location'
 import calender from '../../../../assets/calender'
-import DateTimePicker from '@react-native-community/datetimepicker';
+// import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../../../../store/actions'
 
 const Screen1 = ({ onPress }) => {
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [showdate, setShowDate] = useState('')
+    console.log("TCL ~ file: index.js ~ line 20 ~ Screen1 ~ showdate", showdate)
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date) => {
+        let todaydate = date.getDate()
+        let month = date.getMonth() + 1
+        let year = date.getFullYear()
+        let newDate = year + "/" + month + "/" + todaydate
+        setShowDate(newDate)
+        hideDatePicker();
+    };
+
     const [country, setCountry] = useState("")
     const [username, setUserName] = useState("")
     const [city, setCity] = useState("")
     const [zipCode, setZipCode] = useState("")
     const [error, setError] = useState("")
     const [disable, setDisable] = useState(false)
-    const [mode, setMode] = useState('date');
-    const [show, setShow] = useState(false);
-    const [date, setDate] = useState(1999 + "/" + 9 + "/" + 28)
     const [loader, setLoader] = useState(false)
-    const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
 
-    const onChange = (event, selectedDate) => {
-        let myDate = new Date(selectedDate)
-        let date_date = myDate.getDate()
-        let date_year = myDate.getFullYear()
-        let date_month = myDate.getMonth()
-
-        let fullDate = `${date_year}/${months[date_month]}/${date_date}`
-
-        const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
-        setDate(fullDate);
-    };
-
-    const showMode = (currentMode) => {
-        setShow(true);
-        setMode(currentMode);
-    };
-
-    const showDatepicker = () => {
-        showMode('date');
-    };
-
     const submit = () => {
         let zipReg = /^\d{5}(?:[-\s]\d{4})?$/
         if (username == "" || username.trim()) {
+            setError(true)
+            setTimeout(() => {
+                setError(false)
+            }, 3000)
+        }
+        if (showdate == '') {
             setError(true)
             setTimeout(() => {
                 setError(false)
@@ -76,16 +79,11 @@ const Screen1 = ({ onPress }) => {
                 setError(false)
             }, 3000)
         }
-        if (date == 1999 + "/" + 9 + "/" + 28) {
-            setError(true)
-            setTimeout(() => {
-                setError(false)
-            }, 3000)
-        }
+
         else {
             setDisable(true)
             setLoader(true)
-            action.profileData(username, date, country, city, zipCode)
+            action.profileData(username, showdate, country, city, zipCode)
                 .then((res) => {
                     console.log("TCL ~ file: index.js ~ line 81 ~ action.profileData ~ res", res)
                     setDisable(false)
@@ -105,8 +103,8 @@ const Screen1 = ({ onPress }) => {
         <View style={styles.screen1__container}>
             <ScrollView style={{ flex: 1 }}>
                 <Input value={username} onChangeText={(e => setUserName(e))} customContainerStyle={{ marginVertical: 30 }} icon={profile} placeholder={'Full Name'} />
-                <TouchableOpacity onPress={showDatepicker} activeOpacity={0.9}>
-                    <Input editable={false} value={`${date}`} customContainerStyle={{ marginVertical: 30 }} icon={calender} placeholder={'Date of birth'} />
+                <TouchableOpacity onPress={showDatePicker} activeOpacity={0.9}>
+                    <Input editable={false} value={showdate} customContainerStyle={{ marginVertical: 30 }} icon={calender} placeholder={'Date of birth'} />
                 </TouchableOpacity>
                 <Input value={country} onChangeText={(e => setCountry(e))} customContainerStyle={{ marginVertical: 30 }} icon={path} placeholder={'Country'} />
                 <View style={{ flexDirection: 'row' }}>
@@ -114,19 +112,15 @@ const Screen1 = ({ onPress }) => {
                     <Input value={zipCode} onChangeText={(e) => setZipCode(e)} customStyle={{ width: '65%' }} customContainerStyle={{ width: '50%' }} icon={zip} placeholder={'Zip code'} />
                 </View>
                 <View style={styles.screen1__btnContainer}>
-                    {/* {error && <Typo children={"Next"} />} */}
                     <Button disable={disable} customStyle={{ width: '60%' }} onClick={() => submit()} text={<Typo children={loader ? <ActivityIndicator color="white" size="small" /> : "Next"} />} />
                 </View>
-                {show && (
-                    <DateTimePicker
-                        testID="datePicker"
-                        value={new Date(date)}
-                        mode={mode}
-                        is24Hour={true}
-                        display="default"
-                        onChange={onChange}
-                    />
-                )}
+
+                <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    onConfirm={handleConfirm}
+                    onCancel={hideDatePicker}
+                />
             </ScrollView>
         </View>
     )

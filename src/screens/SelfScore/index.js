@@ -42,14 +42,12 @@ const SelfScore = ({ route }) => {
                 console.log("TCL ~ file: index.js ~ line 23 ~ submit ~ err", err)
                 setLoader(false)
                 setDisable(false)
-
             })
     }
 
-
     return (
         <View style={styles.change__profileContainer}>
-            <ImageBackground style={styles.selfScore__backgroundImage} source={{ uri: user?.profile_picture ? user?.profile_picture : null }}>
+            <ImageBackground style={styles.selfScore__backgroundImage} source={{ uri: uri ? uri : null }}>
                 <View style={{ height: '100%', justifyContent: 'space-between' }}>
                     <View >
                         <TouchableOpacity onPress={() => navigation.goBack()}>

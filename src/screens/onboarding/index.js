@@ -63,50 +63,54 @@ const Onboarding = () => {
         }
     }
     async function onAuthStateChanged(user) {
-        console.log("TCL ~ file: index.js ~ line 66 ~ onAuthStateChanged ~ user", user)
-        const result = await firestore().collection("Users").doc(user?.uid).get()
-            .then(querySnapshot => {
-                if (querySnapshot.exists) {
-                    console.log(querySnapshot.data().step)
-                    if (querySnapshot.data().step == 0) {
-                        console.log('login workin1')
-                        navigation.dispatch(
-                            CommonActions.reset({
-                                index: 0,
-                                routes: [{ name: 'personalData', steps: 0 }],
-                            })
-                        );
+        if (!user) {
+            setLoader(false)
+        } else {
+            const result = await firestore().collection("Users").doc(user?.uid).get()
+                .then(querySnapshot => {
+                    console.log("TCL ~ file: index.js ~ line 69 ~ onAuthStateChanged ~ querySnapshot", querySnapshot.exists)
+                    if (querySnapshot.exists) {
+                        console.log("TCL ~ file: index.js ~ line 70 ~ onAuthStateChanged ~ querySnapshot.exists", querySnapshot.exists)
+                        console.log(querySnapshot.data().step)
+                        if (querySnapshot.data().step == 0) {
+                            console.log('login workin1')
+                            navigation.dispatch(
+                                CommonActions.reset({
+                                    index: 0,
+                                    routes: [{ name: 'personalData', steps: 0 }],
+                                })
+                            );
+                        }
+                        if (querySnapshot.data().step == 1) {
+                            console.log('login working2')
+                            navigation.dispatch(
+                                CommonActions.reset({
+                                    index: 0,
+                                    routes: [{ name: 'personalData', steps: 1 }],
+                                })
+                            );
+                        }
+                        if (querySnapshot.data().step == 2) {
+                            console.log('login working3')
+                            navigation.dispatch(
+                                CommonActions.reset({
+                                    index: 0,
+                                    routes: [{ name: 'personalData', steps: 2 }],
+                                })
+                            );
+                        }
+                        if (querySnapshot.data().step == null) {
+                            console.log('login working')
+                            navigation.dispatch(
+                                CommonActions.reset({
+                                    index: 0,
+                                    routes: [{ name: 'bottomTab', steps: null }],
+                                })
+                            );
+                        }
                     }
-                    if (querySnapshot.data().step == 1) {
-                        console.log('login working2')
-                        navigation.dispatch(
-                            CommonActions.reset({
-                                index: 0,
-                                routes: [{ name: 'personalData', steps: 1 }],
-                            })
-                        );
-                    }
-                    if (querySnapshot.data().step == 2) {
-                        console.log('login working3')
-                        navigation.dispatch(
-                            CommonActions.reset({
-                                index: 0,
-                                routes: [{ name: 'personalData', steps: 2 }],
-                            })
-                        );
-                    }
-                    if (querySnapshot.data().step == null) {
-                        console.log('login working')
-                        navigation.dispatch(
-                            CommonActions.reset({
-                                index: 0,
-                                routes: [{ name: 'bottomTab', steps: null }],
-                            })
-                        );
-                    }
-                }
-            });
-
+                });
+        }
         setUser(user);
         if (initializing) setInitializing(false);
     }
@@ -124,16 +128,21 @@ const Onboarding = () => {
                 stepCount={3}
                 renderStepIndicator={(position) => steps(position)}
             />
-            <View style={{ height: "80%", marginTop: 20 }}>
-                <ImageBackground style={{ height: '100%', width: '100%' }} resizeMode="stretch" source={bg} >
-                    {currentPosition === 0 && <Onboarding1 para={para1} image={onboard1} onPress={onPageChange} text="Next" title={'Create a Profile'} />}
-                    {currentPosition === 1 && <Onboarding1 para={para2} image={onboard3} onPress={onPageChange} text="Next" title={'Get Ranking'} />}
-                    {currentPosition === 2 && <Onboarding1 para={para3} image={onboard2} onPress={() => navigation.navigate("splash")} title={'Your Scores'} text="Let's Start" />}
-                </ImageBackground>
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate("splash")} style={styles.onboard__button} >
-                <Text style={styles.onboard__buttonText}>Skip</Text>
-            </TouchableOpacity>
+            {loader ? <ActivityIndicator size="large" color="white" />
+                :
+                <View style={{ height: "80%", marginTop: 20 }}>
+                    <ImageBackground style={{ height: '100%', width: '100%' }} resizeMode="stretch" source={bg} >
+                        {currentPosition === 0 && <Onboarding1 para={para1} image={onboard1} onPress={onPageChange} text="Next" title={'Create a Profile'} />}
+                        {currentPosition === 1 && <Onboarding1 para={para2} image={onboard3} onPress={onPageChange} text="Next" title={'Get Ranking'} />}
+                        {currentPosition === 2 && <Onboarding1 para={para3} image={onboard2} onPress={() => navigation.navigate("splash")} title={'Your Scores'} text="Let's Start" />}
+                    </ImageBackground>
+                </View>
+            }
+            {!loader &&
+                <TouchableOpacity onPress={() => navigation.navigate("splash")} style={styles.onboard__button} >
+                    <Text style={styles.onboard__buttonText}>Skip</Text>
+                </TouchableOpacity>
+            }
         </View>
     )
 }
