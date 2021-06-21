@@ -8,7 +8,7 @@ const Onboarding1 = ({ title, onPress, image, text, para }) => {
         <View style={styles.onboarding__container}>
             <Text style={styles.onboarding__heading}><Typo style={styles.typo__style} children={title} /></Text>
             <View style={styles.onboarding__image}>
-                <Image source={image} />
+                <Image style={{ height: '100%', resizeMode: 'contain' }} source={image} />
             </View>
             <Text style={styles.onboarding__para}>{para}</Text>
             <View style={{ alignItems: 'center' }}>

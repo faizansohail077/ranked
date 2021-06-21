@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -24,10 +24,10 @@ const App = () => {
         <Stack.Navigator headerMode={false}>
           <Stack.Screen name="onBoard" component={Onboarding} />
           <Stack.Screen name="personalData" component={PersonalData} />
+          <Stack.Screen name="login" component={Login} />
           <Stack.Screen name="bottomTab" component={BottomTabNavigation} />
           <Stack.Screen name="screen4" component={Screen4} />
           <Stack.Screen name="splash" component={Splash} />
-          <Stack.Screen name="login" component={Login} />
           <Stack.Screen name="query" component={Query} />
           <Stack.Screen name="signup" component={SignUp} />
           <Stack.Screen name="accounts" component={Accounts} />

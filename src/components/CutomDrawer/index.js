@@ -10,10 +10,31 @@ import feedback from '../../assets/feedback'
 import help from '../../assets/help'
 import setting from '../../assets/setting'
 import rate from '../../assets/rate'
-import { useNavigation } from '@react-navigation/core'
+import * as actions from '../../store/actions'
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { CommonActions, useNavigation } from '@react-navigation/native'
+
 
 const CustomDrawer = () => {
     const navigation = useNavigation()
+    const dispatch = useDispatch()
+    const action = bindActionCreators(actions, dispatch)
+
+    const logout = () => {
+        action.logOut().then(() => {
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [{ name: 'onBoard' }],
+                })
+            );
+        }).catch(err => {
+            console.log("TCL ~ file: index.js ~ line 28 ~ action.signOut ~ err", err)
+        })
+    }
+
+
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.drawer__top}>
@@ -98,7 +119,7 @@ const CustomDrawer = () => {
                             <Typo style={styles.drawer__bottomViewText} children={"About Us"} />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate("")}>
+                    <TouchableOpacity onPress={() => logout()}>
                         <View style={{ marginBottom: 10 }}>
                             <Typo style={styles.drawer__bottomViewText} children={"Log Out"} />
                         </View>

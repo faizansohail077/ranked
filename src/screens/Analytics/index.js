@@ -1,16 +1,17 @@
 import React from 'react'
 import { Dimensions, View, Image } from 'react-native'
 import { SvgXml } from 'react-native-svg'
-import filter from '../../assets/filter2'
+import filter from '../../assets/filterWhite'
 import { Typo } from '../../components'
 import { styles } from './style'
 import * as Progress from 'react-native-progress';
 import other from '../../assets/other2'
 import multiple from '../../assets/multiple'
 import calender from '../../assets/starCalender'
+import { useNavigation } from '@react-navigation/native'
 
 const Analytics = () => {
-
+    const navigation = useNavigation()
     return (
         <View style={styles.analytics__container}>
             <View style={styles.analytics__top}>
@@ -20,7 +21,7 @@ const Analytics = () => {
                     <Typo children={"Analytics"} style={{ fontSize: 38 }} />
                 </View>
                 <View>
-                    <SvgXml xml={filter} />
+                    <SvgXml onPress={() => navigation.navigate("about")} xml={filter} />
                 </View>
             </View>
             <View style={styles.analytics__view}>
@@ -50,7 +51,9 @@ const Analytics = () => {
                 </View>
 
                 <View>
-                    <Progress.Circle thickness={5} unfilledColor="gray" fill="white" color="yellow" textStyle={{ color: 'black', textAlign: 'center' }} formatText={(progress) => `${progress}`} borderColor="gray" showsText={true} progress={5} size={110} />
+                    <View>
+                        <Progress.Circle thickness={5} unfilledColor="gray" fill="white" color="yellow" textStyle={{ color: 'black', textAlign: 'center' }} formatText={(progress) => `${progress}`} borderColor="gray" showsText={true} progress={5} size={110} />
+                    </View>
                 </View>
             </View>
 

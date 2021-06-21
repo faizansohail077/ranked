@@ -12,7 +12,8 @@ export const signUp = (email, password, username) => {
                         console.log('User account created & signed in!');
                         let result = await firestore().collection('Users').doc(auth().currentUser.uid).set({
                             email: email,
-                            username: username
+                            username: username,
+                            step: 0
                         });
                         resolve(result)
                     })
@@ -33,6 +34,18 @@ export const signUp = (email, password, username) => {
         })
     }
 }
+export const logOut = () => {
+    return dispatch => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                await auth().signOut()
+                resolve()
+            } catch (e) {
+                reject(e)
+            }
+        })
+    }
+}
 
 export const logIn = (email, password) => {
     return dispatch => {
@@ -41,7 +54,6 @@ export const logIn = (email, password) => {
                 auth()
                     .signInWithEmailAndPassword(email, password)
                     .then(async () => {
-                        console.log("signed in")
                         resolve()
                     })
                     .catch(error => {
@@ -53,7 +65,7 @@ export const logIn = (email, password) => {
                             reject('That email address is invalid!')
                             console.log('That email address is invalid!');
                         }
-                        console.error(error);
+                        reject(error)
                     });
             } catch (e) {
                 reject(e)
@@ -73,6 +85,7 @@ export const profileData = (username, dob, country, city, zipCode) => {
                     country: country,
                     city: city,
                     zipCode: zipCode,
+                    step: 1,
                     user_id: auth().currentUser.uid,
 
                 });
@@ -90,6 +103,7 @@ export const genderData = (gender) => {
                 console.log('User gender updated');
                 let result = await firestore().collection('Users').doc(auth().currentUser.uid).update({
                     gender: gender,
+                    step: 2
                 });
                 resolve(result)
             } catch (error) {
@@ -108,7 +122,8 @@ export const profileImage = (image, score) => {
                 await task
                 task.snapshot.ref.getDownloadURL().then(async (e) => {
                     let upload = await firestore().collection("Users").doc(auth().currentUser.uid).update({
-                        profile_picture: e
+                        profile_picture: e,
+                        step: null
                     })
                     createSelfie(e, score)
                     resolve(upload)
@@ -117,6 +132,7 @@ export const profileImage = (image, score) => {
                 });
 
             } catch (error) {
+                console.log('error', error)
                 reject(error)
             }
         })
@@ -148,18 +164,45 @@ export const getUser = () => {
 export const createSelfie = (url, self_score) => {
     return new Promise(async (resolve, reject) => {
         try {
-
-            let result = await firestore().collection('selfies').doc().set({
+            let docId = firestore().collection('Selfies').doc().id
+            let result = await firestore().collection('Selfies').doc(docId).set({
                 selfie_url: url,
                 user_id: auth().currentUser.uid,
                 self_score: self_score,
                 created_at: firestore.Timestamp.fromDate(new Date())
+            })
+
+            let update = await firestore().collection('Users').doc(auth().currentUser.uid).update({
+                selfies: firestore.FieldValue.arrayUnion(docId),
             });
-            console.log('result', result)
         } catch (e) {
             console.log("TCL ~ file: index.js ~ line 160 ~ returnnewPromise ~ e", e)
             reject(e, "error")
         }
     })
 
+}
+
+export const getProfilePhoto = () => {
+    return dispatch => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let profileData = []
+                const data = await firestore().collection("Selfies").where("user_id", "==", auth().currentUser.uid)
+                data.get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            profileData.push(doc.data())
+                        });
+                        resolve(profileData)
+                    })
+                    .catch((error) => {
+                        console.log("Error getting documents: ", error);
+                    });
+            } catch (e) {
+                console.log("TCL ~ file: index.js ~ line 160 ~ returnnewPromise ~ e", e)
+                reject(e, "error")
+            }
+        })
+    }
 }

@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../../../../store/actions'
 import { ActivityIndicator } from 'react-native-paper'
+
 const Screen3 = () => {
     const [loader, setLoader] = useState(false)
     const navigation = useNavigation()
@@ -28,8 +29,6 @@ const Screen3 = () => {
                 let navigate = await navigation.navigate('screen4', { uri: response?.assets[0]?.uri })
                 setLoader(false)
                 console.log('work completed')
-
-
             }
         });
     };

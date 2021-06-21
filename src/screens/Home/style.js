@@ -3,7 +3,7 @@ import { colors } from '../../style/color'
 
 export const styles = StyleSheet.create({
     home__container: {
-        position: 'relative',
+        // position: 'relative',
         flex: 1,
         backgroundColor: colors.white
     },
@@ -12,11 +12,20 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         width: 60,
         height: 60,
-        // borderColor: colors.black,
-        // borderWidth: 1,
+        borderColor: colors.white,
+        borderWidth: 2,
         overflow: 'hidden',
         borderRadius: 100,
-        backgroundColor: 'black'
+        backgroundColor: 'black',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        // marginHorizontal: 50
     },
     home__carouselImage: {
         height: '100%',
@@ -31,15 +40,17 @@ export const styles = StyleSheet.create({
         top: 50
     },
     hone__header: {
-        marginHorizontal: 15,
-        marginVertical: 15,
+
+        paddingHorizontal: 15,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        // paddingBottom: 20,
         alignItems: 'center'
     },
     home__subHeader: {
-        alignItems: 'flex-end'
+        // alignItems: 'flex-end',
+        position : 'absolute',
+        right : -6,
+        top : 60
     },
     home__subHeaderIcon: {
         marginHorizontal: 10,
@@ -49,13 +60,15 @@ export const styles = StyleSheet.create({
     },
 
     home__bottomImageView: {
-        height: '45%',
-        width: '100%',
-        position: 'relative',
+        // height: '40%',
+        // width: '100%',
+        // position: 'relative',
     },
     home__bottomImage: {
         // height: '100%',
         width: '100%',
+        height: 200,
+        resizeMode: 'stretch',
         position: 'absolute',
         bottom: 0,
         zIndex: 1
@@ -66,30 +79,28 @@ export const styles = StyleSheet.create({
         color: colors.white,
     },
     home__bottomContainer: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        position: 'relative'
+        position: 'absolute',
+        bottom: 0,
+        width: '100%'
 
     },
     home__subBottomContainer: {
         flex: 1,
-        // justifyContent: 'flex-end',
-        position: 'absolute',
-        bottom: 0,
-        width: '100%',
+        // width: '100%',
         zIndex: 1
     },
     home__bottomView: {
         alignItems: 'center',
         flexDirection: 'row',
-        justifyContent: 'center',
-        marginBottom: 10,
-        marginTop: 40
+        marginTop: 30,
+        marginBottom: 7,
+        justifyContent: 'center'
+
     },
     home__bottomButton: {
-        width: '60%',
-        marginLeft: 30,
         backgroundColor: 'transparent',
+        minWidth: 170,
+        height: 50,
         borderWidth: 2, borderColor: colors.white
     }
 

@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         backgroundColor: colors.black,
+        opacity: 0.7
     },
     splash__backgroundImage: {
         backgroundColor: colors.black,
