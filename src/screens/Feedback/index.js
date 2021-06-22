@@ -14,12 +14,6 @@ import feedback from '../../assets/feedback2'
 const FeedBack = () => {
     const navigation = useNavigation()
 
-    useEffect(() => {
-        navigation.dangerouslyGetParent().setOptions({
-            tabBarVisible: false
-        })
-    })
-
     return (
         <View style={styles.feedback__container}>
             <View style={{ marginBottom: 15 }}>

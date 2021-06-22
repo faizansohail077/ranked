@@ -23,11 +23,6 @@ const ProfileHistory = () => {
 
     useEffect(() => {
         console.log("working effet")
-        navigation.addListener(() => {
-            dangerouslyGetParent().setOptions({
-                tabBarVisible: false
-            });
-        })
         action.getProfilePhoto()
             .then((res) => {
                 console.log("TCL ~ file: index.js ~ line 32 ~ .then ~ res", res.length)
@@ -66,10 +61,6 @@ const ProfileHistory = () => {
             {loader ? <ActivityIndicator size="large" color="white" /> :
                 <FlatList numColumns={2} keyExtractor={(item) => item.id} data={response} renderItem={({ item }) => {
                     moment().format("MMM Do YY")
-                    console.log("TCL ~ file: index.js ~ line 59 ~ ProfileHistory ~ item", item?.created_at.toDate().getDate())
-                    console.log("TCL ~ file: index.js ~ line 59 ~ ProfileHistory ~ item", moment(item?.created_at).format("Do MMM YY"))
-
-
                     return (
                         <View style={styles.profile__ImageContainer}>
                             <Image style={styles.profile__image} resizeMode={"cover"} source={{ uri: item?.selfie_url }} />

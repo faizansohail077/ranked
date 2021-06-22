@@ -14,24 +14,46 @@ import Accounts from './src/screens/Accounts';
 import SelfScore from './src/screens/SelfScore';
 import { Provider } from 'react-redux';
 import { store } from './src/store';
+import EditProfile from './src/screens/EditProfile';
+import ProfileHistory from './src/screens/ProfileHistory';
+import ChangeProfile from './src/screens/ChangeProfilePhoto';
+import FeedBack from './src/screens/Feedback';
+import Help from './src/screens/Help';
+import Settings from './src/screens/Settings';
+import RateApp from './src/screens/RateApp';
+import About from './src/screens/About';
 
 const Stack = createStackNavigator();
 
-const App = () => {
+const App = ({ route }) => {
+  console.log("TCL ~ file: App.js ~ line 29 ~ App ~ route", route)
+  if (route?.state.index == 2) {
+    navigation.setOptions({
+      tabBarVisibal: false
+    })
+  }
   return (
     <Provider store={store}>
       <NavigationContainer >
         <Stack.Navigator headerMode={false}>
           <Stack.Screen name="onBoard" component={Onboarding} />
-          <Stack.Screen name="personalData" component={PersonalData} />
+          <Stack.Screen name="splash" component={Splash} />
           <Stack.Screen name="login" component={Login} />
+          <Stack.Screen name="personalData" component={PersonalData} />
           <Stack.Screen name="bottomTab" component={BottomTabNavigation} />
           <Stack.Screen name="screen4" component={Screen4} />
-          <Stack.Screen name="splash" component={Splash} />
           <Stack.Screen name="query" component={Query} />
           <Stack.Screen name="signup" component={SignUp} />
           <Stack.Screen name="accounts" component={Accounts} />
           <Stack.Screen name="selfscore" component={SelfScore} />
+          <Stack.Screen name="edit" component={EditProfile} />
+          <Stack.Screen name="profileHistory" component={ProfileHistory} />
+          <Stack.Screen name="changeProfile" component={ChangeProfile} />
+          <Stack.Screen name="feedback" component={FeedBack} />
+          <Stack.Screen name="help" component={Help} />
+          <Stack.Screen name="setting" component={Settings} />
+          <Stack.Screen name="rate" component={RateApp} />
+          <Stack.Screen name="about" component={About} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

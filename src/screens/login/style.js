@@ -9,11 +9,12 @@ export const styles = StyleSheet.create({
     login__top: {
         height: '100%',
         width: '100%',
-        backgroundColor: colors.black
+        backgroundColor: colors.blackOPacity,
+        // opacity: 0
     },
     login__image: {
         position: 'absolute',
-        opacity: 0.4,
+        opacity: 0.1,
         backgroundColor: colors.black,
         height: '100%',
         width: '100%'

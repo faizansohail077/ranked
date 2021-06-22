@@ -64,7 +64,7 @@ const Login = () => {
             <ScrollView style={{ flex: 1 }}>
                 {error && alert("something went wrong")}
                 <View style={styles.login__top}>
-                    <View style={{ position: 'relative', flex: 1, backgroundColor: 'black', opacity: 0.7 }}>
+                    <View style={{ position: 'relative', flex: 1 }}>
                         <Image style={styles.login__image} resizeMode={"cover"} source={guy} />
                         <View style={styles.login__logo}>
                             <SvgXml xml={logo} />

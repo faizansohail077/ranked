@@ -5,6 +5,7 @@ export const colors = {
     white: '#ffffff',
     lightwhite: 'rgba(255,255,255,0.7)',
     black: '#011629',
+    blackOPacity: 'rgba(3,3,3,1) ',
     blue: '#4267B2',
     placholder: 'rgba(255,255,255,0.5)',
     gray: 'gray',

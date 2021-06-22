@@ -10,12 +10,6 @@ import Help from '../Help/component'
 const Settings = () => {
     const navigation = useNavigation()
 
-    useEffect(() => {
-        navigation.dangerouslyGetParent().setOptions({
-            tabBarVisible: false
-        })
-    })
-
     return (
         <View style={styles.setting__container}>
             <View style={{ marginBottom: 15 }}>

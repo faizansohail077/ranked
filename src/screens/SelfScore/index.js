@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ImageBackground, Text, View, Image, Slider } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SvgXml } from 'react-native-svg'
@@ -14,20 +14,31 @@ import { ActivityIndicator } from 'react-native-paper';
 import { bindActionCreators } from 'redux'
 
 const SelfScore = ({ route }) => {
-    const { uri } = route?.params
-    console.log("TCL ~ file: index.js ~ line 18 ~ SelfScore ~ uri", uri)
+
     const navigation = useNavigation()
     const [score, setScore] = useState(2)
+    const [url, setUrl] = useState('')
     const { user } = useSelector(state => state.authReducer)
     const [disable, setDisable] = useState(false)
     const [loader, setLoader] = useState(false)
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
+    console.log(user?.profile_picture)
+    useEffect(() => {
+        if (route?.params && route?.params?.uri) {
+            const { uri } = route?.params
+            setUrl(uri)
+        }
+        else {
+            setUrl(user?.profile_picture)
+        }
+    }, [])
+
 
     const submit = () => {
         setDisable(true)
         setLoader(true)
-        action.profileImage(uri, score)
+        action.profileImage(url, score)
             .then((res) => {
                 setLoader(false)
                 setDisable(false)
@@ -47,7 +58,7 @@ const SelfScore = ({ route }) => {
 
     return (
         <View style={styles.change__profileContainer}>
-            <ImageBackground style={styles.selfScore__backgroundImage} source={{ uri: uri ? uri : null }}>
+            <ImageBackground style={styles.selfScore__backgroundImage} source={{ uri: url }}>
                 <View style={{ height: '100%', justifyContent: 'space-between' }}>
                     <View >
                         <TouchableOpacity onPress={() => navigation.goBack()}>

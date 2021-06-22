@@ -21,12 +21,6 @@ const ChangeProfile = () => {
     const action = bindActionCreators(actions, dispatch)
     const navigation = useNavigation()
 
-    useEffect(() => {
-        navigation.dangerouslyGetParent().setOptions({
-            tabBarVisible: false
-        })
-    }, [])
-
     const uploadImage = () => {
         launchImageLibrary({ noData: true }, (response) => {
             if (response && response?.assets && response?.assets[0]?.uri) {

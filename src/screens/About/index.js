@@ -39,15 +39,11 @@ const screens = [
     }
 ]
 
-const About = () => {
+const About = ({ route }) => {
+    console.log("TCL ~ file: index.js ~ line 43 ~ About ~ route", route?.name)
     const navigation = useNavigation()
     const [activescreen, setActiveScreen] = useState("screen1")
     const [activeTrue, setActiveTrue] = useState('screen1')
-    useEffect(() => {
-        navigation.dangerouslyGetParent().setOptions({
-            tabBarVisible: false
-        })
-    }, [])
 
     const _renderUIScreen = (screen) => {
         switch (screen) {
@@ -62,9 +58,11 @@ const About = () => {
 
     return (
         <View style={styles.about__container}>
-            <View style={{ padding: 20 }}>
-                <SvgXml onPress={() => navigation.goBack()} xml={arrow} />
-            </View>
+            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.goBack()}>
+                <View style={{ padding: 20, width: '10%' }}>
+                    <SvgXml xml={arrow} />
+                </View>
+            </TouchableOpacity>
             <View style={styles.about__top}>
                 {
                     screens.map((screen) => (

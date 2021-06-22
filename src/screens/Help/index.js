@@ -10,11 +10,6 @@ import { styles } from './style';
 
 const Help = () => {
     const navigation = useNavigation()
-    useEffect(() => {
-        navigation.dangerouslyGetParent().setOptions({
-            tabBarVisible: false
-        })
-    }, [])
 
     return (
         <View style={styles.help__container}>

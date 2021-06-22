@@ -16,7 +16,7 @@ import { bindActionCreators } from 'redux'
 import { CommonActions, useNavigation } from '@react-navigation/native'
 
 
-const CustomDrawer = () => {
+const CustomDrawer = ({ route }) => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
@@ -101,8 +101,7 @@ const CustomDrawer = () => {
                             <Typo style={styles.drawer__bottomViewText} children={"Settings"} />
                         </View>
                     </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => navigation.navigate("rate")}>
+                    <TouchableOpacity>
                         <View style={styles.drawer__bottomView}>
                             <View style={{ width: 30 }}>
                                 <SvgXml style={{ width: 30 }} xml={rate} />
@@ -114,7 +113,7 @@ const CustomDrawer = () => {
                 </View>
 
                 <View style={{ position: 'absolute', bottom: 10 }}>
-                    <TouchableOpacity onPress={() => navigation.navigate("about")}>
+                    <TouchableOpacity>
                         <View style={{ marginVertical: 10 }}>
                             <Typo style={styles.drawer__bottomViewText} children={"About Us"} />
                         </View>

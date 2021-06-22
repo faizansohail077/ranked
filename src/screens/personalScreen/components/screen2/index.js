@@ -3,6 +3,8 @@ import { Text, View, Image, ScrollView, TouchableOpacity, ActivityIndicator } fr
 import { styles } from './style'
 import male from '../../../../assets/male.png'
 import female from '../../../../assets/female.png'
+import selectedmale from '../../../../assets/selectedmale.png'
+import unselectedfemale from '../../../../assets/unselectedfemale.png'
 import other from '../../../../assets/other.png'
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Button, Typo } from '../../../../components'
@@ -52,13 +54,13 @@ const Screen2 = ({ onPress }) => {
                     <View>
 
                         <TouchableOpacity onPress={() => setGender("male")}>
-                            <Image source={male} />
+                            <Image source={gender == "male" ? selectedmale : male} />
                         </TouchableOpacity>
                         <Text style={styles.screen2_textFont}>Male</Text>
                     </View>
                     <View>
                         <TouchableOpacity onPress={() => setGender("female")}>
-                            <Image source={female} />
+                            <Image source={gender == "female" ? female : unselectedfemale} />
                         </TouchableOpacity>
                         <Text style={styles.screen2_textFont}>Female</Text>
                     </View>

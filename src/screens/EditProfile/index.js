@@ -18,11 +18,10 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../../store/actions'
-const EditProfile = () => {
 
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-
+const EditProfile = ({ route }) => {
     const navigation = useNavigation()
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const { user } = useSelector(state => state.authReducer)
     const [showdate, setShowDate] = useState(user?.dob)
     const [username, setUserName] = useState(user?.fullname)
@@ -34,13 +33,6 @@ const EditProfile = () => {
     const [disable, setDisable] = useState(false)
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
-
-    useEffect(() => {
-        navigation.dangerouslyGetParent().setOptions({
-            tabBarVisible: false
-        });
-    }, [])
-
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);

@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     },
     personalData__container: {
         flex: 1,
-        backgroundColor: colors.black
+        backgroundColor: colors.blackOPacity
     },
     personalDataScreen2__container: {
         flex: 1,

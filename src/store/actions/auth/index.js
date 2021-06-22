@@ -114,29 +114,60 @@ export const genderData = (gender) => {
 }
 
 export const profileImage = (image, score) => {
+    console.log("TCL ~ file: index.js ~ line 117 ~ profileImage ~ image", image)
     return dispatch => {
         return new Promise(async (resolve, reject) => {
             try {
                 let reference = storage().ref('profilePics/' + auth().currentUser.uid + "/" + auth().currentUser.uid + Date.now() + ".jpg");
-                let task = reference.putFile(image);
-                await task
-                task.snapshot.ref.getDownloadURL().then(async (e) => {
-                    let upload = await firestore().collection("Users").doc(auth().currentUser.uid).update({
-                        profile_picture: e,
-                        step: null
+                if (image.indexOf('https') == -1) {
+                    let task = reference.putFile(image);
+                    await task
+                    task.snapshot.ref.getDownloadURL().then(async (e) => {
+                        let upload = await firestore().collection("Users").doc(auth().currentUser.uid).update({
+                            profile_picture: e,
+                            step: null
+                        })
+                        createSelfie(e, score)
+                        resolve(upload)
+                            .catch((e) => {
+                                console.log('uploading image error => ', e)
+                            });
                     })
-                    createSelfie(e, score)
-                    resolve(upload)
-                }).catch((e) => {
-                    console.log('uploading image error => ', e)
-                });
-
-            } catch (error) {
+                }
+                else {
+                    createSelfie(image, score)
+                    resolve()
+                }
+            }
+            catch (error) {
                 console.log('error', error)
                 reject(error)
             }
         })
     }
+}
+
+export const createSelfie = (url, self_score) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let docId = firestore().collection('Selfies').doc().id
+            let result = await firestore().collection('Selfies').doc(docId).set({
+                selfie_url: url,
+                user_id: auth().currentUser.uid,
+                self_score: self_score,
+                selfie_id: docId,
+                created_at: firestore.Timestamp.fromDate(new Date())
+            })
+            postSelefieId(docId)
+            let update = await firestore().collection('Users').doc(auth().currentUser.uid).update({
+                selfies: firestore.FieldValue.arrayUnion(docId),
+            });
+            resolve()
+        } catch (e) {
+            console.log("TCL ~ file: index.js ~ line 160 ~ returnnewPromise ~ e", e)
+            reject(e, "error")
+        }
+    })
 }
 
 export const getUser = () => {
@@ -161,27 +192,7 @@ export const getUser = () => {
     }
 }
 
-export const createSelfie = (url, self_score) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            let docId = firestore().collection('Selfies').doc().id
-            let result = await firestore().collection('Selfies').doc(docId).set({
-                selfie_url: url,
-                user_id: auth().currentUser.uid,
-                self_score: self_score,
-                created_at: firestore.Timestamp.fromDate(new Date())
-            })
 
-            let update = await firestore().collection('Users').doc(auth().currentUser.uid).update({
-                selfies: firestore.FieldValue.arrayUnion(docId),
-            });
-        } catch (e) {
-            console.log("TCL ~ file: index.js ~ line 160 ~ returnnewPromise ~ e", e)
-            reject(e, "error")
-        }
-    })
-
-}
 
 export const getProfilePhoto = () => {
     return dispatch => {
@@ -206,3 +217,21 @@ export const getProfilePhoto = () => {
         })
     }
 }
+export const postSelefieId = async (query) => {
+    console.log("TCL ~ file: index.js ~ line 222 ~ postSelefieId ~ query", query)
+    // return dispatch => {
+    //     return new Promise(async (resolve, reject) => {
+    try {
+        const response = await fetch(`http://localhost:5000/ranked-89d7d/us-central1/helloWorld?selfies_id=${query}`)
+        const result = response.json()
+        console.log("TCL ~ file: index.js ~ line 225 ~ returnnewPromise ~ result", result)
+        // resolve()
+    } catch (e) {
+        console.log("TCL ~ file: index.js ~ line 160 ~ returnnewPromise ~ e", e)
+        // reject(e, "error")
+    }
+    //     })
+    // }
+}
+postSelefieId('asdasda')
+

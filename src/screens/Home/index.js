@@ -22,10 +22,11 @@ import other from '../../assets/other'
 import all from '../../assets/all'
 import { Slider } from '../../components'
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Home = () => {
     const [entries, setEntries] = useState([{}, {}, {}, {}, {}])
+    const { user } = useSelector(state => state.authReducer)
     const [score, setScore] = useState(2)
     const [filterValue, setFilterValue] = useState(false)
     const [isModalVisible, setModalVisible] = useState(false);

@@ -9,11 +9,11 @@ export const styles = StyleSheet.create({
     signpup__top: {
         height: '100%',
         width: '100%',
-        backgroundColor: colors.black
+        backgroundColor: colors.blackOPacity
     },
     signpup__image: {
         position: 'absolute',
-        opacity: 0.3,
+        opacity: 0.1,
         backgroundColor: colors.black,
         height: '100%',
         width: '100%',

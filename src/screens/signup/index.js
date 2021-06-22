@@ -79,7 +79,7 @@ const SignUp = () => {
             <ScrollView style={{ flex: 1 }}>
                 {error && alert('something went wrong')}
                 <View style={styles.signpup__top}>
-                    <View style={{ flex: 1, backgroundColor: 'black', opacity: 0.7 }}>
+                    <View style={{ flex: 1 }}>
                         <Image style={styles.signpup__image} source={guy} />
                         <View style={styles.signpup__logo}>
                             <SvgXml xml={logo} />
