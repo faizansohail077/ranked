@@ -239,7 +239,31 @@ export const postSelefieId = async (query) => {
 
         }).catch((err) => {
             console.log("ERRROR ", err)
-
-}
-        )
+})
     }
+
+
+export const submitSelfie=(rating,gender,longitude,latitude,age)=>{
+    return dispatch => {
+    return new Promise (async(resolve,reject)=>{
+        try {
+        let result = await firestore().collection('Rating').doc().set({
+            rating :rating,
+            user_id : auth().currentUser.uid,
+            gender:gender,
+            age:age,
+            location:{
+                long:longitude,
+                lat:latitude
+            }
+            // age:age
+        })
+        resolve()
+    } catch (error) {
+        console.log(error,'error')
+        reject(error)    
+    }
+    }
+    )
+}
+}

@@ -23,7 +23,6 @@ const SelfScore = ({ route }) => {
     const [loader, setLoader] = useState(false)
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
-    console.log(user?.profile_picture)
     useEffect(() => {
         if (route?.params && route?.params?.uri) {
             const { uri } = route?.params

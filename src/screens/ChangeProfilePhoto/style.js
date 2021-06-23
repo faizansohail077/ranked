@@ -30,8 +30,8 @@ export const styles = StyleSheet.create({
     change__profileBottomImage: {
         position: 'absolute',
         // top: -30,
-        bottom: 120,
-        left: 130,
+        bottom: 100,
+        left: 150,
         zIndex: 1,
         backgroundColor: colors.red,
         height: 80,

@@ -80,7 +80,7 @@ const EditProfile = ({ route }) => {
         else {
             setDisable(true)
             setLoader(true)
-            action.profileData(username, showdate, country, city, zipCode)
+            action.profileData(username,new Date(showdate), country, city, zipCode)
                 .then(() => {
                     setDisable(false)
                     setLoader(false)

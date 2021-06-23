@@ -12,6 +12,8 @@ target 'ranked' do
     :hermes_enabled => false
   )
 
+  pod 'ReactNativeGetLocation', :path => '../node_modules/react-native-get-location'
+
   target 'rankedTests' do
     inherit! :complete
     # Pods for testing
