@@ -22,10 +22,11 @@ export const styles = StyleSheet.create({
     analytics__viewMain: {
         borderWidth: 6,
         borderColor: colors.white,
-        backgroundColor: '#F2F2F3',
+        backgroundColor:'#E8DEDE',
         flex: 1,
-        width: width / 1.3,
-        borderRadius: 200,
+        height:250,
+        width: 250,
+        borderRadius: 900,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -37,17 +38,18 @@ export const styles = StyleSheet.create({
     analytics__viewText: {
         color: colors.analyticsBg,
         fontFamily: "unicodeimpact",
-        fontSize: 200
+        fontSize: 150
     },
     analytics__subTextView: {
         position: 'absolute',
-        left: 100,
+        left: 80,
         flexDirection: 'row',
-        bottom: 45
+        bottom: 25
     },
     analytics__subText: {
         color: colors.analyticsBg,
         fontSize: 35,
+        fontFamily: "unicodeimpact",
         fontWeight: 'bold'
     },
     analytics__progrssView: {
@@ -73,7 +75,7 @@ export const styles = StyleSheet.create({
         borderColor: colors.analyticsBg,
         borderBottomColor: colors.yellow,
         borderWidth: 2,
-        width: 30,
+        width: 50,
     },
     analytics__bottomView: {
         position: 'relative',
