@@ -11,7 +11,6 @@ import slider from '../../assets/slider.png'
 
 const SliderComponent = ({ setSelfScore, Score }) => {
     const [value, setValue] = useState(2);
-    // console.log("TCL ~ file: index.js ~ line 16 ~ useEffect ~ setSelfScore(value)", setSelfScore)
 
 
     return (
