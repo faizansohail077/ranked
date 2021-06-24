@@ -19,16 +19,7 @@ const Drawer = createDrawerNavigator();
 
 const DrawerNav = ({ route }) => {
     const navigation = useNavigation()
-    if (route?.state?.index > 0) {
-        navigation.setOptions({
-            tabBarVisible: false
-        })
-    }
-    else {
-        navigation.setOptions({
-            tabBarVisible: true
-        })
-    }
+
     return (
         <Drawer.Navigator drawerContent={() => <CustomDrawer />} drawerStyle={{
             width: '50%',

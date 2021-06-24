@@ -222,7 +222,7 @@ export const postSelefieId = async (query) => {
     // return dispatch => {
     //     return new Promise(async (resolve, reject) => {
     try {
-        const response = await fetch(`http://localhost:5000/ranked-89d7d/us-central1/helloWorld?selfies_id=${query}`)
+        const response = await fetch(`http://192.168.100.70:5000/ranked-89d7d/us-central1/helloWorld?selfies_id=${query}`)
         const result = response.json()
         console.log("TCL ~ file: index.js ~ line 225 ~ returnnewPromise ~ result", result)
         // resolve()
