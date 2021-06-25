@@ -15,7 +15,6 @@ import { ActivityIndicator } from 'react-native-paper'
 
 const ProfileHistory = () => {
     const [response, setResponse] = useState("")
-    console.log("TCL ~ file: index.js ~ line 18 ~ ProfileHistory ~ response", response)
     const [loader, setLoader] = useState(true)
     const navigation = useNavigation()
     const dispatch = useDispatch()

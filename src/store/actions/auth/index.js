@@ -36,7 +36,10 @@ export const signUp = (email, password, username) => {
                             reject('That email address is invalid!')
                             console.log('That email address is invalid!');
                         }
-                        console.error(error);
+                        else {
+                            reject(error)
+                            console.error(error);
+                        }
                     });
             } catch (e) {
                 reject(e)
@@ -56,7 +59,6 @@ export const logOut = () => {
         })
     }
 }
-
 export const logIn = (email, password) => {
     return dispatch => {
         return new Promise((resolve, reject) => {
@@ -130,9 +132,12 @@ export const profileImage = (image, score) => {
             try {
                 let reference = storage().ref('profilePics/' + auth().currentUser.uid + "/" + auth().currentUser.uid + Date.now() + ".jpg");
                 if (image.indexOf('https') == -1) {
+                    console.log('eeeee222')
                     let task = reference.putFile(image);
+                    console.log('task')
                     await task
                     task.snapshot.ref.getDownloadURL().then(async (e) => {
+                        console.log(e, 'eeeee')
                         let upload = await firestore().collection("Users").doc(auth().currentUser.uid).update({
                             profile_picture: e,
                             step: null
@@ -189,7 +194,6 @@ export const getUser = () => {
                     .doc(auth().currentUser.uid)
                     .get()
                     .then(documentSnapshot => {
-                        console.log('User exists: ', documentSnapshot.exists);
                         if (documentSnapshot.exists) {
                             console.log('User data: ', documentSnapshot.data());
                             resolve(documentSnapshot.data())
@@ -201,8 +205,6 @@ export const getUser = () => {
         })
     }
 }
-
-
 
 export const getProfilePhoto = () => {
     return dispatch => {
@@ -229,41 +231,106 @@ export const getProfilePhoto = () => {
 }
 
 export const postSelefieId = async (query) => {
-    console.log("TCL ~ file: index.js ~ line 222 ~ postSelefieId ~ query", query)
-    const {data} = await functions()
+    const { data } = await functions()
         .httpsCallable('helloWorld')({
-            selfie_id:query
+            selfie_id: query,
+            currentUser_id: auth().currentUser.uid
         })
         .then(response => {
             console.log("🚀 ~ file: index.js ~ line 227 ~ postSelefieId ~ response", response)
 
         }).catch((err) => {
             console.log("ERRROR ", err)
-})
-    }
-
-
-export const submitSelfie=(rating,gender,longitude,latitude,age)=>{
-    return dispatch => {
-    return new Promise (async(resolve,reject)=>{
-        try {
-        let result = await firestore().collection('Rating').doc().set({
-            rating :rating,
-            user_id : auth().currentUser.uid,
-            gender:gender,
-            age:age,
-            location:{
-                long:longitude,
-                lat:latitude
-            }
-            // age:age
         })
-        resolve()
-    } catch (error) {
-        console.log(error,'error')
-        reject(error)    
-    }
-    }
-    )
 }
+
+export const submitSelfie = (rating, gender, longitude, latitude, age, selfie_id) => {
+    return dispatch => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let result = await firestore().collection('Rating').doc().set({
+                    rating: rating,
+                    user_id: auth().currentUser.uid,
+                    gender: gender,
+                    age: age,
+                    location: {
+                        long: longitude,
+                        lat: latitude
+                    },
+                    created_at: firestore.Timestamp.fromDate(new Date()),
+                    selfie_id: selfie_id
+                })
+                resolve()
+            } catch (error) {
+                console.log(error, 'error')
+                reject(error)
+            }
+        }
+        )
+    }
+}
+
+
+
+// export const getAnalytics =  (query) => {
+//     return dispatch =>{
+//    return new Promise(async(resolve,reject)=>{
+//     try {
+//     const {data} = await functions()
+//     .httpsCallable('analytics')({
+//         currentUser_id:auth().currentUser.uid
+//     })
+//     resolve(data)
+//    } catch (error) {
+//        console.log(error,'error')
+//        reject(error)       
+// }
+// })
+//     }
+//     }
+
+export const getAnalytics = (age, gender) => {
+    console.log('rating started')
+    console.log(age, 'ageage')
+    console.log(gender, 'gender gender')
+
+
+    return dispatch => {
+        console.log('React nasjk')
+        return new Promise(async (resolve, reject) => {
+            console.log('React nasjk 301')
+
+            try {
+                let obj
+                let response
+                const data = firestore().collection("Selfies").where("user_id", "==", auth().currentUser.uid).orderBy("created_at", "desc").limit(1)
+                console.log('React nasjk 301', )
+
+                data.get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach(async (doc) => {
+
+                            response = doc?.data()
+                            console.log(response, "doc?.data().selfie_id", gender)
+                            let result = firestore().collection("Rating").where("selfie_id", "==", doc?.data().selfie_id)
+                            age && (result = result.where("age", "<=", age))
+                            gender && (result = result.where('gender', '==', gender));
+                            const querySnapshot = await result.get()
+                            querySnapshot.docs.forEach((doc) => {
+                                console.log(response, 'response')
+                                obj = { ...doc?.data(), ...response }
+                                resolve(obj)
+                            })
+                        });
+                    })
+                    .catch((error) => {
+                        console.log("Error getting documents: ", error);
+                        reject(error)
+                    });
+            } catch (error) {
+                console.log(error, 'error')
+                reject(error)
+            }
+        })
+    }
 }

@@ -1,11 +1,9 @@
 import React, { useState, useRef } from 'react'
-import { Dimensions, Image, Animated, View, TouchableOpacity, ImageBackground } from 'react-native'
+import { Dimensions, Image,  View, TouchableOpacity } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { styles } from './style'
 import Carousel from 'react-native-snap-carousel';
-import man from '../../assets/902.png'
-import guy from '../../assets/guy.png'
 import roundbg from '../../assets/roundbg.png'
 import humBurger from '../../assets/hamburger'
 import { SvgXml } from 'react-native-svg';
@@ -27,11 +25,10 @@ import * as actions from '../../store/actions'
 import { bindActionCreators } from 'redux';
 import { ActivityIndicator } from 'react-native-paper';
 import GetLocation from 'react-native-get-location'
-import moment from 'moment';
 
 const Home = () => {
     const { user } = useSelector(state => state.authReducer)
-    const age = new Date().getFullYear()-new Date(user.dob.seconds*1000).getFullYear()
+    const age = new Date().getFullYear()-new Date(user?.dob?.seconds*1000).getFullYear()
     const [score, setScore] = useState(2)
     const [filterValue, setFilterValue] = useState(false)
     const [isModalVisible, setModalVisible] = useState(false);
@@ -43,6 +40,8 @@ const Home = () => {
     const [loader,setLoader]=useState(false)
     const [long,setLong]=useState("")
     const [lat,setLat] = useState("")
+    // const [selfieId,setSelfieId]=useState("")
+    const selfieId = []
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const action = bindActionCreators(actions,dispatch)
@@ -68,29 +67,14 @@ const Home = () => {
     },[])
 
 
-    useEffect(async()=>{
-        let userId = auth().currentUser.uid
-        let selfieArray=[]
-          const userDocument =await firestore().collection('Users').doc(userId).get();
-          const selfieDocument = await firestore().collection('Selfies').where("selfie_id","in",userDocument.data().time_line).get()
-          selfieDocument.docs.forEach(arr=>{
-              selfieArray.push({... arr.data()})
-                if(selfieDocument.size ==selfieArray.length ){
-                    setTimelineData([...selfieArray])
-                }
-            }
-            )
+    useEffect(()=>{
+        getTimelineData()
     },[])
 
-
     useEffect(() => {
-        const userDocument = firestore().collection('Users').doc(auth().currentUser.uid);
-        userDocument.get()
-            .then(querySnapshot => {
-                if (querySnapshot.exists) {
-                    dispatch({ type: 'USER', payload: querySnapshot.data() })
-                }
-            });
+        action.getUser().then((res)=>{
+            dispatch({ type: 'USER', payload:res})
+          }) 
     }, [])
 
     const toggleModal = () => {
@@ -105,6 +89,7 @@ const Home = () => {
     }
 
     const _renderProfileImage = (item, index) => {
+        selfieId.push(item?.selfie_id)
         return (
             <View style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'none' }}>
                 <Image style={{ flex: 1, resizeMode: 'cover' }}
@@ -112,7 +97,7 @@ const Home = () => {
             </View>
         )
     }
-
+    
     const selectAll = () => {
         setActiveAll(!activeAll)
         if (!activeAll) {
@@ -127,15 +112,43 @@ const Home = () => {
         }
     }
 
+    const getTimelineData= async()=>{
+        let userId = auth().currentUser.uid
+        let selfieArray=[]
+          const userDocument =await firestore().collection('Users').doc(userId).get();
+          console.log('userDocument.data().tim e_line', userDocument.data().time_line)
+          if( userDocument?.data()?.time_line?.length ==0 ){
+              console.log("timeline mistake")
+          }else{
+              const selfieDocument = await firestore().collection('Selfies').where("selfie_id","in",userDocument.data().time_line).get()
+              selfieDocument.docs.forEach(arr=>{
+                  selfieArray.push({... arr.data()})
+                  if(selfieDocument.size == selfieArray.length ){
+                      setTimelineData([...selfieArray])
+                    }
+                }
+                )
+            }
+    }
+
+
     const submit=()=>{
         setLoader(true)
-        action.submitSelfie(score,user?.gender,long,lat,age)
-        .then(()=>{
+        action.submitSelfie(score,user?.gender,long,lat,age,selfieId[CarouselRef2?.current?._activeItem])
+        .then(async()=>{
             console.log('then working')
+            const data1 = await firestore().collection('Users').get()
+            data1.docs.forEach(async (doc) => {
+                console.log(doc.id,'docdoc')
+                let update = await firestore().collection('Users').doc(auth().currentUser.uid).update({
+                    time_line: firestore.FieldValue.arrayRemove(selfieId[CarouselRef2?.current?._activeItem])
+                })
+                getTimelineData()
+            })
             setLoader(false);
         })
-        .catch(()=>{
-            console.log('catch working')
+        .catch((e)=>{
+            console.log('catch working',e)
             setLoader(false);
         })
     }

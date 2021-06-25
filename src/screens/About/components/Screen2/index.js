@@ -8,11 +8,21 @@ import { SvgXml } from 'react-native-svg'
 import slider from '../../../../assets/slider'
 import plus from '../../../../assets/plus'
 import minus from '../../../../assets/minus'
+import * as actions from '../../../../store/actions'
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { useEffect } from 'react'
+import { ActivityIndicator } from 'react-native-paper'
 
 const Screen2 = () => {
     const [toggle, setToggle] = useState(true)
     const [disable, setDisable] = useState(true)
     const [value, setValue] = useState(7);
+    const [loader,setLoader]=useState(false)
+    const dispatch = useDispatch()
+    const action = bindActionCreators(actions,dispatch)
+
+    console.log(value,'value') 
 
     const addValue = () => {
         if (value >= 0 && value < 49) {
@@ -26,6 +36,23 @@ const Screen2 = () => {
             setValue(value - 7)
         }
     }
+    const submit = ()=>{
+        setLoader(true)
+        setDisable(true)
+        action.getAnalytics(value,null)
+        .then(()=>{
+            console.log("age added")
+            setLoader(false)
+           setDisable(false)
+
+        }).catch((err)=>{
+            console.log(err,'err')
+            setLoader(false)
+           setDisable(false)
+
+        })
+    }
+
 
     return (
         <>
@@ -119,7 +146,7 @@ const Screen2 = () => {
                 </View>
 
                 <View style={{ marginTop: 20, alignItems: 'center' }}>
-                    <Button disable={!toggle && disable} customStyle={{ marginTop: 10 }} text="Done" />
+                    <Button onClick={()=>submit()} disable={!toggle && disable} customStyle={{ marginTop: 10 }} text={loader ? <ActivityIndicator size="small" color="white" />:"Done"} />
                 </View>
             </View>
         </>

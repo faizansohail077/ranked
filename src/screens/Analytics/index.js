@@ -1,5 +1,5 @@
-import React from 'react'
-import { Dimensions, View, Image } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import {  View } from 'react-native'
 import { SvgXml } from 'react-native-svg'
 import filter from '../../assets/filterWhite'
 import { Typo } from '../../components'
@@ -9,9 +9,38 @@ import other from '../../assets/other2'
 import multiple from '../../assets/multiple'
 import calender from '../../assets/starCalender'
 import { useNavigation } from '@react-navigation/native'
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as actions from '../../store/actions'
+import About from '../About'
 
 const Analytics = () => {
+    const [rating,setRating ] = useState("")
+    const [openModal,setOpenModal]=useState(false)
+    const [selfScore,setSelfScore]=useState("")
     const navigation = useNavigation()
+    const dispatch = useDispatch()
+    const action = bindActionCreators(actions,dispatch)
+    console.log(openModal,openModal)
+  
+    useEffect(()=>{
+        let resArray =[]
+           action.getAnalytics().then((res)=>{
+            setSelfScore(res?.self_score)
+            //    console.log(res,'resres') 
+            resArray.push(res)
+            let count = 0
+            resArray.map(item=>{ 
+                // console.log(item,'itemitem')
+                count += item?.rating
+            })
+            let avg = count / resArray.length +1
+            setRating(Math.floor(avg))
+        })
+
+    },[])
+    console.log(rating,'ratings')
+
     return (
         <View style={styles.analytics__container}>
             <View style={styles.analytics__top}>
@@ -21,16 +50,16 @@ const Analytics = () => {
                     <Typo children={"Analytics"} style={{ fontSize: 38 }} />
                 </View>
                 <View>
-                    <SvgXml onPress={() => navigation.navigate("about")} xml={filter} />
+                    <SvgXml onPress={() => setOpenModal(!openModal)} xml={filter} />
                 </View>
             </View>
             <View style={styles.analytics__view}>
                 <View style={styles.analytics__viewMain}>
                     <View style={styles.analytics__viewInside}>
-                        <Typo style={styles.analytics__viewText} children={"8"} />
+                        <Typo style={styles.analytics__viewText} children={rating && rating ? rating:0} />
                         <View style={styles.analytics__subTextView}>
                             <Typo style={styles.analytics__subText} children={'/'} />
-                            <Typo style={styles.analytics__subText} children={'10'} />
+                            <Typo style={styles.analytics__subText} children={'10'} /> 
                         </View>
                     </View>
                 </View>
@@ -49,10 +78,9 @@ const Analytics = () => {
                     <View style={styles.analytics__progressTopRight}>
                     </View>
                 </View>
-
                 <View>
                     <View>
-                        <Progress.Circle thickness={5} unfilledColor="gray" fill="white" color="yellow" textStyle={{ color: 'black', textAlign: 'center' }} formatText={(progress) => `${progress}`} borderColor="gray" showsText={true} progress={5} size={110} />
+                        <Progress.Circle thickness={5} unfilledColor="gray" fill="white" color="yellow" textStyle={{ color: 'black', textAlign: 'center' }} formatText={() => `${selfScore}`} borderColor="gray" showsText={true} progress={selfScore} size={110} />
                     </View>
                 </View>
             </View>
@@ -76,7 +104,7 @@ const Analytics = () => {
                 </View>
             </View>
 
-
+            <About openModal={openModal} modalToggle={() => setOpenModal(!openModal)} />
 
         </View>
     )
