@@ -230,12 +230,14 @@ export const getProfilePhoto = () => {
     }
 }
 
+
+
 export const postSelefieId = async (query) => {
+    console.log("🚀 ~ file: index.js ~ line 234 ~ postSelefieId ~ query", query)
+    console.log(auth().currentUser,'auth().currentUserauth().currentUser')
+    console.log("🚀 ~ file: index.js ~ line 251 ~ .httpsCallable ~ auth().currentUser.uid", auth().currentUser.uid)
     const { data } = await functions()
-        .httpsCallable('helloWorld')({
-            selfie_id: query,
-            currentUser_id: auth().currentUser.uid
-        })
+        .httpsCallable(`helloWorld?selfie_id=${query}&currentUser_id=${auth().currentUser.uid}`)()
         .then(response => {
             console.log("🚀 ~ file: index.js ~ line 227 ~ postSelefieId ~ response", response)
 
@@ -306,23 +308,23 @@ export const getAnalytics = (age, gender) => {
                         querySnapshot.forEach(async (doc) => {
                             response = doc?.data()
                             console.log(response, "doc?.data().selfie_id", gender)
-                            console.log("doc?.data().selfie_id",doc?.data().selfie_id)
+                            console.log("doc?.data().selfie_id", doc?.data().selfie_id)
                             let result = firestore().collection("Rating")
                             age && (result = result.where("age", "<=", age))
                             gender && (result = result.where('gender', '==', gender));
                             const querySnapshot = await result.get()
-                            if(querySnapshot?.docs?.length > 0){
-                            querySnapshot.docs.forEach((doc) => {
-                                docData.push(doc?.data())
-                                   console.log(docData.sort(function(a,b){ return(b.age - a.age)}))
-                                    obj = {docData, ...response }
+                            if (querySnapshot?.docs?.length > 0) {
+                                querySnapshot.docs.forEach((doc) => {
+                                    docData.push(doc?.data())
+                                    console.log(docData.sort(function (a, b) { return (b.age - a.age) }))
+                                    obj = { docData, ...response }
                                     resolve(obj)
-                            })
-                        }
-                        else{
-                            console.log("no data is avaliable")
-                            reject("no data is avaliable")
-                        }
+                                })
+                            }
+                            else {
+                                console.log("no data is avaliable")
+                                reject("no data is avaliable")
+                            }
                         });
                     })
                     .catch((error) => {
