@@ -1,6 +1,16 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import functions from '@react-native-firebase/functions';
+
+
+
+// Use a local emulator in development
+if (__DEV__) {
+    // If you are running on a physical device, replace http://localhost with the local ip of your PC. (http://192.168.x.x)
+    functions().useFunctionsEmulator('http://localhost:5000');
+}
+
 
 export const signUp = (email, password, username) => {
     return dispatch => {
@@ -217,21 +227,42 @@ export const getProfilePhoto = () => {
         })
     }
 }
+
 export const postSelefieId = async (query) => {
     console.log("TCL ~ file: index.js ~ line 222 ~ postSelefieId ~ query", query)
-    // return dispatch => {
-    //     return new Promise(async (resolve, reject) => {
-    try {
-        const response = await fetch(`http://192.168.100.70:5000/ranked-89d7d/us-central1/helloWorld?selfies_id=${query}`)
-        const result = response.json()
-        console.log("TCL ~ file: index.js ~ line 225 ~ returnnewPromise ~ result", result)
-        // resolve()
-    } catch (e) {
-        console.log("TCL ~ file: index.js ~ line 160 ~ returnnewPromise ~ e", e)
-        // reject(e, "error")
-    }
-    //     })
-    // }
-}
-postSelefieId('asdasda')
+    const { data } = await functions()
+        .httpsCallable('helloWorld')({
+            selfie_id: query
+        })
+        .then(response => {
+            console.log("🚀 ~ file: index.js ~ line 227 ~ postSelefieId ~ response", response)
 
+        }).catch((err) => {
+            console.log("ERRROR ", err)
+        })
+}
+
+
+export const submitSelfie = (rating, gender, longitude, latitude, age) => {
+    return dispatch => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let result = await firestore().collection('Rating').doc().set({
+                    rating: rating,
+                    user_id: auth().currentUser.uid,
+                    gender: gender,
+                    age: age,
+                    location: {
+                        long: longitude,
+                        lat: latitude
+                    }
+                })
+                resolve()
+            } catch (error) {
+                console.log(error, 'error')
+                reject(error)
+            }
+        }
+        )
+    }
+}

@@ -18,15 +18,21 @@
         selfie_url : '',
         user_id,
         created_at
-        rating : [{
-                rating : 0-10,
-                user_id : '',
-            }]
+        rating:[rating_id]
         self_score : 0  -  10
         reports : ['fake account']
     }
 }
-
+rating : {
+                rating : 0-10,
+                user_id : '',
+                location:{
+                    lat:'',
+                    long:''
+                },
+                gender:'',
+                age:""
+            },
 
 users : {
     profiles 1,,

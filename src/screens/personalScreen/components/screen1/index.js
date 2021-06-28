@@ -7,7 +7,6 @@ import profile from '../../../../assets/profile'
 import path from '../../../../assets/path'
 import location from '../../../../assets/location'
 import calender from '../../../../assets/calender'
-// import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { useDispatch } from 'react-redux'
@@ -83,9 +82,8 @@ const Screen1 = ({ onPress }) => {
         else {
             setDisable(true)
             setLoader(true)
-            action.profileData(username, showdate, country, city, zipCode)
+            action.profileData(username,new Date(showdate), country, city, zipCode)
                 .then((res) => {
-                    console.log("TCL ~ file: index.js ~ line 81 ~ action.profileData ~ res", res)
                     setDisable(false)
                     setLoader(false)
                     onPress()

@@ -1,12 +1,31 @@
 import React, { useState } from 'react'
-import { View, Image } from 'react-native'
+import { View, Image,ImageBackground, TouchableOpacity } from 'react-native'
 import { Typo, Button } from '../../../../components'
 import ToggleSwitch from 'toggle-switch-react-native'
 import { styles } from './style'
-import miles from '../../../../assets/miles.png'
+import miles from '../../../../assets/miles2.png'
+import { SvgXml } from 'react-native-svg'
+import minus2 from '../../../../assets/minus2'
+import plus2 from '../../../../assets/plus2'
+
+
 const Screen3 = () => {
     const [toggle, setToggle] = useState(true)
     const [disable, setDisable] = useState(true)
+    const [value,setValue] =useState(10) 
+
+    const minus = () =>{ 
+        if(value > 0 ){
+            setValue(value -1 )
+        }
+    }
+    const plus = ()=>{
+        if(value >= 0 ){
+            setValue(value +1 )
+        }
+    }
+
+
     return (
         <>
             <View style={styles.screen3__top}>
@@ -23,10 +42,31 @@ const Screen3 = () => {
             </View>
             <View style={toggle ? styles.screen3__center : styles.screen3__disable}>
                 <Typo style={styles.screen3__centerHeading} children={"How far from you?"} />
-                <View style={{ marginHorizontal: 10 }}>
-                    <Image resizeMode="cover" source={miles} />
+                <View  style={{position:'relative',marginTop:20}}>
+                <View>
+                    <Image resizeMode="contain" source={miles} />
                 </View>
-                <View style={{ marginTop: 20, alignItems: 'center' }}>
+                <View>
+                    <View style={styles.screen3__milesView}>
+                        <Typo children={value} style={styles.screen3__milesViewText} />
+                        <Typo children={"Miles"}style={styles.screen3__milesViewText2} />
+                    </View>
+
+                    <View style={{position:'absolute',bottom:15,left:80}}>
+                    <TouchableOpacity onPress={()=>minus()} >
+                    <SvgXml onPress={()=>minus()} xml={minus2} />
+                    </TouchableOpacity>
+                    </View>
+
+                    <View style={{position:'absolute',bottom:15,right:80}}>
+                    <TouchableOpacity onPress={()=>plus()}>
+                    <SvgXml xml={plus2} />
+                    </TouchableOpacity>
+                    </View>
+                </View>
+                
+                </View>
+                <View style={{ marginTop: 20,width:'100%',alignItems:'center' }}>
                     <Button disable={!toggle && disable} customStyle={{ marginTop: 10 }} text="Done" />
                 </View>
             </View>

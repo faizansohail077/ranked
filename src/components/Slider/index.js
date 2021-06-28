@@ -121,8 +121,8 @@ const SliderComponent = ({ setSelfScore, Score }) => {
                                     position: 'relative'
                                 }}
                             >
-                                <Image style={{ width: '90%', height: '100%', resizeMode: "stretch", position: 'absolute' }} source={slider} />
-                                <Typo children={Score ? Score : value} style={{ textAlign: 'center', fontSize: 18, top: 15, right: 5 }} />
+                                <Image style={{ width: '90%', height: '90%', resizeMode: "stretch", position: 'absolute', top: 3 }} source={slider} />
+                                <Typo children={Score ? Score : value} style={{ textAlign: 'center', fontSize: 18, top: 18, right: 5 }} />
                             </View>
                         }
                     />
