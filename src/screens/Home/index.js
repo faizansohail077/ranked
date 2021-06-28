@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { Dimensions, Image,  View, TouchableOpacity } from 'react-native'
+import { Dimensions, Image, View, TouchableOpacity } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { styles } from './style'
@@ -26,9 +26,10 @@ import { bindActionCreators } from 'redux';
 import { ActivityIndicator } from 'react-native-paper';
 import GetLocation from 'react-native-get-location'
 
+
 const Home = () => {
     const { user } = useSelector(state => state.authReducer)
-    const age = new Date().getFullYear()-new Date(user?.dob?.seconds*1000).getFullYear()
+    const age = new Date().getFullYear() - new Date(user?.dob?.seconds * 1000).getFullYear()
     const [score, setScore] = useState(2)
     const [filterValue, setFilterValue] = useState(false)
     const [isModalVisible, setModalVisible] = useState(false);
@@ -36,45 +37,43 @@ const Home = () => {
     const [activeFemale, setActiveFemale] = useState(false)
     const [activeOther, setActiveOther] = useState(false)
     const [activeAll, setActiveAll] = useState(false)
-    const [timelineData,setTimelineData]=useState("")
-    const [loader,setLoader]=useState(false)
-    const [long,setLong]=useState("")
-    const [lat,setLat] = useState("")
-    // const [selfieId,setSelfieId]=useState("")
+    const [timelineData, setTimelineData] = useState("")
+    const [loader, setLoader] = useState(false)
+    const [long, setLong] = useState("")
+    const [lat, setLat] = useState("")
     const selfieId = []
     const navigation = useNavigation()
     const dispatch = useDispatch()
-    const action = bindActionCreators(actions,dispatch)
+    const action = bindActionCreators(actions, dispatch)
     const sliderWidth = Dimensions.get('screen').width
     const CarouselRef = useRef(null)
     const CarouselRef2 = useRef(null)
 
-    useEffect(()=>{
+    useEffect(() => {
         GetLocation.getCurrentPosition({
             enableHighAccuracy: true,
             timeout: 15000,
         })
-        .then(location => {
-            setLong(location?.longitude)
-            setLat(location?.latitude)
+            .then(location => {
+                console.log("TCL ~ file: index.js ~ line 57 ~ useEffect ~ location", location)
+                setLong(location?.longitude)
+                setLat(location?.latitude)
+            })
+            .catch(error => {
+                const { code, message } = error;
+                console.warn(code, message);
+            })
+    }, [])
 
-        })
-        .catch(error => {
-            const { code, message } = error;
-            console.warn(code, message);
-        })
-       
-    },[])
-
-
-    useEffect(()=>{
-        getTimelineData()
-    },[])
 
     useEffect(() => {
-        action.getUser().then((res)=>{
-            dispatch({ type: 'USER', payload:res})
-          }) 
+        getTimelineData()
+    }, [])
+
+    useEffect(() => {
+        action.getUser().then((res) => {
+            dispatch({ type: 'USER', payload: res })
+        })
     }, [])
 
     const toggleModal = () => {
@@ -83,7 +82,7 @@ const Home = () => {
     const _renderItem = (item, index) => {
         return (
             <View style={styles.home__carousel}>
-                <Image style={styles.home__carouselImage} source={{ uri:item && item?.selfie_url }} />
+                <Image style={styles.home__carouselImage} source={{ uri: item && item?.selfie_url }} />
             </View>
         )
     }
@@ -93,11 +92,11 @@ const Home = () => {
         return (
             <View style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'none' }}>
                 <Image style={{ flex: 1, resizeMode: 'cover' }}
-                    source={{ uri: item && item?.selfie_url  }} />
+                    source={{ uri: item && item?.selfie_url }} />
             </View>
         )
     }
-    
+
     const selectAll = () => {
         setActiveAll(!activeAll)
         if (!activeAll) {
@@ -112,44 +111,44 @@ const Home = () => {
         }
     }
 
-    const getTimelineData= async()=>{
+    const getTimelineData = async () => {
         let userId = auth().currentUser.uid
-        const userDocument =await firestore().collection('Users').doc(userId).get();
-        if( userDocument?.data()?.time_line?.length == 0 ){
+        const userDocument = await firestore().collection('Users').doc(userId).get();
+        if (userDocument?.data()?.time_line?.length == 0) {
             console.log("timeline mistake")
-        }else{
-            let selfieArray=[]
-            const selfieDocument = await firestore().collection('Selfies').get() 
-            selfieDocument.docs.forEach(arr=>{
-                if(userDocument.data().time_line.indexOf(arr?.data()?.selfie_id) !== -1){
-                    selfieArray.push({... arr.data()})
+        } else {
+            let selfieArray = []
+            const selfieDocument = await firestore().collection('Selfies').get()
+            selfieDocument.docs.forEach(arr => {
+                if (userDocument.data().time_line.indexOf(arr?.data()?.selfie_id) !== -1) {
+                    selfieArray.push({ ...arr.data() })
                 }
             }
             )
             setTimelineData(selfieArray)
-            }
+        }
     }
 
 
-    const submit=()=>{
+    const submit = () => {
         setLoader(true)
-        action.submitSelfie(score,user?.gender,long,lat,age,selfieId[CarouselRef2?.current?._activeItem])
-        .then(async()=>{
-            console.log('then working')
-            const data1 = await firestore().collection('Users').get()
-            data1.docs.forEach(async (doc) => {
-                console.log(doc.id,'docdoc')
-                let update = await firestore().collection('Users').doc(auth().currentUser.uid).update({
-                    time_line: firestore.FieldValue.arrayRemove(selfieId[CarouselRef2?.current?._activeItem])
+        action.submitSelfie(score, user?.gender, long, lat, age, selfieId[CarouselRef2?.current?._activeItem])
+            .then(async () => {
+                console.log('then working')
+                const data1 = await firestore().collection('Users').get()
+                data1.docs.forEach(async (doc) => {
+                    console.log(doc.id, 'docdoc')
+                    let update = await firestore().collection('Users').doc(auth().currentUser.uid).update({
+                        time_line: firestore.FieldValue.arrayRemove(selfieId[CarouselRef2?.current?._activeItem])
+                    })
+                    getTimelineData()
                 })
-                getTimelineData()
+                setLoader(false);
             })
-            setLoader(false);
-        })
-        .catch((e)=>{
-            console.log('catch working',e)
-            setLoader(false);
-        })
+            .catch((e) => {
+                console.log('catch working', e)
+                setLoader(false);
+            })
     }
 
     return (
@@ -161,10 +160,10 @@ const Home = () => {
                     </View>
                     <View>
                         <Carousel
-                          scrollEnabled={false}
+                            scrollEnabled={false}
                             ref={CarouselRef2}
                             data={timelineData}
-                            renderItem={({item,index}) =>_renderItem(item,index)}
+                            renderItem={({ item, index }) => _renderItem(item, index)}
                             sliderWidth={sliderWidth / 2}
                             itemWidth={sliderWidth / 10.1}
                             inactiveSlideOpacity={0.6}
@@ -180,9 +179,9 @@ const Home = () => {
                 <View style={{ flex: 1, }}>
                     <Carousel
                         ref={CarouselRef}
-                        onSnapToItem={(i)=>CarouselRef2.current?.snapToItem(i)}
+                        onSnapToItem={(i) => CarouselRef2.current?.snapToItem(i)}
                         data={timelineData}
-                        renderItem={({item,index}) => _renderProfileImage(item,index)}
+                        renderItem={({ item, index }) => _renderProfileImage(item, index)}
                         sliderWidth={sliderWidth}
                         itemWidth={sliderWidth}
                         slideStyle={{ justifyContent: 'center', alignItems: 'center' }}
@@ -229,8 +228,8 @@ const Home = () => {
                                 <SvgXml onPress={() => toggleModal()} xml={report} />
                             </View>
                             <View style={{ flex: 7, alignItems: 'center', }}>
-                                <Button onClick={()=>submit()} customStyle={styles.home__bottomButton}
-                                    text={<Typo children={loader? <ActivityIndicator size="small" color="white" />:"Summit"} />} />
+                                <Button onClick={() => submit()} customStyle={styles.home__bottomButton}
+                                    text={<Typo children={loader ? <ActivityIndicator size="small" color="white" /> : "Summit"} />} />
                             </View>
                             <View style={{ flex: 2 }} />
                         </View>

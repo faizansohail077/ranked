@@ -5,9 +5,7 @@ import functions from '@react-native-firebase/functions';
 
 
 
-// Use a local emulator in development
 if (__DEV__) {
-    // If you are running on a physical device, replace http://localhost with the local ip of your PC. (http://192.168.x.x)
     functions().useFunctionsEmulator('http://localhost:5000');
 }
 
@@ -108,14 +106,18 @@ export const profileData = (username, dob, country, city, zipCode) => {
         })
     }
 }
-export const genderData = (gender) => {
+export const genderData = (gender, longitude, latitude) => {
     return dispatch => {
         return new Promise(async (resolve, reject) => {
             try {
                 console.log('User gender updated');
                 let result = await firestore().collection('Users').doc(auth().currentUser.uid).update({
                     gender: gender,
-                    step: 2
+                    step: 2,
+                    location: {
+                        long: longitude,
+                        lat: latitude
+                    },
                 });
                 resolve(result)
             } catch (error) {
@@ -126,18 +128,14 @@ export const genderData = (gender) => {
 }
 
 export const profileImage = (image, score) => {
-    console.log("TCL ~ file: index.js ~ line 117 ~ profileImage ~ image", image)
     return dispatch => {
         return new Promise(async (resolve, reject) => {
             try {
                 let reference = storage().ref('profilePics/' + auth().currentUser.uid + "/" + auth().currentUser.uid + Date.now() + ".jpg");
                 if (image.indexOf('https') == -1) {
-                    console.log('eeeee222')
                     let task = reference.putFile(image);
-                    console.log('task')
                     await task
                     task.snapshot.ref.getDownloadURL().then(async (e) => {
-                        console.log(e, 'eeeee')
                         let upload = await firestore().collection("Users").doc(auth().currentUser.uid).update({
                             profile_picture: e,
                             step: null
@@ -239,10 +237,11 @@ export const postSelefieId = async (query) => {
     const { data } = await functions()
         .httpsCallable(`helloWorld?selfie_id=${query}&currentUser_id=${auth().currentUser.uid}`)()
         .then(response => {
-            console.log("🚀 ~ file: index.js ~ line 227 ~ postSelefieId ~ response", response)
-
+            console.log("working1"),
+                console.log("🚀 ~ file: index.js ~ line 227 ~ postSelefieId ~ response", response)
         }).catch((err) => {
-            console.log("ERRROR ", err)
+            console.log("working2"),
+                console.log("ERRROR ", err)
         })
 }
 
@@ -316,10 +315,10 @@ export const getAnalytics = (age, gender) => {
                             if (querySnapshot?.docs?.length > 0) {
                                 querySnapshot.docs.forEach((doc) => {
                                     docData.push(doc?.data())
-                                    console.log(docData.sort(function (a, b) { return (b.age - a.age) }))
+                                    // console.log(docData.sort(function (a, b) { return (b.age - a.age) }))
                                     obj = { docData, ...response }
-                                    resolve(obj)
                                 })
+                                resolve(obj)
                             }
                             else {
                                 console.log("no data is avaliable")

@@ -12,6 +12,7 @@ import slider from '../../assets/slider.png'
 const SliderComponent = ({ setSelfScore, Score }) => {
     const [value, setValue] = useState(2);
 
+
     return (
         <View>
             <View style={{ marginHorizontal: 10, flexDirection: 'row', justifyContent: 'space-around', position: 'relative' }}>
@@ -120,7 +121,7 @@ const SliderComponent = ({ setSelfScore, Score }) => {
                                     position: 'relative'
                                 }}
                             >
-                                <Image style={{ width: '90%', height: '90%', resizeMode: "stretch", position: 'absolute',top:3 }} source={slider} />
+                                <Image style={{ width: '90%', height: '90%', resizeMode: "stretch", position: 'absolute', top: 3 }} source={slider} />
                                 <Typo children={Score ? Score : value} style={{ textAlign: 'center', fontSize: 18, top: 18, right: 5 }} />
                             </View>
                         }

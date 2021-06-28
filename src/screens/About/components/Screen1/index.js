@@ -22,29 +22,29 @@ const Screen1 = () => {
     const [activeFemale, setActiveFemale] = useState(false)
     const [activeOther, setActiveOther] = useState(false)
     const [activeAll, setActiveAll] = useState(false)
-    const [value,setValue] = useState("")
-    const [loader,setLoader]=useState(false)
+    const [value, setValue] = useState("")
+    const [loader, setLoader] = useState(false)
     const dispatch = useDispatch()
-    const action = bindActionCreators(actions,dispatch)
-    
-    useEffect(()=>{
-        if(activeMale){
+    const action = bindActionCreators(actions, dispatch)
+
+    useEffect(() => {
+        if (activeMale) {
             setValue("male")
         }
-        else if(activeFemale){
+        else if (activeFemale) {
             setValue("female")
         }
-        else if(activeOther){
-            setValue("other")
+        else if (activeOther) {
+            setValue("others")
         }
-        else{
+        else {
             setValue(null)
         }
-        console.log(value,'value')
-    },[activeMale,activeFemale,activeOther])
+        console.log(value, 'value')
+    }, [activeMale, activeFemale, activeOther])
 
 
-    
+
     console.log("🚀 ~ file: index.js ~ line 25 ~ Screen1 ~ value", value)
     const selectAll = () => {
         setActiveAll(!activeAll)
@@ -60,19 +60,19 @@ const Screen1 = () => {
         }
     }
 
-    const submit = ()=>{
-        if(toggle && value !== null){
+    const submit = () => {
+        if (toggle && value !== null) {
             setLoader(true)
-            action.getAnalytics(null,value)
-            .then((res)=>{
-                setLoader(false)
-                dispatch({type:'ANALYTICS',payload:res})
-                console.log(res,'in gender screens')
-            })
-            .catch(err=>{
-                console.log(err,'err')
-                setLoader(false)
-            })
+            action.getAnalytics(null, value)
+                .then((res) => {
+                    setLoader(false)
+                    dispatch({ type: 'ANALYTICS', payload: res })
+                    console.log(res, 'in gender screens')
+                })
+                .catch(err => {
+                    console.log(err, 'err')
+                    setLoader(false)
+                })
         }
     }
 
@@ -133,7 +133,7 @@ const Screen1 = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ marginTop: 20, alignItems: 'center' }}>
-                    <Button onClick={()=>submit()} disable={!toggle && disable} customStyle={{ marginTop: 10 }} text={loader? <ActivityIndicator size="small" color="white" /> :"Done"} />
+                    <Button onClick={() => submit()} disable={!toggle && disable} customStyle={{ marginTop: 10 }} text={loader ? <ActivityIndicator size="small" color="white" /> : "Done"} />
                 </View>
             </View>
         </>
