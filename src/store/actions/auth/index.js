@@ -293,34 +293,36 @@ export const getAnalytics = (age, gender) => {
     console.log('rating started')
     console.log(age, 'ageage')
     console.log(gender, 'gender gender')
-
-
     return dispatch => {
         console.log('React nasjk')
         return new Promise(async (resolve, reject) => {
-            console.log('React nasjk 301')
-
             try {
+                let docData = []
                 let obj
                 let response
                 const data = firestore().collection("Selfies").where("user_id", "==", auth().currentUser.uid).orderBy("created_at", "desc").limit(1)
-                console.log('React nasjk 301', )
-
                 data.get()
                     .then((querySnapshot) => {
                         querySnapshot.forEach(async (doc) => {
-
                             response = doc?.data()
                             console.log(response, "doc?.data().selfie_id", gender)
-                            let result = firestore().collection("Rating").where("selfie_id", "==", doc?.data().selfie_id)
+                            console.log("doc?.data().selfie_id",doc?.data().selfie_id)
+                            let result = firestore().collection("Rating")
                             age && (result = result.where("age", "<=", age))
                             gender && (result = result.where('gender', '==', gender));
                             const querySnapshot = await result.get()
+                            if(querySnapshot?.docs?.length > 0){
                             querySnapshot.docs.forEach((doc) => {
-                                console.log(response, 'response')
-                                obj = { ...doc?.data(), ...response }
-                                resolve(obj)
+                                docData.push(doc?.data())
+                                   console.log(docData.sort(function(a,b){ return(b.age - a.age)}))
+                                    obj = {docData, ...response }
+                                    resolve(obj)
                             })
+                        }
+                        else{
+                            console.log("no data is avaliable")
+                            reject("no data is avaliable")
+                        }
                         });
                     })
                     .catch((error) => {

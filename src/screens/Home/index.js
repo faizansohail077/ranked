@@ -114,20 +114,19 @@ const Home = () => {
 
     const getTimelineData= async()=>{
         let userId = auth().currentUser.uid
-        let selfieArray=[]
-          const userDocument =await firestore().collection('Users').doc(userId).get();
-          console.log('userDocument.data().tim e_line', userDocument.data().time_line)
-          if( userDocument?.data()?.time_line?.length ==0 ){
-              console.log("timeline mistake")
-          }else{
-              const selfieDocument = await firestore().collection('Selfies').where("selfie_id","in",userDocument.data().time_line).get()
-              selfieDocument.docs.forEach(arr=>{
-                  selfieArray.push({... arr.data()})
-                  if(selfieDocument.size == selfieArray.length ){
-                      setTimelineData([...selfieArray])
-                    }
+        const userDocument =await firestore().collection('Users').doc(userId).get();
+        if( userDocument?.data()?.time_line?.length == 0 ){
+            console.log("timeline mistake")
+        }else{
+            let selfieArray=[]
+            const selfieDocument = await firestore().collection('Selfies').get() 
+            selfieDocument.docs.forEach(arr=>{
+                if(userDocument.data().time_line.indexOf(arr?.data()?.selfie_id) !== -1){
+                    selfieArray.push({... arr.data()})
                 }
-                )
+            }
+            )
+            setTimelineData(selfieArray)
             }
     }
 

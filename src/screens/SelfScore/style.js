@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
         width: '100%'
     },
     selfScore__bottomImageView: {
-        height: '35%',
+        height: '40%',
         width: '100%',
         position: 'relative'
     },

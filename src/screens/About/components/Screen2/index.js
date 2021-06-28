@@ -40,10 +40,12 @@ const Screen2 = () => {
         setLoader(true)
         setDisable(true)
         action.getAnalytics(value,null)
-        .then(()=>{
+        .then((res)=>{
+            console.log("🚀 ~ age added", res)
             console.log("age added")
+            dispatch({type:'ANALYTICS',payload:res})
             setLoader(false)
-           setDisable(false)
+            setDisable(false)
 
         }).catch((err)=>{
             console.log(err,'err')

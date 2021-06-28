@@ -18,6 +18,7 @@ const Screen1 = () => {
     const [toggle, setToggle] = useState(true)
     const [disable, setDisable] = useState(true)
     const [activeMale, setActiveMale] = useState(false)
+    console.log("🚀 ~ file: index.js ~ line 21 ~ Screen1 ~ activeMale", activeMale)
     const [activeFemale, setActiveFemale] = useState(false)
     const [activeOther, setActiveOther] = useState(false)
     const [activeAll, setActiveAll] = useState(false)
@@ -25,23 +26,26 @@ const Screen1 = () => {
     const [loader,setLoader]=useState(false)
     const dispatch = useDispatch()
     const action = bindActionCreators(actions,dispatch)
-
+    
     useEffect(()=>{
-        if(!activeMale){
+        if(activeMale){
             setValue("male")
         }
-       else if(!activeFemale){
+        else if(activeFemale){
             setValue("female")
         }
-    else if(!activeOther){
-        setValue("other")
-    }
+        else if(activeOther){
+            setValue("other")
+        }
         else{
             setValue(null)
         }
         console.log(value,'value')
     },[activeMale,activeFemale,activeOther])
 
+
+    
+    console.log("🚀 ~ file: index.js ~ line 25 ~ Screen1 ~ value", value)
     const selectAll = () => {
         setActiveAll(!activeAll)
         if (!activeAll) {
@@ -62,6 +66,7 @@ const Screen1 = () => {
             action.getAnalytics(null,value)
             .then((res)=>{
                 setLoader(false)
+                dispatch({type:'ANALYTICS',payload:res})
                 console.log(res,'in gender screens')
             })
             .catch(err=>{

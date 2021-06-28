@@ -9,7 +9,7 @@ import other from '../../assets/other2'
 import multiple from '../../assets/multiple'
 import calender from '../../assets/starCalender'
 import { useNavigation } from '@react-navigation/native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../../store/actions'
 import About from '../About'
@@ -19,6 +19,8 @@ const Analytics = () => {
     const [openModal,setOpenModal]=useState(false)
     const [selfScore,setSelfScore]=useState("")
     const navigation = useNavigation()
+    const {analytics} = useSelector(state=>state?.authReducer)
+    console.log("🚀 ~ file: index.js ~ line 23 ~ Analytics ~ data", analytics) 
     const dispatch = useDispatch()
     const action = bindActionCreators(actions,dispatch)
     console.log(openModal,openModal)
@@ -27,11 +29,9 @@ const Analytics = () => {
         let resArray =[]
            action.getAnalytics().then((res)=>{
             setSelfScore(res?.self_score)
-            //    console.log(res,'resres') 
             resArray.push(res)
             let count = 0
             resArray.map(item=>{ 
-                // console.log(item,'itemitem')
                 count += item?.rating
             })
             let avg = count / resArray.length +1
@@ -39,11 +39,14 @@ const Analytics = () => {
         })
 
     },[])
-    console.log(rating,'ratings')
 
     return (
         <View style={styles.analytics__container}>
             <View style={styles.analytics__top}>
+                {analytics?.docData?.map((item)=>{
+                console.log("🚀 ~ file: index.js ~ line 47 ~ {analytics?.docData?.map ~ item", item?.age )
+                    
+                })}
                 <View>
                 </View>
                 <View>
@@ -56,7 +59,7 @@ const Analytics = () => {
             <View style={styles.analytics__view}>
                 <View style={styles.analytics__viewMain}>
                     <View style={styles.analytics__viewInside}>
-                        <Typo style={styles.analytics__viewText} children={rating && rating ? rating:0} />
+                        <Typo style={styles.analytics__viewText} children={analytics?.rating && analytics?.rating ? analytics?.rating :  rating && rating ? rating:0} />
                         <View style={styles.analytics__subTextView}>
                             <Typo style={styles.analytics__subText} children={'/'} />
                             <Typo style={styles.analytics__subText} children={'10'} /> 
@@ -90,11 +93,11 @@ const Analytics = () => {
                     <View style={styles.analytics__bottomViewBottom}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <SvgXml xml={other} />
-                            <Typo children="Male" style={{ fontSize: 12 }} />
+                            <Typo children={analytics &&  analytics?.gender ? `${analytics?.gender}` : "default"} style={{ fontSize: 16 }} />
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <SvgXml xml={calender} />
-                            <Typo children="< 34" style={{ paddingLeft: 2, fontSize: 12 }} />
+                            <Typo children={analytics &&  analytics?.age ? `<${analytics?.age}` : "default"} style={{ paddingLeft: 2, fontSize: 16 }} />
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <SvgXml xml={multiple} />
