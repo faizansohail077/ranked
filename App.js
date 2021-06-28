@@ -25,13 +25,8 @@ import About from './src/screens/About';
 
 const Stack = createStackNavigator();
 
-const App = ({ route }) => {
-  console.log("TCL ~ file: App.js ~ line 29 ~ App ~ route", route)
-  if (route?.state.index == 2) {
-    navigation.setOptions({
-      tabBarVisibal: false
-    })
-  }
+const App = () => {
+ 
   return (
     <Provider store={store}>
       <NavigationContainer >
@@ -53,7 +48,6 @@ const App = ({ route }) => {
           <Stack.Screen name="help" component={Help} />
           <Stack.Screen name="setting" component={Settings} />
           <Stack.Screen name="rate" component={RateApp} />
-          <Stack.Screen name="about" component={About} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

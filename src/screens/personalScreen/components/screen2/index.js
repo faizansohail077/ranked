@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, View, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { styles } from './style'
 import male from '../../../../assets/male.png'
@@ -12,7 +12,8 @@ import { colors } from '../../../../style/color'
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../../../../store/actions'
-
+import GetLocation from 'react-native-get-location'
+import { request, PERMISSIONS } from 'react-native-permissions';
 
 const Screen2 = ({ onPress }) => {
     const [open, setOpen] = useState(false);
@@ -20,6 +21,10 @@ const Screen2 = ({ onPress }) => {
     const [gender, setGender] = useState("others")
     const [loader, setLoader] = useState(false)
     const [disable, setDisable] = useState(false)
+    const [long, setLong] = useState("")
+    console.log("TCL ~ file: index.js ~ line 25 ~ Screen2 ~ long", long)
+    const [lat, setLat] = useState("")
+    console.log("TCL ~ file: index.js ~ line 27 ~ Screen2 ~ lat", lat)
     const [items, setItems] = useState([
         { label: 'Androgynous', value: 'androgynous' },
         { label: 'Androgyne', value: 'androgyne' }
@@ -27,10 +32,35 @@ const Screen2 = ({ onPress }) => {
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
 
+    useEffect(() => {
+        request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then((result) => {
+            console.log("TCL ~ file: index.js ~ line 55 ~ request ~ result", result)
+            GetLocation.getCurrentPosition({
+                enableHighAccuracy: true,
+                timeout: 15000,
+            })
+                .then(location => {
+                    console.log("TCL ~ file : index.js ~ line 39 ~ useEffect ~ location", location)
+                    setLong(location?.longitude)
+                    setLat(location?.latitude)
+                })
+                .catch(error => {
+                    const { code, message } = error;
+                    console.warn(code, message);
+                })
+        });
+    }, [])
+
+
+
+
+
+
+
     const submit = () => {
         setLoader(true)
         setDisable(true)
-        action.genderData(gender)
+        action.genderData(gender, long, lat)
             .then(() => {
                 console.log('gender updated')
                 onPress()

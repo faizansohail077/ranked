@@ -15,7 +15,6 @@ import { ActivityIndicator } from 'react-native-paper'
 
 const ProfileHistory = () => {
     const [response, setResponse] = useState("")
-    console.log("TCL ~ file: index.js ~ line 18 ~ ProfileHistory ~ response", response)
     const [loader, setLoader] = useState(true)
     const navigation = useNavigation()
     const dispatch = useDispatch()
@@ -60,7 +59,6 @@ const ProfileHistory = () => {
             </View>
             {loader ? <ActivityIndicator size="large" color="white" /> :
                 <FlatList numColumns={2} keyExtractor={(item) => item.id} data={response} renderItem={({ item }) => {
-                    moment().format("MMM Do YY")
                     return (
                         <View style={styles.profile__ImageContainer}>
                             <Image style={styles.profile__image} resizeMode={"cover"} source={{ uri: item?.selfie_url }} />
@@ -69,7 +67,7 @@ const ProfileHistory = () => {
                             </View>
                             <View style={styles.profile__bottomConatiner}>
                                 <View style={styles.profile__bottomLeft}>
-                                    <Typo style={styles.profilt__bottomText} children={item?.self_score} />
+                                    <Typo style={styles.profilt__bottomText} children={'10'} />
                                 </View>
                                 <View style={styles.profile__bottomRight}>
                                     <Typo style={styles.profilt__bottomText} children={item?.self_score} />

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
-import { Text, View, Image, TouchableOpacity } from 'react-native'
+import { Text, View, Image, TouchableOpacity,Modal } from 'react-native'
 import { SvgXml } from 'react-native-svg'
 import arrow from '../../assets/arrow'
 import checkbox from '../../assets/Checkbox'
@@ -39,8 +39,7 @@ const screens = [
     }
 ]
 
-const About = ({ route }) => {
-    console.log("TCL ~ file: index.js ~ line 43 ~ About ~ route", route?.name)
+const About = ({openModal,modalToggle}) => {
     const navigation = useNavigation()
     const [activescreen, setActiveScreen] = useState("screen1")
     const [activeTrue, setActiveTrue] = useState('screen1')
@@ -57,8 +56,12 @@ const About = ({ route }) => {
     }
 
     return (
+        <Modal animationType="slide"
+        transparent={true}
+        visible={openModal}
+       >
         <View style={styles.about__container}>
-            <TouchableOpacity activeOpacity={0.9} onPress={() => navigation.goBack()}>
+            <TouchableOpacity activeOpacity={0.9} onPress={() =>modalToggle()}>
                 <View style={{ padding: 20, width: '10%' }}>
                     <SvgXml xml={arrow} />
                 </View>
@@ -90,6 +93,7 @@ const About = ({ route }) => {
                 }
             </View>
         </View>
+        </Modal>
     )
 }
 

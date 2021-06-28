@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, View, Image, TouchableOpacity } from 'react-native'
 import { Typo, Button } from '../../../../components'
 import LinearGradient from 'react-native-linear-gradient';
@@ -9,15 +9,43 @@ import othersvg from '../../../../assets/othersvg'
 import maleSvg from '../../../../assets/maleSvg'
 import femalesvg from '../../../../assets/femalesvg'
 import allsvg from '../../../../assets/allsvg'
+import * as actions from '../../../../store/actions'
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActivityIndicator } from 'react-native-paper';
 
 const Screen1 = () => {
     const [toggle, setToggle] = useState(true)
     const [disable, setDisable] = useState(true)
     const [activeMale, setActiveMale] = useState(false)
+    console.log("🚀 ~ file: index.js ~ line 21 ~ Screen1 ~ activeMale", activeMale)
     const [activeFemale, setActiveFemale] = useState(false)
     const [activeOther, setActiveOther] = useState(false)
     const [activeAll, setActiveAll] = useState(false)
+    const [value, setValue] = useState("")
+    const [loader, setLoader] = useState(false)
+    const dispatch = useDispatch()
+    const action = bindActionCreators(actions, dispatch)
 
+    useEffect(() => {
+        if (activeMale) {
+            setValue("male")
+        }
+        else if (activeFemale) {
+            setValue("female")
+        }
+        else if (activeOther) {
+            setValue("others")
+        }
+        else {
+            setValue(null)
+        }
+        console.log(value, 'value')
+    }, [activeMale, activeFemale, activeOther])
+
+
+
+    console.log("🚀 ~ file: index.js ~ line 25 ~ Screen1 ~ value", value)
     const selectAll = () => {
         setActiveAll(!activeAll)
         if (!activeAll) {
@@ -29,6 +57,22 @@ const Screen1 = () => {
             setActiveMale(false)
             setActiveFemale(false)
             setActiveOther(false)
+        }
+    }
+
+    const submit = () => {
+        if (toggle && value !== null) {
+            setLoader(true)
+            action.getAnalytics(null, value)
+                .then((res) => {
+                    setLoader(false)
+                    dispatch({ type: 'ANALYTICS', payload: res })
+                    console.log(res, 'in gender screens')
+                })
+                .catch(err => {
+                    console.log(err, 'err')
+                    setLoader(false)
+                })
         }
     }
 
@@ -89,7 +133,7 @@ const Screen1 = () => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ marginTop: 20, alignItems: 'center' }}>
-                    <Button disable={!toggle && disable} customStyle={{ marginTop: 10 }} text="Done" />
+                    <Button onClick={() => submit()} disable={!toggle && disable} customStyle={{ marginTop: 10 }} text={loader ? <ActivityIndicator size="small" color="white" /> : "Done"} />
                 </View>
             </View>
         </>
