@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     edit__header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems:'center',
         marginVertical: 10
     }
 })

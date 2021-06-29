@@ -29,8 +29,9 @@ export const styles = StyleSheet.create({
     },
     change__profileBottomImage: {
         position: 'absolute',
-        bottom: 85,
-        left: 160,
+        bottom: '13%',
+        left: '40%',
+        right:'41%',
         zIndex: 1,
         backgroundColor: colors.red,
         height: 80,

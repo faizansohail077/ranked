@@ -24,10 +24,11 @@ const ProfileHistory = () => {
         console.log("working effet")
         action.getProfilePhoto()
             .then((res) => {
-                console.log("TCL ~ file: index.js ~ line 32 ~ .then ~ res", res.length)
+                console.log("🚀 ~ file: index.js ~ line 27 ~ .then ~ res", res) 
+                console.log("TCL ~ file: index.js ~ line 32 ~ .then ~ res", res.length) 
+                console.log("TCL ~ file: index.js ~ line 31 ~ action.getProfilePhoto ~ res", res.map((i)=>console.log(i,'iasdasd')))
                 if (res.length && res.length > 0) {
                     setLoader(false)
-                    console.log("TCL ~ file: index.js ~ line 31 ~ action.getProfilePhoto ~ res", res)
                     setResponse(res)
                 }
                 else {
@@ -53,12 +54,12 @@ const ProfileHistory = () => {
                     <View>
                         <Typo children={"Profile"} />
                     </View>
-                    <View>
+                    <View style={{width:13.5,padding:15}}>
                     </View>
                 </View>
             </View>
             {loader ? <ActivityIndicator size="large" color="white" /> :
-                <FlatList numColumns={2} keyExtractor={(item) => item.id} data={response} renderItem={({ item }) => {
+                <FlatList numColumns={2} contentContainerStyle={{alignItems:'center'}} keyExtractor={(item) => item.id} data={response} renderItem={({ item }) => {
                     return (
                         <View style={styles.profile__ImageContainer}>
                             <Image style={styles.profile__image} resizeMode={"cover"} source={{ uri: item?.selfie_url }} />
@@ -67,18 +68,18 @@ const ProfileHistory = () => {
                             </View>
                             <View style={styles.profile__bottomConatiner}>
                                 <View style={styles.profile__bottomLeft}>
-                                    <Typo style={styles.profilt__bottomText} children={'10'} />
+                                    <Typo style={styles.profilt__bottomText} children={item?.average ? item?.average : 'NA' } />
                                 </View>
                                 <View style={styles.profile__bottomRight}>
                                     <Typo style={styles.profilt__bottomText} children={item?.self_score} />
                                 </View>
                             </View>
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', width: '90%', position: 'absolute', bottom: 20, left: 5 }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', width: '80%', position: 'absolute', bottom: '5%', left: '3%' }}>
                                 <View style={{ flexGrow: 1 }}>
-                                    <Typo style={{ textAlign: 'center', fontSize: 10 }} children={'Overall Score'} />
+                                    <Typo style={{ textAlign: 'center', fontSize: 8 }} children={'Overall Score'} />
                                 </View>
                                 <View style={{ flexGrow: 0 }}>
-                                    <Typo style={{ textAlign: 'center', fontSize: 10 }} children={'Self Score'} />
+                                    <Typo style={{ textAlign: 'center', fontSize: 8 }} children={'Self Score'} />
                                 </View>
                             </View>
                         </View>

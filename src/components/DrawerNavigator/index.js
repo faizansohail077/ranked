@@ -24,7 +24,7 @@ const DrawerNav = ({ route }) => {
         <Drawer.Navigator drawerContent={() => <CustomDrawer />} drawerStyle={{
             width: '50%',
             borderTopRightRadius: 50,
-            marginVertical: 20, borderBottomRightRadius: 50,
+            borderBottomRightRadius: 50,
             backgroundColor: '#011629'
         }}>
             <Drawer.Screen name="Ranked" component={Home} />

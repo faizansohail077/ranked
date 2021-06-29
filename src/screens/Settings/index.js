@@ -27,7 +27,6 @@ const Settings = () => {
                 </View>
                 <Help where={"accounts"} subText={"Update your password"} text={"Accounts"} />
                 <Help where={"selfscore"} subText={"Update Your Profile Self Score"} text={"Self Score"} />
-
             </View>
         </View>
     )

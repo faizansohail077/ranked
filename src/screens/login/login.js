@@ -52,7 +52,7 @@ const Login = () => {
             }
             ).catch(err => {
                 setLoader(false)
-                console.log("TCL ~ file: login.js ~ line 46 ~ action.logIn ~ err", err)
+                alert(err)
                 setDisable(false)
             })
         }

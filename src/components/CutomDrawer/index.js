@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View,ScrollView } from 'react-native'
 import { SvgXml } from 'react-native-svg'
 import { Typo } from '..'
 import { styles } from './style'
@@ -11,7 +11,7 @@ import help from '../../assets/help'
 import setting from '../../assets/setting'
 import rate from '../../assets/rate'
 import * as actions from '../../store/actions'
-import { useDispatch } from 'react-redux'
+import { useDispatch ,useSelector} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { CommonActions, useNavigation } from '@react-navigation/native'
 
@@ -19,7 +19,9 @@ import { CommonActions, useNavigation } from '@react-navigation/native'
 const CustomDrawer = ({ route }) => {
     const navigation = useNavigation()
     const dispatch = useDispatch()
+    const { user } = useSelector(state => state.authReducer)
     const action = bindActionCreators(actions, dispatch)
+    console.log("🚀 ~ file: index.js ~ line 26 ~ CustomDrawer ~ user", user)
 
     const logout = () => {
         action.logOut().then(() => {
@@ -36,12 +38,15 @@ const CustomDrawer = ({ route }) => {
 
 
     return (
-        <View style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={{flex:1}}>
+        <View style={{ flex: 1,borderTopRightRadius: 50,
+        borderBottomRightRadius: 50, }}>
             <View style={styles.drawer__top}>
                 <View style={styles.drawer__topImage}>
+                    <Image style={{height:'100%',width:'100%',borderRadius: 20 }} source={{uri:user && user?.profile_picture}} />
                 </View>
                 <View>
-                    <Typo children="John Alex" style={styles.drawer__topText} />
+                    <Typo children={user && user?.fullname} style={styles.drawer__topText} />
                 </View>
             </View>
             <View style={styles.drawer__bottom}>
@@ -109,10 +114,11 @@ const CustomDrawer = ({ route }) => {
                             <Typo style={styles.drawer__bottomViewText} children={"Rate This App"} />
                         </View>
                     </TouchableOpacity>
+                </View>
+                <View style={{flex:1}}>
 
                 </View>
-
-                <View style={{ position: 'absolute', bottom: 10 }}>
+                <View>
                     <TouchableOpacity>
                         <View style={{ marginVertical: 10 }}>
                             <Typo style={styles.drawer__bottomViewText} children={"About Us"} />
@@ -126,6 +132,7 @@ const CustomDrawer = ({ route }) => {
                 </View>
             </View>
         </View>
+        </ScrollView>
     )
 }
 

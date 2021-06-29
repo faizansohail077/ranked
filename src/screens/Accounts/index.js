@@ -38,14 +38,20 @@ const Accounts = () => {
         else {
             setDisable(true)
             setLoader(true)
-            user.updatePassword(password)
+            user?.updatePassword(password)
                 .then(() => {
                     alert("Password Updated")
+                    navigation.navigate("Ranked")
                     setDisable(false)
                     setLoader(false)
                 })
                 .catch(err => {
-                    console.log("TCL ~ file: index.js ~ line 39 ~ submit ~ err", err)
+                    console.log("TCL ~ file: index.js ~ line 39 ~ submit ~ err", err?.message)
+                    if(err.code === 'auth/requires-recent-login'){
+                        console.log("🚀 ~ file: index.js ~ line 51 ~ submit ~ err.code", err.code)
+                        setDisable(false)
+                        setLoader(false)
+                    }
                     setDisable(false)
                     setLoader(false)
                 })
@@ -55,7 +61,7 @@ const Accounts = () => {
     return (
         <View style={styles.account__container}>
             <ScrollView style={{ flex: 1 }}>
-                {error && alert("something is not right")}
+                {error && alert("Password does not match")}
                 <View style={{ marginBottom: 15 }}>
                     <View style={styles.account__header}>
                         <TouchableOpacity onPress={() => navigation.goBack()}>

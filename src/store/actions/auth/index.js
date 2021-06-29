@@ -195,6 +195,8 @@ export const getUser = () => {
                         if (documentSnapshot.exists) {
                             console.log('User data: ', documentSnapshot.data());
                             resolve(documentSnapshot.data())
+                            dispatch({ type: 'USER', payload: documentSnapshot.data() })
+
                         }
                     });
             } catch (e) {
@@ -209,17 +211,43 @@ export const getProfilePhoto = () => {
         return new Promise(async (resolve, reject) => {
             try {
                 let profileData = []
+                let selfieId = []
+                let obj
                 const data = await firestore().collection("Selfies").where("user_id", "==", auth().currentUser.uid)
                 data.get()
-                    .then((querySnapshot) => {
-                        querySnapshot.forEach((doc) => {
-                            profileData.push(doc.data())
+                    .then((querySnapshotSelfies) => {
+                        querySnapshotSelfies.forEach(async (doc) => {
+                            const data2 = await firestore().collection("Rating").where("selfie_id", "==", doc?.id)
+                            data2.get().then((querySnapshot) => {
+                                console.log("🚀 ~ file: index.js ~ line 222 ~ data2.get ~ querySnapshot", querySnapshot.size)
+                                if (querySnapshot.size !== 0) {
+                                    let overallScore = 0;
+                                    let temArr = []
+                                    querySnapshot.forEach((docs) => {
+                                        // avaerage overall score
+                                        let rating = docs.data().rating;
+                                        overallScore += rating
+                                        temArr.push('temp')
+                                        if (querySnapshot.size == temArr.length) {
+                                            profileData.push({ ...doc.data(), ...docs.data(), average: overallScore / querySnapshot.size })
+                                        }
+                                    })
+                                } else {
+                                    profileData.push({ ...doc.data(), rating: null })
+                                }
+                                if (profileData?.length === querySnapshotSelfies.size) {
+                                    console.log(profileData, 'profileDataprofileDataprofileData')
+                                     resolve(profileData)
+                                }
+                            })
                         });
-                        resolve(profileData)
                     })
                     .catch((error) => {
                         console.log("Error getting documents: ", error);
+                        reject(error, "error")
+
                     });
+
             } catch (e) {
                 console.log("TCL ~ file: index.js ~ line 160 ~ returnnewPromise ~ e", e)
                 reject(e, "error")
@@ -232,7 +260,7 @@ export const getProfilePhoto = () => {
 
 export const postSelefieId = async (query) => {
     console.log("🚀 ~ file: index.js ~ line 234 ~ postSelefieId ~ query", query)
-    console.log(auth().currentUser,'auth().currentUserauth().currentUser')
+    console.log(auth().currentUser, 'auth().currentUserauth().currentUser')
     console.log("🚀 ~ file: index.js ~ line 251 ~ .httpsCallable ~ auth().currentUser.uid", auth().currentUser.uid)
     const { data } = await functions()
         .httpsCallable(`helloWorld?selfie_id=${query}&currentUser_id=${auth().currentUser.uid}`)()

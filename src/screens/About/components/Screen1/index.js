@@ -15,7 +15,7 @@ import { bindActionCreators } from 'redux';
 import { ActivityIndicator } from 'react-native-paper';
 
 const Screen1 = () => {
-    const [toggle, setToggle] = useState(true)
+    const [toggle, setToggle] = useState(false)
     const [disable, setDisable] = useState(true)
     const [activeMale, setActiveMale] = useState(false)
     console.log("🚀 ~ file: index.js ~ line 21 ~ Screen1 ~ activeMale", activeMale)
