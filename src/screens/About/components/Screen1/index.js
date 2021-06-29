@@ -65,6 +65,7 @@ const Screen1 = () => {
             setLoader(true)
             action.getAnalytics(null, value)
                 .then((res) => {
+                    console.log("🚀 ~ file: index.js ~ Screen1~ .then ~ res", res)
                     setLoader(false)
                     dispatch({ type: 'ANALYTICS', payload: res })
                     console.log(res, 'in gender screens')
