@@ -6,7 +6,7 @@ import functions from '@react-native-firebase/functions';
 
 
 if (__DEV__) {
-    functions().useFunctionsEmulator('http://localhost:5000');
+    functions().useFunctionsEmulator('https://us-central1-ranked-89d7d.cloudfunctions.net/');
 }
 
 
@@ -171,7 +171,9 @@ export const createSelfie = (url, self_score) => {
                 selfie_id: docId,
                 created_at: firestore.Timestamp.fromDate(new Date())
             })
+            console.log('before postSelefieId')
             postSelefieId(docId)
+            console.log('after postSelefieId')
             let update = await firestore().collection('Users').doc(auth().currentUser.uid).update({
                 selfies: firestore.FieldValue.arrayUnion(docId),
             });
@@ -229,10 +231,20 @@ export const getProfilePhoto = () => {
 }
 
 
+functions()
+    .httpsCallable(`helloWorld?selfie_id=${'query'}&currentUser_id=${auth().currentUser.uid}`)()
+    .then(response => {
+        console.log("working1"),
+            console.log("🚀 ~ file: index.js ~ line 227 ~ postSelefieId ~ response", response)
+    }).catch((err) => {
+        console.log("working2"),
+            console.log("ERRROR ", err)
+    })
+
 
 export const postSelefieId = async (query) => {
     console.log("🚀 ~ file: index.js ~ line 234 ~ postSelefieId ~ query", query)
-    console.log(auth().currentUser,'auth().currentUserauth().currentUser')
+    console.log(auth().currentUser, 'auth().currentUserauth().currentUser')
     console.log("🚀 ~ file: index.js ~ line 251 ~ .httpsCallable ~ auth().currentUser.uid", auth().currentUser.uid)
     const { data } = await functions()
         .httpsCallable(`helloWorld?selfie_id=${query}&currentUser_id=${auth().currentUser.uid}`)()

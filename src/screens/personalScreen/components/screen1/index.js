@@ -82,7 +82,7 @@ const Screen1 = ({ onPress }) => {
         else {
             setDisable(true)
             setLoader(true)
-            action.profileData(username,new Date(showdate), country, city, zipCode)
+            action.profileData(username, new Date(showdate), country, city, zipCode)
                 .then((res) => {
                     setDisable(false)
                     setLoader(false)
@@ -97,6 +97,7 @@ const Screen1 = ({ onPress }) => {
     }
 
 
+    { error && alert("Check Your input fileds") }
     return (
         <View style={styles.screen1__container}>
             <ScrollView style={{ flex: 1 }}>

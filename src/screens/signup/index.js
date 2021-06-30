@@ -77,7 +77,7 @@ const SignUp = () => {
     return (
         <View style={styles.signpup__container}>
             <ScrollView style={{ flex: 1 }}>
-                {error && alert('something went wrong')}
+                {error && alert('Check Your input field')}
                 <View style={styles.signpup__top}>
                     <View style={{ flex: 1 }}>
                         <Image style={styles.signpup__image} source={guy} />

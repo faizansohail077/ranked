@@ -62,7 +62,7 @@ const Login = () => {
     return (
         <View style={styles.login__container}>
             <ScrollView style={{ flex: 1 }}>
-                {error && alert("something went wrong")}
+                {error && alert("Check your field ")}
                 <View style={styles.login__top}>
                     <View style={{ position: 'relative', flex: 1 }}>
                         <Image style={styles.login__image} resizeMode={"cover"} source={guy} />

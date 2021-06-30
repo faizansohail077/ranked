@@ -17,6 +17,7 @@ import About from '../About'
 const Analytics = () => {
     const navigation = useNavigation()
     const [rating, setRating] = useState("")
+    console.log("TCL ~ file: index.js ~ line 20 ~ Analytics ~ rating", rating)
     const [openModal, setOpenModal] = useState(false)
     const [selfScore, setSelfScore] = useState("")
     const { analytics } = useSelector(state => state?.authReducer)
@@ -33,6 +34,7 @@ const Analytics = () => {
     useEffect(() => {
         action.getAnalytics().then((res) => {
             console.log("TCL ~ file: index.js ~ line 33 ~ action.getAnalytics ~ res", res)
+            dispatch({ type: 'ANALYTICS', payload: res })
             setSelfScore(res?.self_score)
         })
     }, [])
@@ -74,7 +76,7 @@ const Analytics = () => {
             <View style={styles.analytics__view}>
                 <View style={styles.analytics__viewMain}>
                     <View style={styles.analytics__viewInside}>
-                        <Typo style={styles.analytics__viewText} children={analytics?.rating && analytics?.rating ? analytics?.rating : rating && rating ? rating : 0} />
+                        <Typo style={styles.analytics__viewText} children={analytics?.rating ? analytics?.rating : rating && rating ? rating : 0} />
                         <View style={styles.analytics__subTextView}>
                             <Typo style={styles.analytics__subText} children={'/'} />
                             <Typo style={styles.analytics__subText} children={'10'} />

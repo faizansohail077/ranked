@@ -22,9 +22,9 @@ export const styles = StyleSheet.create({
     analytics__viewMain: {
         borderWidth: 6,
         borderColor: colors.white,
-        backgroundColor:'#E8DEDE',
+        backgroundColor: '#E8DEDE',
         flex: 1,
-        height:250,
+        height: 250,
         width: 250,
         borderRadius: 900,
         justifyContent: 'center',
@@ -44,6 +44,8 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         left: 80,
         flexDirection: 'row',
+        fontFamily: "unicodeimpact",
+
         bottom: 25
     },
     analytics__subText: {

@@ -9,6 +9,7 @@ const customStyles = {
     currentStepIndicatorSize: 80,
     separatorStrokeWidth: 10,
     currentStepStrokeWidth: 1,
+    fontFamily: "unicodeimpact",
     stepStrokeCurrentColor: 'white',
     stepStrokeWidth: 3,
     stepStrokeFinishedColor: 'white',
