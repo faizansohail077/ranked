@@ -12,11 +12,11 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginVertical: 20,
+        marginVertical: 10,
         marginHorizontal: 20
     },
     analytics__view: {
-        height: height / 2.9,
+        height: height / 3,
         alignItems: 'center'
     },
     analytics__viewMain: {
@@ -24,9 +24,8 @@ export const styles = StyleSheet.create({
         borderColor: colors.white,
         backgroundColor: '#E8DEDE',
         flex: 1,
-        height: 250,
-        width: 250,
-        borderRadius: 900,
+        width: width / 1.7,
+        borderRadius: 200,
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -38,11 +37,11 @@ export const styles = StyleSheet.create({
     analytics__viewText: {
         color: colors.analyticsBg,
         fontFamily: "unicodeimpact",
-        fontSize: 150
+        fontSize: 130
     },
     analytics__subTextView: {
         position: 'absolute',
-        left: 80,
+        left: '30%',
         flexDirection: 'row',
         fontFamily: "unicodeimpact",
 
@@ -52,7 +51,6 @@ export const styles = StyleSheet.create({
         color: colors.analyticsBg,
         fontSize: 35,
         fontFamily: "unicodeimpact",
-        fontWeight: 'bold'
     },
     analytics__progrssView: {
         flexDirection: 'row',

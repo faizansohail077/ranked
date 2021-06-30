@@ -25,6 +25,7 @@ const customStyles = {
     stepIndicatorLabelFinishedColor: 'blue',
     stepIndicatorLabelUnFinishedColor: 'gray',
     labelColor: 'red',
+    labelFontFamily:'unicodeimpact',
     labelSize: 13,
     currentStepLabelColor: 'red'
 }

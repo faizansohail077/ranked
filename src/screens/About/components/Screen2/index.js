@@ -15,9 +15,9 @@ import { useEffect } from 'react'
 import { ActivityIndicator } from 'react-native-paper'
 
 const Screen2 = () => {
-    const [toggle, setToggle] = useState(true)
+    const [toggle, setToggle] = useState(false)
     const [disable, setDisable] = useState(true)
-    const [value, setValue] = useState(7);
+    const [value, setValue] = useState(18);
     const [loader,setLoader]=useState(false)
     const dispatch = useDispatch()
     const action = bindActionCreators(actions,dispatch)
@@ -25,15 +25,15 @@ const Screen2 = () => {
     console.log(value,'value') 
 
     const addValue = () => {
-        if (value >= 0 && value < 49) {
-            setValue(value + 7)
+        if (value >= 0 && value < 50) {
+            setValue(value + 1)
         }
 
     }
     const removeValue = () => {
         console.log('hello')
-        if (value > 0 && value <= 49) {
-            setValue(value - 7)
+        if (value > 18 && value <= 50) {
+            setValue(value - 1)
         }
     }
     const submit = ()=>{
@@ -120,10 +120,10 @@ const Screen2 = () => {
                     <Slider
                         value={value}
                         trackStyle={{ backgroundColor: 'transparent' }}
-                        minimumValue={0}
-                        step={7}
-                        style={{ marginLeft: 30, position: 'absolute', width: '85%', backgroundColor: 'transparent', bottom: 3 }}
-                        maximumValue={49}
+                        minimumValue={18}
+                        step={1}
+                        style={{ marginLeft: 13, position: 'absolute', width: '87%', backgroundColor: 'transparent', bottom: 3 }}
+                        maximumValue={50}
                         onValueChange={(value) => setValue(value)}
                         thumbStyle={{ justifyContent: 'center', alignItems: 'center', width: 45 }}
                         minimumTrackTintColor="transparent"

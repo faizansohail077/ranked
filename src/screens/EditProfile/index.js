@@ -18,12 +18,14 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../../store/actions'
-
+import moment from 'moment'
 const EditProfile = ({ route }) => {
     const navigation = useNavigation()
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const { user } = useSelector(state => state.authReducer)
-    const [showdate, setShowDate] = useState(user?.dob)
+    const [dob,setDob]=useState(user?.dob.toDate())
+    console.log(user?.dob.toDate(),'sdasdasdasd')
+    const [showdate, setShowDate] = useState(`${moment(dob).format("YYYY/M/DD")}`)
     const [username, setUserName] = useState(user?.fullname)
     const [country, setCountry] = useState(user?.country)
     const [city, setCity] = useState(user?.city)
@@ -82,6 +84,10 @@ const EditProfile = ({ route }) => {
             setLoader(true)
             action.profileData(username,new Date(showdate), country, city, zipCode)
                 .then(() => {
+                    action.getUser().then(()=>{
+                        navigation.navigate("Ranked")
+                    })
+                    
                     setDisable(false)
                     setLoader(false)
                 })
@@ -93,10 +99,9 @@ const EditProfile = ({ route }) => {
         }
     }
 
-
     return (
         <View style={styles.edit__container}>
-            {error && console.log("not working")}
+            {error && console.log("Kindly check input fields")}
             <ScrollView style={{ flex: 1 }}>
                 <View style={{ margin: 15 }}>
                     <View style={styles.edit__header}>
@@ -108,7 +113,7 @@ const EditProfile = ({ route }) => {
                         <View>
                             <Typo children={"Edit Profile"} />
                         </View>
-                        <View>
+                        <View style={{ padding: 10,width:13.5 }}>
                         </View>
                     </View>
                     <View style={{ alignItems: 'center', marginVertical: 20 }}>
@@ -116,7 +121,7 @@ const EditProfile = ({ route }) => {
                     </View>
                     <Input value={username} onChangeText={(e) => setUserName(e)} customContainerStyle={{ marginVertical: 30 }} icon={profile} placeholder={'John Alex'} />
                     <TouchableOpacity activeOpacity={0.9} onPress={() => showDatePicker()}>
-                        <Input editable={false} value={showdate} customContainerStyle={{ marginVertical: 30 }} icon={calender} placeholder={'28-3-1995'} />
+                        <Input editable={false} value={showdate} customContainerStyle={{ marginVertical: 30 }} icon={calender} placeholder={`${moment(dob).format("YYYY/M/DD")}`} />
                     </TouchableOpacity>
                     <Input value={country} onChangeText={(e) => setCountry(e)} customContainerStyle={{ marginVertical: 30 }} icon={path} placeholder={'United States of America'} />
                     <View style={{ flexDirection: 'row' }}>

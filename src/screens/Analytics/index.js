@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { SvgXml } from 'react-native-svg'
 import filter from '../../assets/filterWhite'
 import { Typo } from '../../components'
@@ -20,7 +20,8 @@ const Analytics = () => {
     console.log("TCL ~ file: index.js ~ line 20 ~ Analytics ~ rating", rating)
     const [openModal, setOpenModal] = useState(false)
     const [selfScore, setSelfScore] = useState("")
-    const { analytics } = useSelector(state => state?.authReducer)
+    const [analytics, setAnalytics] = useState("")
+    // const { analytics } = useSelector(state => state?.authReducer)
     const [largest, setLargest] = useState("")
     const [gender, setGender] = useState("")
 
@@ -34,14 +35,16 @@ const Analytics = () => {
     useEffect(() => {
         action.getAnalytics().then((res) => {
             console.log("TCL ~ file: index.js ~ line 33 ~ action.getAnalytics ~ res", res)
-            dispatch({ type: 'ANALYTICS', payload: res })
+            setAnalytics(res)
             setSelfScore(res?.self_score)
         })
-    }, [])
+    }, [openModal])
 
     useEffect(() => {
         console.log('useEffect started')
         if (analytics && analytics.docData && analytics.docData.length) {
+            let analyticsData = analytics?.docData?.map((doc) => doc.rating)
+            console.log("🚀 ~ file: index.js ~ line 44 ~ useEffect ~ analyticsData", analyticsData)
             let age = analytics?.docData?.map((doc) => doc.age)
             let largest = Math.max(...age)
             let self = analytics?.docData?.map((doc) => doc?.rating)
@@ -59,15 +62,15 @@ const Analytics = () => {
         else {
             console.log("analytics not found")
         }
-    }, [openModal, analytics])
+    }, [openModal])
 
     return (
         <View style={styles.analytics__container}>
             <View style={styles.analytics__top}>
-                <View>
+                <View style={{ width: 29.458 }}>
                 </View>
                 <View>
-                    <Typo children={"Analytics"} style={{ fontSize: 38 }} />
+                    <Typo children={"Analytics"} style={{ fontSize: 38, fontFamily: 'ArialRoundedBold' }} />
                 </View>
                 <View>
                     <SvgXml onPress={() => setOpenModal(!openModal)} xml={filter} />
@@ -76,7 +79,7 @@ const Analytics = () => {
             <View style={styles.analytics__view}>
                 <View style={styles.analytics__viewMain}>
                     <View style={styles.analytics__viewInside}>
-                        <Typo style={styles.analytics__viewText} children={analytics?.rating ? analytics?.rating : rating && rating ? rating : 0} />
+                        <Typo style={styles.analytics__viewText} children={analytics?.rating && analytics?.rating ? analytics?.rating : rating && rating ? rating : '0'} />
                         <View style={styles.analytics__subTextView}>
                             <Typo style={styles.analytics__subText} children={'/'} />
                             <Typo style={styles.analytics__subText} children={'10'} />
@@ -84,12 +87,12 @@ const Analytics = () => {
                     </View>
                 </View>
             </View>
-            <View style={{ marginVertical: 20 }}>
-                <Typo style={{ color: 'white', textAlign: 'center' }} children={'Overall score'} />
+            <View style={{ marginTop: 20 }}>
+                <Typo style={{ color: 'white', textAlign: 'center', fontFamily: 'ArialRoundedBold' }} children={'Overall score'} />
             </View>
             <View style={styles.analytics__progrssView}>
                 <View>
-                    <Typo children={"Self Score"} />
+                    <Typo style={{ fontFamily: 'ArialRoundedBold' }} children={"Self Score"} />
                 </View>
 
                 <View style={styles.analytics__porgressTop}>
@@ -99,9 +102,21 @@ const Analytics = () => {
                     </View>
                 </View>
                 <View>
-                    <View>
-                        <Progress.Circle thickness={5} unfilledColor="gray" fill="white" color="yellow" textStyle={{ color: 'black', textAlign: 'center' }} formatText={() => `${selfScore}`} borderColor="gray" showsText={true} progress={selfScore} size={110} />
-                    </View>
+                    <Progress.Circle
+                        thickness={5}
+                        unfilledColor="#B3B3B3"
+                        fill="#011629"
+                        color="yellow"
+                        textStyle={{ fontFamily: 'unicodeimpact', fontSize: 60, color: 'black', textAlign: 'center' }}
+                        formatText={() => (
+                            <View style={{ backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', height: 80, width: 80, borderRadius: 100 }}>
+                                <Text style={{ fontSize: 40, fontFamily: 'unicodeimpact' }}>{selfScore}</Text>
+                            </View>)
+                        }
+                        borderColor="gray" showsText={true} style={{ backgroundColor: '#011629', position: 'relative' }} progress={selfScore / 10} size={110} >
+                        <View>
+                        </View>
+                    </Progress.Circle>
                 </View>
             </View>
 
@@ -118,14 +133,12 @@ const Analytics = () => {
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <SvgXml xml={multiple} />
-                            <Typo children="50 Miles" style={{ paddingLeft: 2, fontSize: 12 }} />
+                            <Typo children="default" style={{ paddingLeft: 2, fontSize: 12 }} />
                         </View>
                     </View>
                 </View>
             </View>
-
             <About openModal={openModal} modalToggle={() => setOpenModal(!openModal)} />
-
         </View>
     )
 }

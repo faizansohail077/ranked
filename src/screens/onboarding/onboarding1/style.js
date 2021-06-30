@@ -18,7 +18,10 @@ export const styles = StyleSheet.create({
     onboarding__para: {
         padding: 10,
         textAlign: 'center',
-        lineHeight: 25
+        paddingHorizontal:30,
+        color:'#020537',
+        fontSize:17,
+        lineHeight: 30
     },
     typo__style: {
         color: 'black',

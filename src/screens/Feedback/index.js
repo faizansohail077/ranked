@@ -5,7 +5,6 @@ import { Button, Typo } from '../../components'
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './style'
 import { SvgXml } from 'react-native-svg'
-
 import arrow from '../../assets/arrow'
 import email from '../../assets/message2'
 import edit from '../../assets/edit2'
@@ -24,7 +23,7 @@ const FeedBack = () => {
                         </View>
                     </TouchableOpacity>
                     <View>
-                        <Typo children={"FeedBack"} />
+                        <Typo children={"Feedback"} />
                     </View>
                     <View>
                     </View>
@@ -50,7 +49,7 @@ const FeedBack = () => {
                     </View>
                 </ScrollView>
             </View>
-            <View>
+            <View style={{alignItems:'center'}}>
                 <SvgXml xml={feedback} />
             </View>
         </View>

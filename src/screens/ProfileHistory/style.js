@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     profile__header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     profile__headerLeft: {
         padding: 15,
@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
         marginHorizontal: 15,
         marginVertical: 10,
         height: height / 2.8,
-        width: 150,
+        width: width / 2.6,
         borderRadius: 30,
         position: 'relative',
     },
@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: colors.white,
         height: height / 13,
-        width: '45%',
+        width: width/8,
         borderRadius: 100,
         marginRight: 5,
         marginTop: 10,
@@ -74,14 +74,14 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: colors.white,
         height: height / 13,
-        width: '45%',
+        width: width/8,
         borderRadius: 100,
         marginTop: 10,
 
     },
     profilt__bottomText: {
         textAlign: 'center',
-        fontSize: 35,
+        fontSize: 30,
         color: colors.black,
         fontFamily: 'unicodeimpact'
     }

@@ -4,7 +4,7 @@ import { TextInput, View, TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { SvgXml } from 'react-native-svg'
 import arrow from '../../assets/arrow'
-import edit from '../../assets/edit'
+import edit from '../../assets/edit2'
 import email from '../../assets/message2'
 
 import { Button, Typo } from '../../components'

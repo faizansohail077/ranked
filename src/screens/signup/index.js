@@ -68,7 +68,7 @@ const SignUp = () => {
             }).catch(e => {
                 setDisable(false)
                 setLoader(false)
-                console.log("TCL ~ file: index.js ~ line 63 ~ action.signUp ~ e", e)
+                alert(e)
             })
         }
     }
@@ -93,7 +93,7 @@ const SignUp = () => {
                             <View style={styles.signpup__button}>
                                 <Button disable={disable} customStyle={{ width: '70%' }} onClick={() => SignUp()} text={<Typo children={loader ? <ActivityIndicator color="white" size="small" /> : "Register"} />} />
                                 <Text style={styles.signpup__Text}>Already have an accoung?</Text>
-                                <Text style={styles.signpup__signInText}>Sign In</Text>
+                                <Text onPress={()=>navigation.goBack()} style={styles.signpup__signInText}>Sign In</Text>
                             </View>
                         </View>
                     </View>

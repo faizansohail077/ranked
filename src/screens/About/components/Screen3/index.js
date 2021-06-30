@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Image,ImageBackground, TouchableOpacity } from 'react-native'
+import { View, Image, TouchableOpacity } from 'react-native'
 import { Typo, Button } from '../../../../components'
 import ToggleSwitch from 'toggle-switch-react-native'
 import { styles } from './style'
@@ -8,9 +8,8 @@ import { SvgXml } from 'react-native-svg'
 import minus2 from '../../../../assets/minus2'
 import plus2 from '../../../../assets/plus2'
 
-
 const Screen3 = () => {
-    const [toggle, setToggle] = useState(true)
+    const [toggle, setToggle] = useState(false)
     const [disable, setDisable] = useState(true)
     const [value,setValue] =useState(10) 
 
@@ -24,7 +23,6 @@ const Screen3 = () => {
             setValue(value +1 )
         }
     }
-
 
     return (
         <>

@@ -42,7 +42,7 @@ const Screen1 = ({ onPress }) => {
     const [error, setError] = useState("")
     const [disable, setDisable] = useState(false)
     const [loader, setLoader] = useState(false)
-
+    const [zipError, setZipError] = useState(false)
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
 
@@ -95,9 +95,7 @@ const Screen1 = ({ onPress }) => {
                 })
         }
     }
-
-
-    { error && alert("Check Your input fileds") }
+    { error && alert('kindly check input fields') }
     return (
         <View style={styles.screen1__container}>
             <ScrollView style={{ flex: 1 }}>
