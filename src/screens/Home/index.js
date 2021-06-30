@@ -44,8 +44,10 @@ const Home = () => {
     const [long, setLong] = useState("")
     const [lat, setLat] = useState("")
     const [noData, setNoData] = useState(false)
-    console.log("🚀 ~ file: index.js ~ line 45 ~ Home ~ noData", noData)
+    // console.log("🚀 ~ file: index.js ~ line 45 ~ Home ~ noData", noData)
     const selfieId = []
+
+    const [filteredData, setFilteredData] = useState(null)
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
@@ -59,7 +61,7 @@ const Home = () => {
             timeout: 15000,
         })
             .then(location => {
-                console.log("TCL ~ file: index.js ~ line 57 ~ useEffect ~ location", location)
+                // console.log("TCL ~ file: index.js ~ line 57 ~ useEffect ~ location", location)
                 setLong(location?.longitude)
                 setLat(location?.latitude)
             })
@@ -125,47 +127,58 @@ const Home = () => {
     }
 
     const getTimelineData = async () => {
-        console.log("getting timeline")
         let userId = auth().currentUser.uid
         const userDocument = await firestore().collection('Users').doc(userId).get();
-        console.log("🚀 ~ file: index.js ~ line 121 ~ getTimelineData ~ userDocument?.data()?.time_line", userDocument?.data()?.time_line)
         if (!userDocument?.data()?.time_line && !userDocument?.data()?.time_line?.length) {
-            console.log("timeline mistake")
-            console.log("getting timeline2")
             setNoData(true)
         } else {
-            console.log("getting timeline3")
             let selfieArray = []
-            const selfieDocument = await firestore().collection('Selfies').get()
-            selfieDocument.docs.forEach(arr => {
-                if (userDocument.data().time_line.indexOf(arr?.data()?.selfie_id) !== -1) {
-                    selfieArray.push({ ...arr.data() })
+            let filterData = []
+
+            const selfieDocument = await firestore().collection('Selfies').where('selfie_id', 'in', userDocument?.data()?.time_line).get()
+            selfieDocument.docs.forEach(async (arr) => {
+                console.log(arr.data(), 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+                const userDocument = await firestore().collection('Users').doc(arr?.data()?.user_id).get()
+                console.log("TCL ~ file: index.js ~ line 141 ~ selfieDocument.docs.forEach ~ userDocument", userDocument?.data()?.gender)
+                selfieArray.push({ ...arr.data(), gender: userDocument?.data()?.gender })
+                if (selfieDocument?.size == selfieArray?.length) {
+                    setTimelineData(selfieArray)
                 }
-            }
-            )
-            setTimelineData(selfieArray)
+            })
+
+
+
+            // selfieDocument.docs.forEach(async (arr) => {
+            //     const specificGenderDocument = await firestore().collection('Users').doc(arr.data()?.user_id).get();
+            //     // console.log("TCL ~ file: index.js ~ line 140 ~ selfieDocument.docs.forEach ~ specificGenderDocument", specificGenderDocument?.data().gender)
+            //     // 
+            //     if (userDocument.data().time_line.indexOf(arr?.data()?.selfie_id) !== -1) {
+            //         selfieArray.push({ ...arr.data(), gender: specificGenderDocument?.data()?.gender })
+            //     }
+            //     filterData.push(specificGenderDocument?.data())
+            // }
+            // )
+            // console.log(selfieArray, 'selfieArray')
+            // setTimelineData(selfieArray)
+            // setFilteredData(filterData)
         }
     }
-
+    // console.log(filteredData, 'filteredData')
+    // const FilteredData = filteredData?.filter(value => value?.gender == 'female')
+    // { FilteredData?.length == 0 && al ert("no data found") }
+    console.log(timelineData, 'timelineDatatimelineDatatimelineData')
 
     const submit = () => {
-
-        console.log('CarouselRef2.current.currentIndex', CarouselRef2.current.currentIndex)
-         setLoader(true)
+        setLoader(true)
         action.submitSelfie(score, user?.gender, long, lat, age, selfieId[CarouselRef2?.current?._activeItem])
             .then(async () => {
-                console.log('then working')
                 alert("rating successfully submitted")
                 const data1 = await firestore().collection('Users').get()
                 data1.docs.forEach(async (doc) => {
-                    console.log(doc.id, 'docdoc')
                     let update = await firestore().collection('Users').doc(auth().currentUser.uid).update({
                         time_line: firestore.FieldValue.arrayRemove(selfieId[CarouselRef2?.current?._activeItem])
                     })
                     getTimelineData()
-
-                    // timelineData.splice(CarouselRef2.current.currentIndex, 1,)
-                    // setTimelineData([...timelineData])
                 })
                 setLoader(false);
             })

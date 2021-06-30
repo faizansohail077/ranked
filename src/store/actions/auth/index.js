@@ -6,7 +6,7 @@ import functions from '@react-native-firebase/functions';
 
 
 if (__DEV__) {
-    functions().useFunctionsEmulator('https://us-central1-ranked-89d7d.cloudfunctions.net/');
+    functions().useFunctionsEmulator('http://localhost:5000');
 }
 
 
@@ -239,7 +239,7 @@ export const getProfilePhoto = () => {
                                 }
                                 if (profileData?.length === querySnapshotSelfies.size) {
                                     console.log(profileData, 'profileDataprofileDataprofileData')
-                                     resolve(profileData)
+                                    resolve(profileData)
                                 }
                             })
                         });
@@ -355,7 +355,6 @@ export const getAnalytics = (age, gender) => {
                             if (querySnapshot?.docs?.length > 0) {
                                 querySnapshot.docs.forEach((doc) => {
                                     docData.push(doc?.data())
-                                    // console.log(docData.sort(function (a, b) { return (b.age - a.age) }))
                                     obj = { docData, ...response }
                                 })
                                 resolve(obj)

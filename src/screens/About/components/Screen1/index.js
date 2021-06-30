@@ -18,7 +18,6 @@ const Screen1 = () => {
     const [toggle, setToggle] = useState(false)
     const [disable, setDisable] = useState(true)
     const [activeMale, setActiveMale] = useState(false)
-    console.log("🚀 ~ file: index.js ~ line 21 ~ Screen1 ~ activeMale", activeMale)
     const [activeFemale, setActiveFemale] = useState(false)
     const [activeOther, setActiveOther] = useState(false)
     const [activeAll, setActiveAll] = useState(false)
@@ -40,12 +39,8 @@ const Screen1 = () => {
         else {
             setValue(null)
         }
-        console.log(value, 'value')
     }, [activeMale, activeFemale, activeOther])
 
-
-
-    console.log("🚀 ~ file: index.js ~ line 25 ~ Screen1 ~ value", value)
     const selectAll = () => {
         setActiveAll(!activeAll)
         if (!activeAll) {
@@ -63,12 +58,11 @@ const Screen1 = () => {
     const submit = () => {
         if (toggle && value !== null) {
             setLoader(true)
+            dispatch({ type: 'selectedValues', payload: { gender: value } })
             action.getAnalytics(null, value)
                 .then((res) => {
-                    console.log("🚀 ~ file: index.js ~ Screen1~ .then ~ res", res)
                     setLoader(false)
                     dispatch({ type: 'ANALYTICS', payload: res })
-                    console.log(res, 'in gender screens')
                 })
                 .catch(err => {
                     console.log(err, 'err')

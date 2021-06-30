@@ -108,6 +108,12 @@ const Onboarding = () => {
                                 })
                             );
                         }
+                        else {
+                            setLoader(false)
+                        }
+                    }
+                    else {
+                        setLoader(false)
                     }
                 });
         }

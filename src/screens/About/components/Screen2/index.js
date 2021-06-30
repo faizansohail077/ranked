@@ -9,7 +9,7 @@ import slider from '../../../../assets/slider'
 import plus from '../../../../assets/plus'
 import minus from '../../../../assets/minus'
 import * as actions from '../../../../store/actions'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { useEffect } from 'react'
 import { ActivityIndicator } from 'react-native-paper'
@@ -18,11 +18,11 @@ const Screen2 = () => {
     const [toggle, setToggle] = useState(false)
     const [disable, setDisable] = useState(true)
     const [value, setValue] = useState(18);
-    const [loader,setLoader]=useState(false)
+    const [loader, setLoader] = useState(false)
     const dispatch = useDispatch()
-    const action = bindActionCreators(actions,dispatch)
+    const action = bindActionCreators(actions, dispatch)
+    const { selectedValues } = useSelector(state => state.authReducer)
 
-    console.log(value,'value') 
 
     const addValue = () => {
         if (value >= 0 && value < 50) {
@@ -36,23 +36,23 @@ const Screen2 = () => {
             setValue(value - 1)
         }
     }
-    const submit = ()=>{
+    const submit = () => {
         setLoader(true)
         setDisable(true)
-        action.getAnalytics(value,null)
-        .then((res)=>{
-            console.log("🚀 ~ age added", res)
-            console.log("age added")
-            dispatch({type:'ANALYTICS',payload:res})
-            setLoader(false)
-            setDisable(false)
+        dispatch({ type: 'selectedValues', payload: { ...selectedValues, age: value } })
+        action.getAnalytics(value, null)
+            .then((res) => {
+                console.log("age added")
+                dispatch({ type: 'ANALYTICS', payload: res })
+                setLoader(false)
+                setDisable(false)
 
-        }).catch((err)=>{
-            console.log(err,'err')
-            setLoader(false)
-           setDisable(false)
+            }).catch((err) => {
+                console.log(err, 'err')
+                setLoader(false)
+                setDisable(false)
 
-        })
+            })
     }
 
 
@@ -148,7 +148,7 @@ const Screen2 = () => {
                 </View>
 
                 <View style={{ marginTop: 20, alignItems: 'center' }}>
-                    <Button onClick={()=>submit()} disable={!toggle && disable} customStyle={{ marginTop: 10 }} text={loader ? <ActivityIndicator size="small" color="white" />:"Done"} />
+                    <Button onClick={() => submit()} disable={!toggle && disable} customStyle={{ marginTop: 10 }} text={loader ? <ActivityIndicator size="small" color="white" /> : "Done"} />
                 </View>
             </View>
         </>

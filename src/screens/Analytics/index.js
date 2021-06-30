@@ -16,48 +16,58 @@ import About from '../About'
 
 const Analytics = () => {
     const navigation = useNavigation()
+    const { selectedValues } = useSelector(state => state.authReducer)
+
     const [rating, setRating] = useState("")
-    console.log("TCL ~ file: index.js ~ line 20 ~ Analytics ~ rating", rating)
     const [openModal, setOpenModal] = useState(false)
     const [selfScore, setSelfScore] = useState("")
     const [analytics, setAnalytics] = useState("")
-    // const { analytics } = useSelector(state => state?.authReducer)
     const [largest, setLargest] = useState("")
     const [gender, setGender] = useState("")
 
-    console.log("TCL ~ file: index.js ~ line 24 ~ Analytics ~ largest", largest)
-    console.log("🚀 ~ file: index.js ~ line 23 ~ Analytics ~ data", analytics)
 
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
-    console.log(openModal, openModal)
 
     useEffect(() => {
         action.getAnalytics().then((res) => {
-            console.log("TCL ~ file: index.js ~ line 33 ~ action.getAnalytics ~ res", res)
             setAnalytics(res)
-            setSelfScore(res?.self_score)
-        })
-    }, [openModal])
-
-    useEffect(() => {
-        console.log('useEffect started')
-        if (analytics && analytics.docData && analytics.docData.length) {
-            let analyticsData = analytics?.docData?.map((doc) => doc.rating)
-            console.log("🚀 ~ file: index.js ~ line 44 ~ useEffect ~ analyticsData", analyticsData)
-            let age = analytics?.docData?.map((doc) => doc.age)
-            let largest = Math.max(...age)
             let self = analytics?.docData?.map((doc) => doc?.rating)
-            let gender = analytics?.docData?.map((doc) => doc?.gender)
-            console.log("TCL ~ file: index.js ~ line 44 ~ useEffect ~ gender", gender[0])
+            setSelfScore(res?.self_score)
             let count = 0
             self.map(item => {
                 count += item
             })
             let avg = count / self.length + 1
             setRating(Math.floor(avg))
-            setLargest(largest)
-            setGender(gender[0])
+        })
+    }, [openModal])
+
+    useEffect(() => {
+        console.log('useEffect started')
+        if (analytics && analytics.docData && analytics.docData.length) {
+            let age = analytics?.docData?.map((doc) => doc.age)
+            let self = analytics?.docData?.map((doc) => doc?.rating)
+            let genderData = analytics?.docData?.map((doc) => doc?.gender)
+            let count = 0
+            self.map(item => {
+                count += item
+            })
+            let avg = count / self.length + 1
+            setRating(Math.floor(avg))
+            let foundGender = genderData.find(value => value == selectedValues?.gender)
+            let foundAge = age.find(value => value <= selectedValues?.age)
+            console.log("TCL ~ file: index.js ~ line 65 ~ useEffect ~ foundAge", foundAge)
+            if (!foundGender) {
+                alert('no gender found')
+            }
+            if (!foundAge) {
+                alert("no age found")
+                setLargest('default')
+            } else {
+                setLargest(selectedValues?.age)
+            }
+            setGender(foundGender ? foundGender : 'default')
         }
         else {
             console.log("analytics not found")
@@ -110,7 +120,7 @@ const Analytics = () => {
                         textStyle={{ fontFamily: 'unicodeimpact', fontSize: 60, color: 'black', textAlign: 'center' }}
                         formatText={() => (
                             <View style={{ backgroundColor: 'white', alignItems: 'center', justifyContent: 'center', height: 80, width: 80, borderRadius: 100 }}>
-                                <Text style={{ fontSize: 40, fontFamily: 'unicodeimpact' }}>{selfScore}</Text>
+                                <Text style={{ fontSize: 40, fontFamily: 'unicodeimpact' }}>{selfScore ? selfScore : 0}</Text>
                             </View>)
                         }
                         borderColor="gray" showsText={true} style={{ backgroundColor: '#011629', position: 'relative' }} progress={selfScore / 10} size={110} >
