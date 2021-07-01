@@ -26,8 +26,6 @@ import { bindActionCreators } from 'redux';
 import { ActivityIndicator } from 'react-native-paper';
 import GetLocation from 'react-native-get-location'
 
-
-
 const Home = () => {
     const { user } = useSelector(state => state.authReducer)
     const age = new Date().getFullYear() - new Date(user?.dob?.seconds * 1000).getFullYear()
@@ -35,19 +33,18 @@ const Home = () => {
     const [refreshing, setRefreshing] = useState(false);
     const [filterValue, setFilterValue] = useState(false)
     const [isModalVisible, setModalVisible] = useState(false);
-    const [activeMale, setActiveMale] = useState(false)
-    const [activeFemale, setActiveFemale] = useState(false)
-    const [activeOther, setActiveOther] = useState(false)
-    const [activeAll, setActiveAll] = useState(false)
+
+    const [activeMale, setActiveMale] = useState(true)
+    const [activeFemale, setActiveFemale] = useState(true)
+    const [activeOther, setActiveOther] = useState(true)
+
+    const [activeAll, setActiveAll] = useState(true)
     const [timelineData, setTimelineData] = useState(null)
     const [loader, setLoader] = useState(false)
     const [long, setLong] = useState("")
     const [lat, setLat] = useState("")
     const [noData, setNoData] = useState(false)
-    // console.log("🚀 ~ file: index.js ~ line 45 ~ Home ~ noData", noData)
     const selfieId = []
-
-    const [filteredData, setFilteredData] = useState(null)
     const navigation = useNavigation()
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
@@ -61,7 +58,6 @@ const Home = () => {
             timeout: 15000,
         })
             .then(location => {
-                // console.log("TCL ~ file: index.js ~ line 57 ~ useEffect ~ location", location)
                 setLong(location?.longitude)
                 setLat(location?.latitude)
             })
@@ -78,7 +74,10 @@ const Home = () => {
         action.getUser()
     }, [])
 
-    const toggleModal = () => {
+  
+
+
+const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };
     const _renderItem = (item, index) => {
@@ -127,46 +126,34 @@ const Home = () => {
     }
 
     const getTimelineData = async () => {
+      
         let userId = auth().currentUser.uid
         const userDocument = await firestore().collection('Users').doc(userId).get();
-        if (!userDocument?.data()?.time_line && !userDocument?.data()?.time_line?.length) {
+        let timelineExist = userDocument.data().hasOwnProperty('time_line');
+        if (!timelineExist || userDocument?.data()?.time_line?.length == 0) {
             setNoData(true)
         } else {
+            const n = 10
+            let usersTimeline = [...userDocument.data().time_line];
+            const result = new Array(Math.ceil(usersTimeline.length / n))
+            .fill()
+            .map(_ => usersTimeline.splice(0, n))
+            const user = userDocument?.data()
             let selfieArray = []
-            let filterData = []
-
             const selfieDocument = await firestore().collection('Selfies').where('selfie_id', 'in', userDocument?.data()?.time_line).get()
-            selfieDocument.docs.forEach(async (arr) => {
-                console.log(arr.data(), 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-                const userDocument = await firestore().collection('Users').doc(arr?.data()?.user_id).get()
-                console.log("TCL ~ file: index.js ~ line 141 ~ selfieDocument.docs.forEach ~ userDocument", userDocument?.data()?.gender)
-                selfieArray.push({ ...arr.data(), gender: userDocument?.data()?.gender })
-                if (selfieDocument?.size == selfieArray?.length) {
-                    setTimelineData(selfieArray)
-                }
+            result.map(async (firstChunkSelfieIds, i) => {
+                selfieDocument.docs.forEach(async (arr) => {
+                    const userDoc = await firestore().collection('Users').doc(arr?.data()?.user_id).get()
+                    selfieArray.push({ ...arr.data(), gender: userDoc?.data()?.gender })
+                    if (user?.time_line?.length == selfieArray?.length) {
+                        setTimelineData(selfieArray)
+                    }
+                })
             })
 
-
-
-            // selfieDocument.docs.forEach(async (arr) => {
-            //     const specificGenderDocument = await firestore().collection('Users').doc(arr.data()?.user_id).get();
-            //     // console.log("TCL ~ file: index.js ~ line 140 ~ selfieDocument.docs.forEach ~ specificGenderDocument", specificGenderDocument?.data().gender)
-            //     // 
-            //     if (userDocument.data().time_line.indexOf(arr?.data()?.selfie_id) !== -1) {
-            //         selfieArray.push({ ...arr.data(), gender: specificGenderDocument?.data()?.gender })
-            //     }
-            //     filterData.push(specificGenderDocument?.data())
-            // }
-            // )
-            // console.log(selfieArray, 'selfieArray')
-            // setTimelineData(selfieArray)
-            // setFilteredData(filterData)
         }
     }
-    // console.log(filteredData, 'filteredData')
-    // const FilteredData = filteredData?.filter(value => value?.gender == 'female')
-    // { FilteredData?.length == 0 && al ert("no data found") }
-    console.log(timelineData, 'timelineDatatimelineDatatimelineData')
+    console.log(timelineData, 'timelineData')
 
     const submit = () => {
         setLoader(true)
@@ -178,8 +165,9 @@ const Home = () => {
                     let update = await firestore().collection('Users').doc(auth().currentUser.uid).update({
                         time_line: firestore.FieldValue.arrayRemove(selfieId[CarouselRef2?.current?._activeItem])
                     })
-                    getTimelineData()
                 })
+                timelineData.splice(CarouselRef2?.current?._activeItem, 1)
+                setTimelineData([...timelineData])
                 setLoader(false);
             })
             .catch((e) => {
@@ -188,6 +176,15 @@ const Home = () => {
             })
     }
 
+    let filteredArray = []
+  
+    if (activeOther || activeMale || activeFemale) {
+        filteredArray = timelineData?.filter(selfie => {
+            return (activeMale ? selfie.gender == 'male' : false) || (activeFemale ? selfie.gender == 'female' : false) || (activeOther ? selfie.gender == 'others' : false)
+        })
+    }
+
+   
     return (
         <>
             <ScrollView refreshControl={
@@ -205,7 +202,7 @@ const Home = () => {
                             <Carousel
                                 scrollEnabled={false}
                                 ref={CarouselRef2}
-                                data={timelineData}
+                                data={filteredArray}
                                 renderItem={({ item, index }) => _renderItem(item, index)}
                                 sliderWidth={sliderWidth / 2}
                                 itemWidth={sliderWidth / 10.1}
@@ -223,7 +220,7 @@ const Home = () => {
                         <Carousel
                             ref={CarouselRef}
                             onSnapToItem={(i) => CarouselRef2.current?.snapToItem(i)}
-                            data={timelineData}
+                            data={filteredArray}
                             renderItem={({ item, index }) => _renderProfileImage(item, index)}
                             sliderWidth={sliderWidth}
                             itemWidth={sliderWidth}
@@ -240,26 +237,26 @@ const Home = () => {
                             </View>
                             <View style={{ alignItems: 'center' }}>
                                 <TouchableOpacity>
-                                    <SvgXml onPress={() => setActiveOther(!activeOther)} style={styles.home__subHeaderIcon} xml={other({ color: activeOther ? '#00a6d1' : "url(#linear-gradient)" })} />
+                                    <SvgXml onPress={() =>setActiveMale(!activeMale)} style={styles.home__subHeaderIcon} xml={other({ color: activeMale ? '#00a6d1' : "url(#linear-gradient)" })} />
                                 </TouchableOpacity>
                                 <Typo children="Male" style={{ fontSize: 12, color: 'black' }} />
                             </View>
                             <View style={{ alignItems: 'center' }}>
                                 <TouchableOpacity>
-                                    <SvgXml onPress={() => setActiveMale(!activeMale)} style={styles.home__subHeaderIcon} xml={male({ color: activeMale ? '#00a6d1' : "url(#linear-gradient)" })} />
+                                    <SvgXml onPress={() => setActiveFemale(!activeFemale)} style={styles.home__subHeaderIcon} xml={male({ color: activeFemale ? '#00a6d1' : "url(#linear-gradient)" })} />
                                 </TouchableOpacity>
                                 <Typo children="Female" style={{ fontSize: 12, color: 'black' }} />
                             </View>
 
                             <View style={{ alignItems: 'center' }}>
                                 <TouchableOpacity>
-                                    <SvgXml onPress={() => setActiveFemale(!activeFemale)} style={styles.home__subHeaderIcon} xml={female2({ color: activeFemale ? '#00a6d1' : "url(#linear-gradient)" })} />
+                                    <SvgXml onPress={() => setActiveOther(!activeOther)} style={styles.home__subHeaderIcon} xml={female2({ color: activeOther ? '#00a6d1' : "url(#linear-gradient)" })} />
                                 </TouchableOpacity>
                                 <Typo children="Other" style={{ fontSize: 12, color: 'black' }} />
                             </View>
                         </View>
                     }
-                    {noData ? <View style={{ alignItems: 'center', height: '40%' }}><Typo style={{ color: 'black' }} children="No timeline Data avaliable" /></View> :
+                    {noData ? <View style={{ alignItems: 'center', height: '40%' }}><Typo style={{ color: 'black' }} children="No Selfies Found" /></View> :
                         <View style={styles.home__bottomContainer}>
                             <Image style={styles.home__bottomImage} source={roundbg} />
                             <View style={styles.home__subBottomContainer}>

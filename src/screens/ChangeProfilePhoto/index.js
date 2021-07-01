@@ -24,7 +24,6 @@ const ChangeProfile = () => {
     const uploadImage = () => {
         launchImageLibrary({ noData: true }, (response) => {
             if (response && response?.assets && response?.assets[0]?.uri) {
-                console.log("TCL ~ file: index.js ~ line 38 ~ launchImageLibrary ~  response?.assets[0]?.uri", response?.assets[0]?.uri)
                 setPhoto(response?.assets[0]?.uri)
                 navigation.navigate("selfscore", { uri: response?.assets[0]?.uri })
             }

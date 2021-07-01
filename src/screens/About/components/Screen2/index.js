@@ -31,7 +31,6 @@ const Screen2 = () => {
 
     }
     const removeValue = () => {
-        console.log('hello')
         if (value > 18 && value <= 50) {
             setValue(value - 1)
         }
@@ -42,7 +41,6 @@ const Screen2 = () => {
         dispatch({ type: 'selectedValues', payload: { ...selectedValues, age: value } })
         action.getAnalytics(value, null)
             .then((res) => {
-                console.log("age added")
                 dispatch({ type: 'ANALYTICS', payload: res })
                 setLoader(false)
                 setDisable(false)

@@ -21,12 +21,8 @@ const ProfileHistory = () => {
     const action = bindActionCreators(actions, dispatch)
 
     useEffect(() => {
-        console.log("working effet")
         action.getProfilePhoto()
             .then((res) => {
-                console.log("🚀 ~ file: index.js ~ line 27 ~ .then ~ res", res) 
-                console.log("TCL ~ file: index.js ~ line 32 ~ .then ~ res", res.length) 
-                console.log("TCL ~ file: index.js ~ line 31 ~ action.getProfilePhoto ~ res", res.map((i)=>console.log(i,'iasdasd')))
                 if (res.length && res.length > 0) {
                     setLoader(false)
                     setResponse(res)

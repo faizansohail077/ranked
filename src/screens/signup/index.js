@@ -52,7 +52,9 @@ const SignUp = () => {
             setTimeout(() => {
                 setError(false)
             }, 3000)
+            setError(false)
         }
+
         else {
             setDisable(true)
             setLoader(true)
@@ -64,7 +66,6 @@ const SignUp = () => {
                 setPassword("")
                 setEmail("")
                 navigation.navigate("personalData")
-                console.log('working')
             }).catch(e => {
                 setDisable(false)
                 setLoader(false)

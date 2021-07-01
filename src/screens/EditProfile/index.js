@@ -24,7 +24,6 @@ const EditProfile = ({ route }) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const { user } = useSelector(state => state.authReducer)
     const [dob,setDob]=useState(user?.dob.toDate())
-    console.log(user?.dob.toDate(),'sdasdasdasd')
     const [showdate, setShowDate] = useState(`${moment(dob).format("YYYY/M/DD")}`)
     const [username, setUserName] = useState(user?.fullname)
     const [country, setCountry] = useState(user?.country)

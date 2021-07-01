@@ -68,12 +68,8 @@ const Onboarding = () => {
         } else {
             const result = await firestore().collection("Users").doc(user?.uid).get()
                 .then(querySnapshot => {
-                    console.log("TCL ~ file: index.js ~ line 69 ~ onAuthStateChanged ~ querySnapshot", querySnapshot.exists)
                     if (querySnapshot.exists) {
-                        console.log("TCL ~ file: index.js ~ line 70 ~ onAuthStateChanged ~ querySnapshot.exists", querySnapshot.exists)
-                        console.log(querySnapshot.data().step)
                         if (querySnapshot.data().step == 0) {
-                            console.log('login workin1')
                             navigation.dispatch(
                                 CommonActions.reset({
                                     index: 0,
@@ -82,7 +78,6 @@ const Onboarding = () => {
                             );
                         }
                         if (querySnapshot.data().step == 1) {
-                            console.log('login working2')
                             navigation.dispatch(
                                 CommonActions.reset({
                                     index: 0,
@@ -91,7 +86,6 @@ const Onboarding = () => {
                             );
                         }
                         if (querySnapshot.data().step == 2) {
-                            console.log('login working3')
                             navigation.dispatch(
                                 CommonActions.reset({
                                     index: 0,
@@ -100,7 +94,6 @@ const Onboarding = () => {
                             );
                         }
                         if (querySnapshot.data().step == null) {
-                            console.log('login working')
                             navigation.dispatch(
                                 CommonActions.reset({
                                     index: 0,

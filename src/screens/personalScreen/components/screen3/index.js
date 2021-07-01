@@ -28,7 +28,6 @@ const Screen3 = () => {
                 setLoader(true)
                 let navigate = await navigation.navigate('screen4', { uri: response?.assets[0]?.uri })
                 setLoader(false)
-                console.log('work completed')
             }
         });
     };

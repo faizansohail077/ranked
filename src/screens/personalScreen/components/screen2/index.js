@@ -22,9 +22,7 @@ const Screen2 = ({ onPress }) => {
     const [loader, setLoader] = useState(false)
     const [disable, setDisable] = useState(false)
     const [long, setLong] = useState("")
-    console.log("TCL ~ file: index.js ~ line 25 ~ Screen2 ~ long", long)
     const [lat, setLat] = useState("")
-    console.log("TCL ~ file: index.js ~ line 27 ~ Screen2 ~ lat", lat)
     const [items, setItems] = useState([
         { label: 'Androgynous', value: 'androgynous' },
         { label: 'Androgyne', value: 'androgyne' }
@@ -34,13 +32,11 @@ const Screen2 = ({ onPress }) => {
 
     useEffect(() => {
         request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then((result) => {
-            console.log("TCL ~ file: index.js ~ line 55 ~ request ~ result", result)
             GetLocation.getCurrentPosition({
                 enableHighAccuracy: true,
                 timeout: 15000,
             })
                 .then(location => {
-                    console.log("TCL ~ file : index.js ~ line 39 ~ useEffect ~ location", location)
                     setLong(location?.longitude)
                     setLat(location?.latitude)
                 })
@@ -62,7 +58,6 @@ const Screen2 = ({ onPress }) => {
         setDisable(true)
         action.genderData(gender, long, lat)
             .then(() => {
-                console.log('gender updated')
                 onPress()
                 setLoader(false)
                 setDisable(false)

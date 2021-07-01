@@ -16,7 +16,6 @@ import * as actions from '../../../../store/actions'
 const Screen1 = ({ onPress }) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [showdate, setShowDate] = useState('')
-    console.log("TCL ~ file: index.js ~ line 20 ~ Screen1 ~ showdate", showdate)
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);

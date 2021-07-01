@@ -13,11 +13,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as actions from '../../store/actions'
 import About from '../About'
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const Analytics = () => {
     const navigation = useNavigation()
     const { selectedValues } = useSelector(state => state.authReducer)
-
+    // await firestore().collection("Selfies").where("user_id", "==", auth().currentUser.uid)
     const [rating, setRating] = useState("")
     const [openModal, setOpenModal] = useState(false)
     const [selfScore, setSelfScore] = useState("")
@@ -29,10 +31,14 @@ const Analytics = () => {
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
 
-    useEffect(() => {
+    useEffect(async() => {
+        const result =  await firestore().collection("Rating").where("user_id", "==", auth().currentUser.uid).orderBy('created_at', 'desc').limit(1).get()
+        result?.docs?.forEach(arr=>setRating(arr?.data()?.rating))
+ 
         action.getAnalytics().then((res) => {
             setAnalytics(res)
             let self = analytics?.docData?.map((doc) => doc?.rating)
+
             setSelfScore(res?.self_score)
             let count = 0
             self.map(item => {
@@ -41,10 +47,21 @@ const Analytics = () => {
             let avg = count / self.length + 1
             setRating(Math.floor(avg))
         })
+    }, [])
+
+    useEffect(() => {
+        action.getAnalytics().then((res) => {
+            setAnalytics(res)
+        })
+    }, [])
+    
+    useEffect(() => {
+        action.getAnalytics().then((res) => {
+            setAnalytics(res)
+        })
     }, [openModal])
 
     useEffect(() => {
-        console.log('useEffect started')
         if (analytics && analytics.docData && analytics.docData.length) {
             let age = analytics?.docData?.map((doc) => doc.age)
             let self = analytics?.docData?.map((doc) => doc?.rating)
@@ -57,7 +74,6 @@ const Analytics = () => {
             setRating(Math.floor(avg))
             let foundGender = genderData.find(value => value == selectedValues?.gender)
             let foundAge = age.find(value => value <= selectedValues?.age)
-            console.log("TCL ~ file: index.js ~ line 65 ~ useEffect ~ foundAge", foundAge)
             if (!foundGender) {
                 alert('no gender found')
             }
