@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
         borderColor: colors.white,
         backgroundColor: '#E8DEDE',
         flex: 1,
-        width: width / 1.7,
+        width: width - 90,
         borderRadius: 200,
         justifyContent: 'center',
         alignItems: 'center'
@@ -44,7 +44,6 @@ export const styles = StyleSheet.create({
         left: '30%',
         flexDirection: 'row',
         fontFamily: "unicodeimpact",
-
         bottom: 25
     },
     analytics__subText: {

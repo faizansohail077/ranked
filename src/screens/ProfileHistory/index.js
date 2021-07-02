@@ -32,9 +32,7 @@ const ProfileHistory = () => {
                 }
             }).catch(err => {
                 console.log("TCL ~ file: index.js ~ line 38 ~ .then ~ err", err)
-
             })
-
     }, [])
 
 
@@ -50,21 +48,21 @@ const ProfileHistory = () => {
                     <View>
                         <Typo children={"Profile"} />
                     </View>
-                    <View style={{width:13.5,padding:15}}>
+                    <View style={{ width: 13.5, padding: 15 }}>
                     </View>
                 </View>
             </View>
             {loader ? <ActivityIndicator size="large" color="white" /> :
-                <FlatList numColumns={2} contentContainerStyle={{alignItems:'center'}} keyExtractor={(item) => item.id} data={response} renderItem={({ item }) => {
+                <FlatList numColumns={2} contentContainerStyle={{ alignItems: 'center' }} keyExtractor={(item) => item.id} data={response} renderItem={({ item }) => {
                     return (
                         <View style={styles.profile__ImageContainer}>
                             <Image style={styles.profile__image} resizeMode={"cover"} source={{ uri: item?.selfie_url }} />
                             <View>
-                                <Typo style={styles.profile__topText} children={`UPDATED,      ${moment(item?.created_at).format("Do MMM YY")}`} />
+                                <Typo style={styles.profile__topText} children={`UPDATED, ${moment(item?.created_at).format("Do MMM YY")}`} />
                             </View>
                             <View style={styles.profile__bottomConatiner}>
                                 <View style={styles.profile__bottomLeft}>
-                                    <Typo style={styles.profilt__bottomText} children={item?.average ? item?.average : 'NA' } />
+                                    <Typo style={styles.profilt__bottomText} children={item?.average ? Math.floor(item?.average) : 'NA'} />
                                 </View>
                                 <View style={styles.profile__bottomRight}>
                                     <Typo style={styles.profilt__bottomText} children={item?.self_score} />

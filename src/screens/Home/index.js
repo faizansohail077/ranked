@@ -74,10 +74,10 @@ const Home = () => {
         action.getUser()
     }, [])
 
-  
 
 
-const toggleModal = () => {
+
+    const toggleModal = () => {
         setModalVisible(!isModalVisible);
     };
     const _renderItem = (item, index) => {
@@ -126,7 +126,7 @@ const toggleModal = () => {
     }
 
     const getTimelineData = async () => {
-      
+
         let userId = auth().currentUser.uid
         const userDocument = await firestore().collection('Users').doc(userId).get();
         let timelineExist = userDocument.data().hasOwnProperty('time_line');
@@ -136,8 +136,8 @@ const toggleModal = () => {
             const n = 10
             let usersTimeline = [...userDocument.data().time_line];
             const result = new Array(Math.ceil(usersTimeline.length / n))
-            .fill()
-            .map(_ => usersTimeline.splice(0, n))
+                .fill()
+                .map(_ => usersTimeline.splice(0, n))
             const user = userDocument?.data()
             let selfieArray = []
             const selfieDocument = await firestore().collection('Selfies').where('selfie_id', 'in', userDocument?.data()?.time_line).get()
@@ -153,7 +153,6 @@ const toggleModal = () => {
 
         }
     }
-    console.log(timelineData, 'timelineData')
 
     const submit = () => {
         setLoader(true)
@@ -177,14 +176,14 @@ const toggleModal = () => {
     }
 
     let filteredArray = []
-  
+
     if (activeOther || activeMale || activeFemale) {
         filteredArray = timelineData?.filter(selfie => {
             return (activeMale ? selfie.gender == 'male' : false) || (activeFemale ? selfie.gender == 'female' : false) || (activeOther ? selfie.gender == 'others' : false)
         })
     }
 
-   
+
     return (
         <>
             <ScrollView refreshControl={
@@ -237,7 +236,7 @@ const toggleModal = () => {
                             </View>
                             <View style={{ alignItems: 'center' }}>
                                 <TouchableOpacity>
-                                    <SvgXml onPress={() =>setActiveMale(!activeMale)} style={styles.home__subHeaderIcon} xml={other({ color: activeMale ? '#00a6d1' : "url(#linear-gradient)" })} />
+                                    <SvgXml onPress={() => setActiveMale(!activeMale)} style={styles.home__subHeaderIcon} xml={other({ color: activeMale ? '#00a6d1' : "url(#linear-gradient)" })} />
                                 </TouchableOpacity>
                                 <Typo children="Male" style={{ fontSize: 12, color: 'black' }} />
                             </View>

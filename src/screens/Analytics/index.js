@@ -15,11 +15,13 @@ import * as actions from '../../store/actions'
 import About from '../About'
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { useIsFocused } from '@react-navigation/native';
+
 
 const Analytics = () => {
+    const isFocused = useIsFocused();
     const navigation = useNavigation()
     const { selectedValues } = useSelector(state => state.authReducer)
-    // await firestore().collection("Selfies").where("user_id", "==", auth().currentUser.uid)
     const [rating, setRating] = useState("")
     const [openModal, setOpenModal] = useState(false)
     const [selfScore, setSelfScore] = useState("")
@@ -31,30 +33,30 @@ const Analytics = () => {
     const dispatch = useDispatch()
     const action = bindActionCreators(actions, dispatch)
 
-    useEffect(async() => {
-        const result =  await firestore().collection("Rating").where("user_id", "==", auth().currentUser.uid).orderBy('created_at', 'desc').limit(1).get()
-        result?.docs?.forEach(arr=>setRating(arr?.data()?.rating))
- 
-        action.getAnalytics().then((res) => {
-            setAnalytics(res)
-            let self = analytics?.docData?.map((doc) => doc?.rating)
+    useEffect(async () => {
+        const result = await firestore().collection("Rating").where("user_id", "==", auth().currentUser.uid).orderBy('created_at', 'desc').limit(1).get()
 
+
+        action.getAnalytics().then((res) => {
+
+            setAnalytics(res)
+            let self = selectedValues && selectedValues?.fiterMilesData ? selectedValues?.fiterMilesData?.map((doc) => doc?.rating) : analytics?.docData?.map((doc) => doc?.rating)
             setSelfScore(res?.self_score)
             let count = 0
-            self.map(item => {
+            self?.map(item => {
                 count += item
             })
-            let avg = count / self.length + 1
+            let avg = count / self?.length + 1
             setRating(Math.floor(avg))
         })
-    }, [])
+    }, [isFocused])
 
     useEffect(() => {
         action.getAnalytics().then((res) => {
             setAnalytics(res)
         })
     }, [])
-    
+
     useEffect(() => {
         action.getAnalytics().then((res) => {
             setAnalytics(res)
@@ -62,15 +64,17 @@ const Analytics = () => {
     }, [openModal])
 
     useEffect(() => {
+
+
         if (analytics && analytics.docData && analytics.docData.length) {
             let age = analytics?.docData?.map((doc) => doc.age)
-            let self = analytics?.docData?.map((doc) => doc?.rating)
+            let self = selectedValues && selectedValues?.fiterMilesData ? selectedValues?.fiterMilesData?.map((doc) => doc?.rating) : analytics?.docData?.map((doc) => doc?.rating)
             let genderData = analytics?.docData?.map((doc) => doc?.gender)
             let count = 0
-            self.map(item => {
+            self?.map(item => {
                 count += item
             })
-            let avg = count / self.length + 1
+            let avg = count / self?.length + 1
             setRating(Math.floor(avg))
             let foundGender = genderData.find(value => value == selectedValues?.gender)
             let foundAge = age.find(value => value <= selectedValues?.age)
@@ -88,7 +92,7 @@ const Analytics = () => {
         else {
             console.log("analytics not found")
         }
-    }, [openModal])
+    }, [openModal, isFocused])
 
     return (
         <View style={styles.analytics__container}>
@@ -159,7 +163,7 @@ const Analytics = () => {
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <SvgXml xml={multiple} />
-                            <Typo children="default" style={{ paddingLeft: 2, fontSize: 12 }} />
+                            <Typo children={selectedValues && selectedValues?.miles ? selectedValues.miles : "default"} style={{ paddingLeft: 2, fontSize: 12 }} />
                         </View>
                     </View>
                 </View>

@@ -17,7 +17,6 @@ export const signUp = (email, password, username) => {
                 auth()
                     .createUserWithEmailAndPassword(email, password)
                     .then(async () => {
-                        console.log('User account created & signed in!');
                         let result = await firestore().collection('Users').doc(auth().currentUser.uid).set({
                             email: email,
                             username: username,
@@ -88,7 +87,6 @@ export const profileData = (username, dob, country, city, zipCode) => {
     return dispatch => {
         return new Promise(async (resolve, reject) => {
             try {
-                console.log('User account updated');
                 let result = await firestore().collection('Users').doc(auth().currentUser.uid).update({
                     fullname: username,
                     dob: dob,
@@ -110,7 +108,6 @@ export const genderData = (gender, longitude, latitude) => {
     return dispatch => {
         return new Promise(async (resolve, reject) => {
             try {
-                console.log('User gender updated');
                 let result = await firestore().collection('Users').doc(auth().currentUser.uid).update({
                     gender: gender,
                     step: 2,
@@ -171,9 +168,7 @@ export const createSelfie = (url, self_score) => {
                 selfie_id: docId,
                 created_at: firestore.Timestamp.fromDate(new Date())
             })
-            console.log('before postSelefieId')
             postSelefieId(docId)
-            console.log('after postSelefieId')
             let update = await firestore().collection('Users').doc(auth().currentUser.uid).update({
                 selfies: firestore.FieldValue.arrayUnion(docId),
             });
@@ -195,7 +190,6 @@ export const getUser = () => {
                     .get()
                     .then(documentSnapshot => {
                         if (documentSnapshot.exists) {
-                            console.log('User data: ', documentSnapshot.data());
                             resolve(documentSnapshot.data())
                             dispatch({ type: 'USER', payload: documentSnapshot.data() })
 
@@ -221,7 +215,6 @@ export const getProfilePhoto = () => {
                         querySnapshotSelfies.forEach(async (doc) => {
                             const data2 = await firestore().collection("Rating").where("selfie_id", "==", doc?.id)
                             data2.get().then((querySnapshot) => {
-                                console.log("🚀 ~ file: index.js ~ line 222 ~ data2.get ~ querySnapshot", querySnapshot.size)
                                 if (querySnapshot.size !== 0) {
                                     let overallScore = 0;
                                     let temArr = []
@@ -238,7 +231,6 @@ export const getProfilePhoto = () => {
                                     profileData.push({ ...doc.data(), rating: null })
                                 }
                                 if (profileData?.length === querySnapshotSelfies.size) {
-                                    console.log(profileData, 'profileDataprofileDataprofileData')
                                     resolve(profileData)
                                 }
                             })
@@ -262,8 +254,6 @@ export const getProfilePhoto = () => {
 functions()
     .httpsCallable(`helloWorld?selfie_id=${'query'}&currentUser_id=${auth().currentUser.uid}`)()
     .then(response => {
-        console.log("working1"),
-            console.log("🚀 ~ file: index.js ~ line 227 ~ postSelefieId ~ response", response)
     }).catch((err) => {
         console.log("working2"),
             console.log("ERRROR ", err)
@@ -271,17 +261,13 @@ functions()
 
 
 export const postSelefieId = async (query) => {
-    console.log("🚀 ~ file: index.js ~ line 234 ~ postSelefieId ~ query", query)
-    console.log(auth().currentUser, 'auth().currentUserauth().currentUser')
-    console.log("🚀 ~ file: index.js ~ line 251 ~ .httpsCallable ~ auth().currentUser.uid", auth().currentUser.uid)
+
     const { data } = await functions()
         .httpsCallable(`helloWorld?selfie_id=${query}&currentUser_id=${auth().currentUser.uid}`)()
         .then(response => {
-            console.log("working1"),
-                console.log("🚀 ~ file: index.js ~ line 227 ~ postSelefieId ~ response", response)
+
         }).catch((err) => {
-            console.log("working2"),
-                console.log("ERRROR ", err)
+            console.log("ERRROR ", err)
         })
 }
 
@@ -313,29 +299,9 @@ export const submitSelfie = (rating, gender, longitude, latitude, age, selfie_id
 
 
 
-// export const getAnalytics =  (query) => {
-//     return dispatch =>{
-//    return new Promise(async(resolve,reject)=>{
-//     try {
-//     const {data} = await functions()
-//     .httpsCallable('analytics')({
-//         currentUser_id:auth().currentUser.uid
-//     })
-//     resolve(data)
-//    } catch (error) {
-//        console.log(error,'error')
-//        reject(error)       
-// }
-// })
-//     }
-//     }
-
 export const getAnalytics = (age, gender) => {
-    console.log('rating started')
-    console.log(age, 'ageage')
-    console.log(gender, 'gender gender')
+
     return dispatch => {
-        console.log('React nasjk')
         return new Promise(async (resolve, reject) => {
             try {
                 let docData = []
@@ -346,8 +312,7 @@ export const getAnalytics = (age, gender) => {
                     .then((querySnapshot) => {
                         querySnapshot.forEach(async (doc) => {
                             response = doc?.data()
-                            console.log(response, "doc?.data().selfie_id", gender)
-                            console.log("doc?.data().selfie_id", doc?.data().selfie_id)
+
                             let result = firestore().collection("Rating")
                             age && (result = result.where("age", "<=", age))
                             gender && (result = result.where('gender', '==', gender));
