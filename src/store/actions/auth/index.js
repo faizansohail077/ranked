@@ -251,19 +251,19 @@ export const getProfilePhoto = () => {
 }
 
 
-functions()
-    .httpsCallable(`helloWorld?selfie_id=${'query'}&currentUser_id=${auth().currentUser.uid}`)()
-    .then(response => {
-    }).catch((err) => {
-        console.log("working2"),
-            console.log("ERRROR ", err)
-    })
+// functions()
+//     .httpsCallable(`helloWorld?selfie_id=${'query'}&currentUser_id=${auth()?.currentUser?.uid}`)()
+//     .then(response => {
+//     }).catch((err) => {
+//         console.log("working2"),
+//             console.log("ERRROR ", err)
+//     })
 
 
 export const postSelefieId = async (query) => {
 
     const { data } = await functions()
-        .httpsCallable(`helloWorld?selfie_id=${query}&currentUser_id=${auth().currentUser.uid}`)()
+        .httpsCallable(`helloWorld?selfie_id=${query}&currentUser_id=${auth()?.currentUser?.uid}`)()
         .then(response => {
 
         }).catch((err) => {
