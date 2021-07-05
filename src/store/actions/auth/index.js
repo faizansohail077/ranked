@@ -371,11 +371,9 @@ export const submitSelfie = (
 
 export const getAnalytics = (age, gender) => {
   const userId = auth()?.currentUser?.uid;
-  console.log('🚀 ~ file: index.js ~ line 374 ~ getAnalytics ~ userId', userId);
   return dispatch => {
     return new Promise(async (resolve, reject) => {
       try {
-        console.log('🚀 ~ file: index.js ~ line 374 ~ getAnalytics ~ userId');
         let url;
         if (age) {
           url = `https://us-central1-ranked-89d7d.cloudfunctions.net/getAnalytics?user_id=${userId}&age=${age}`;
@@ -391,28 +389,14 @@ export const getAnalytics = (age, gender) => {
         const data = await axios
           .get(url)
           .then(res => {
-            console.log(
-              '🚀 ~ file: index.js ~ line 383 ~ returnnewPromise ~ res',
-              res.data,
-            );
             resolve(res.data);
           })
           .catch(e => {
-            console.log(
-              '🚀 ~ file: index.js ~ line 390 ~ returnnewPromise ~ e',
-              e,
-            );
             reject(e);
           });
       } catch (error) {
-        console.log(
-          '🚀 ~ file: index.js ~ line 394 ~ returnnewPromise ~ error',
-          error,
-        );
         reject(error);
       }
     });
   };
 };
-// getAnalytics();
-// http://localhost:5000/ranked-89d7d/us-central1/getAnalytics?age=12&gender=male
