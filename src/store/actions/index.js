@@ -1,14 +1,27 @@
-import { signUp, logIn, profileData, genderData, profileImage, getUser, logOut, getProfilePhoto,submitSelfie,getAnalytics  } from './auth'
+import {
+  signUp,
+  logIn,
+  profileData,
+  genderData,
+  profileImage,
+  getUser,
+  logOut,
+  getProfilePhoto,
+  submitSelfie,
+  getAnalytics,
+  getTimelineData,
+} from './auth';
 
 export {
-    signUp,
-    logIn,
-    profileData,
-    genderData,
-    profileImage,
-    getUser,
-    logOut,
-    getProfilePhoto,
-    submitSelfie,
-    getAnalytics
-}
+  signUp,
+  logIn,
+  profileData,
+  genderData,
+  profileImage,
+  getUser,
+  logOut,
+  getProfilePhoto,
+  submitSelfie,
+  getAnalytics,
+  getTimelineData,
+};
