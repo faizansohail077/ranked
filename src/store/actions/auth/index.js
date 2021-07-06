@@ -435,34 +435,128 @@ export const submitSelfie = (
 //   };
 // };
 
+// export const getAnalytics = (age, gender) => {
+//   const userId = auth()?.currentUser?.uid;
+//   return dispatch => {
+//     return new Promise(async (resolve, reject) => {
+//       try {
+//         let url;
+//         if (age) {
+//           url = `https://us-central1-ranked-89d7d.cloudfunctions.net/getAnalytics?user_id=${userId}&age=${age}`;
+//         }
+//         if (gender) {
+//           url = `https://us-central1-ranked-89d7d.cloudfunctions.net/getAnalytics?user_id=${userId}&gender=${gender}`;
+//         }
+//         if (age && gender) {
+//           url = `https://us-central1-ranked-89d7d.cloudfunctions.net/getAnalytics?user_id=${userId}&age=${age}&gender=${gender}`;
+//         } else {
+//           url = `https://us-central1-ranked-89d7d.cloudfunctions.net/getAnalytics?user_id=${userId}`;
+//         }
+//         const data = await axios
+//           .get(url)
+//           .then(res => {
+//             resolve(res.data);
+//           })
+//           .catch(e => {
+//             reject(e);
+//           });
+//       } catch (error) {
+//         reject(error);
+//       }
+//     });
+//   };
+// };
+
+
+
+// export const getAnalytics = (age, gender) => {
+//   const userId = auth()?.currentUser?.uid;
+//   console.log("TCL ~ file: index.js ~ line 471 ~ getAnalytics ~ userId", userId)
+//   return dispatch => {
+//     return new Promise(async (resolve, reject) => {
+//       try {
+//         console.log("hew")
+//         let docData = [];
+//         let obj;
+//         let response;
+//         const data = firestore()
+//           .collection("Selfies")
+//           .where("user_id", "==", userId)
+//           .orderBy("created_at", "desc")
+//           .limit(1)
+//           .get()
+//           .then((querySnapshot) => {
+//             querySnapshot.forEach(async (doc) => {
+//               console.log("TCL ~ file: index.js ~ line 490 ~ querySnapshot.forEach ~ doc", doc?.data().selfie_id)
+//               response = doc.data();
+//               let result = firestore().collection("Rating")
+//               age && (result = result.where("age", "<=", age));
+//               gender && (result = result.where("gender", "==", gender));
+//               const querySnapshots = await result.get();
+//               if (querySnapshots.docs.length > 0) {
+//                 querySnapshots.docs.forEach((docs) => {
+//                   docData.push(docs.data());
+//                   obj = { docData, ...response };
+//                 });
+//                 resolve(obj);
+//               } else {
+//                 resolve("no data is avaliable");
+//               }
+//             });
+//           })
+//           .catch((error) => {
+//             return reject(error);
+//           });
+//       } catch (error) {
+//         return reject(error);
+//       }
+//     });
+//   };
+// };
+
 export const getAnalytics = (age, gender) => {
-  const userId = auth()?.currentUser?.uid;
+  console.log('get analytics 2')
+  const userId = auth().currentUser.uid
   return dispatch => {
     return new Promise(async (resolve, reject) => {
       try {
-        let url;
-        if (age) {
-          url = `https://us-central1-ranked-89d7d.cloudfunctions.net/getAnalytics?user_id=${userId}&age=${age}`;
-        }
-        if (gender) {
-          url = `https://us-central1-ranked-89d7d.cloudfunctions.net/getAnalytics?user_id=${userId}&gender=${gender}`;
-        }
-        if (age && gender) {
-          url = `https://us-central1-ranked-89d7d.cloudfunctions.net/getAnalytics?user_id=${userId}&age=${age}&gender=${gender}`;
-        } else {
-          url = `https://us-central1-ranked-89d7d.cloudfunctions.net/getAnalytics?user_id=${userId}`;
-        }
-        const data = await axios
-          .get(url)
-          .then(res => {
-            resolve(res.data);
+        let obj;
+        let docData = [];
+        let response;
+        const data3 = firestore()
+          .collection("Selfies")
+          .where("user_id", "==", userId)
+          .orderBy("created_at", "desc")
+          .limit(1)
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach(async (doc) => {
+              response = doc.data()
+              const data = await firestore()
+                .collection("Users")
+                .doc(auth().currentUser.uid)
+                .get()
+              data?.data()?.selfies.map(async (i) => {
+                const data2 = await firestore()
+                  .collection("Rating")
+                  .where('selfie_id', '==', i)
+                  .get()
+                if (data2.docs.length > 0) {
+                  data2?.docs?.forEach((arr) => {
+                    docData.push(arr.data())
+                    obj = { docData, ...response };
+                  })
+                  resolve(obj)
+                } else {
+                  resolve('no data found')
+                }
+              })
+            })
           })
-          .catch(e => {
-            reject(e);
-          });
       } catch (error) {
-        reject(error);
+        console.log("TCL ~ file: index.js ~ line 530 ~ returnnewPromise ~ error", error)
+        return reject(error);
       }
-    });
-  };
-};
+    })
+  }
+}

@@ -15,97 +15,98 @@ import * as actions from '../../store/actions';
 import About from '../About';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import { useIsFocused } from '@react-navigation/native';
 
 const Analytics = () => {
-  const isFocused = useIsFocused();
   const navigation = useNavigation();
   const { selectedValues } = useSelector(state => state.authReducer);
   const [rating, setRating] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [selfScore, setSelfScore] = useState('');
-  const [analytics, setAnalytics] = useState('');
+  const [analytics, setAnalytics] = useState([]);
+  console.log("TCL ~ file: index.js ~ line 28 ~ Analytics ~ analytics", analytics)
   const [largest, setLargest] = useState('');
   const [gender, setGender] = useState('');
 
   const dispatch = useDispatch();
   const action = bindActionCreators(actions, dispatch);
 
-  useEffect(async () => {
-    const result = await firestore()
-      .collection('Rating')
-      .where('user_id', '==', auth().currentUser.uid)
-      .orderBy('created_at', 'desc')
-      .limit(1)
-      .get();
-    action.getAnalytics().then(res => {
-      if (res == 'no data is avaliable') {
-        alert('no data avaliable');
-      } else {
+  // useEffect(async () => {
+  //   action.getAnalytics().then(res => {
+  //     if (res == 'no data is avaliable') {
+  //       alert('no data avaliable');
+  //     } else {
+  //       setAnalytics(res);
+  //       let self = analytics?.docData?.map(doc => doc?.rating);
+  //       setSelfScore(res?.self_score);
+  //       let count = 0;
+  //       self?.map(item => {
+  //         count += item;
+  //       });
+  //       let avg = count / self?.length
+  //       setRating(Math.floor(avg));
+  //     }
+  //   });
+  // }, [isFocused, openModal]);
 
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      console.log('action started 1')
+      action
+        .getAnalytics()
+        .then(res => {
+          setAnalytics(res);
+          setSelfScore(res?.self_score)
+        })
+        .catch(err => {
+        });
+    })
+  }, []);
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      console.log('action started 2')
+      action.getAnalytics().then(res => {
         setAnalytics(res);
-        let self =
-          selectedValues && selectedValues?.fiterMilesData
-            ? selectedValues?.fiterMilesData?.map(doc => doc?.rating)
-            : analytics?.docData?.map(doc => doc?.rating);
-        setSelfScore(res?.self_score);
+        setSelfScore(res?.self_score)
+      });
+    })
+  }, [openModal]);
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      if (analytics && analytics.docData && analytics.docData.length) {
+        setSelfScore(analytics?.self_score);
+        let age = analytics?.docData?.map(doc => doc.age);
+        let self = selectedValues && selectedValues?.fiterMilesData
+          ? selectedValues?.fiterMilesData?.map(doc => doc?.rating)
+          : analytics?.docData?.map(doc => doc?.rating);
+        console.log("TCL ~ file: index.js ~ line 81 ~ navigation.addListener ~ self", self)
+        let genderData = analytics?.docData?.map(doc => doc?.gender);
         let count = 0;
         self?.map(item => {
           count += item;
         });
-        let avg = count / self?.length + 1;
+        let avg = count / self?.length;
         setRating(Math.floor(avg));
-      }
-    });
-  }, [isFocused]);
-
-  useEffect(() => {
-    action
-      .getAnalytics()
-      .then(res => {
-        setAnalytics(res);
-      })
-      .catch(err => {
-      });
-  }, []);
-
-  useEffect(() => {
-    action.getAnalytics().then(res => {
-      setAnalytics(res);
-    });
-  }, [openModal]);
-
-  useEffect(() => {
-    if (analytics && analytics.docData && analytics.docData.length) {
-      let age = analytics?.docData?.map(doc => doc.age);
-      let self =
-        selectedValues && selectedValues?.fiterMilesData
-          ? selectedValues?.fiterMilesData?.map(doc => doc?.rating)
-          : analytics?.docData?.map(doc => doc?.rating);
-      let genderData = analytics?.docData?.map(doc => doc?.gender);
-      let count = 0;
-      self?.map(item => {
-        count += item;
-      });
-      let avg = count / self?.length + 1;
-      setRating(Math.floor(avg));
-      let foundGender = genderData.find(
-        value => value == selectedValues?.gender,
-      );
-      let foundAge = age.find(value => value <= selectedValues?.age);
-      if (!foundGender) {
-        alert('no gender found');
-      }
-      if (!foundAge) {
-        alert('no age found');
-        setLargest('default');
+        let foundGender = genderData.find(
+          value => value == selectedValues?.gender,
+        );
+        let foundAge = age.find(value => value <= selectedValues?.age);
+        if (!foundGender) {
+          // alert('no gender found');
+        }
+        if (!foundAge) {
+          // alert('no age found');
+          setLargest('default');
+        } else {
+          setLargest(selectedValues?.age);
+        }
+        setGender(foundGender ? foundGender : 'default');
       } else {
-        setLargest(selectedValues?.age);
       }
-      setGender(foundGender ? foundGender : 'default');
-    } else {
-    }
-  }, [openModal, isFocused]);
+    })
+
+  }, [openModal]);
 
   return (
     <View style={styles.analytics__container}>
