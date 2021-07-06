@@ -18,7 +18,7 @@ const Query = () => {
             <ScrollView style={{ flex: 1 }}>
                 <View style={{ marginBottom: 15 }}>
                     <View style={styles.query__header}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <TouchableOpacity style={{ padding: 10 }} onPress={() => navigation.goBack()}>
                             <View>
                                 <SvgXml xml={arrow} />
                             </View>
@@ -42,7 +42,7 @@ const Query = () => {
                         </View>
                     </View>
                     <View style={styles.query__centerCenter}>
-                        <TextInput multiline={false} numberOfLines={20} textAlignVertical={'top'} style={{ justifyContent: 'flex-start' }} placeholder="hello" />
+                        <TextInput multiline={false} numberOfLines={20} textAlignVertical={'top'} style={{ justifyContent: 'flex-start' }} />
                     </View>
                     <View style={{ alignItems: 'center' }}>
                         <Button text={"Submit"} />

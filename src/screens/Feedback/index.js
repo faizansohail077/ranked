@@ -17,7 +17,7 @@ const FeedBack = () => {
         <View style={styles.feedback__container}>
             <View style={{ marginBottom: 15 }}>
                 <View style={styles.feedback__header}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <TouchableOpacity style={{ padding: 10 }} onPress={() => navigation.goBack()}>
                         <View>
                             <SvgXml xml={arrow} />
                         </View>
@@ -42,14 +42,14 @@ const FeedBack = () => {
                         </View>
                     </View>
                     <View style={styles.feedback__centerCenter}>
-                        <TextInput multiline={true} numberOfLines={10} textAlignVertical={'top'} style={{ justifyContent: 'flex-start', height: 150 }} placeholder="hello" />
+                        <TextInput multiline={true} numberOfLines={10} textAlignVertical={'top'} style={{ justifyContent: 'flex-start', height: 150 }} />
                     </View>
                     <View style={{ alignItems: 'center' }}>
                         <Button text={"Submit"} />
                     </View>
                 </ScrollView>
             </View>
-            <View style={{alignItems:'center'}}>
+            <View style={{ alignItems: 'center' }}>
                 <SvgXml xml={feedback} />
             </View>
         </View>

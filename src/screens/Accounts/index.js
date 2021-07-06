@@ -1,17 +1,17 @@
-import React, {useState} from 'react';
-import {View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {SvgXml} from 'react-native-svg';
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { SvgXml } from 'react-native-svg';
 import auth from '@react-native-firebase/auth';
 
-import {styles} from './style';
-import {Button, Input, Typo} from '../../components';
+import { styles } from './style';
+import { Button, Input, Typo } from '../../components';
 import arrow from '../../assets/arrow';
 import account from '../../assets/account';
 import PasswordIcon from '../../assets/password';
 import ConfirmPassword from '../../assets/confirmPassword';
-import {ActivityIndicator} from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 
 const Accounts = () => {
   const navigation = useNavigation();
@@ -35,6 +35,7 @@ const Accounts = () => {
         setError(false);
       }, 3000);
     } else {
+      setError(false)
       setDisable(true);
       setLoader(true);
       user
@@ -48,7 +49,13 @@ const Accounts = () => {
         .catch(err => {
           if (err.code === 'auth/requires-recent-login') {
             setDisable(false);
+            alert(err.message)
             setLoader(false);
+          }
+          if (err.code === 'auth/weak-password') {
+            alert(err.message)
+            setDisable(false);
+            setLoader(false)
           }
           setDisable(false);
           setLoader(false);
@@ -58,9 +65,9 @@ const Accounts = () => {
 
   return (
     <View style={styles.account__container}>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{ flex: 1 }}>
         {error && alert('Password does not match')}
-        <View style={{marginBottom: 15}}>
+        <View style={{ marginBottom: 15 }}>
           <View style={styles.account__header}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <View>
@@ -73,15 +80,15 @@ const Accounts = () => {
             <View></View>
           </View>
         </View>
-        <View style={{marginVertical: 20, alignItems: 'center'}}>
+        <View style={{ marginVertical: 20, alignItems: 'center' }}>
           <SvgXml xml={account} />
           <Typo
-            style={{marginTop: 20, fontSize: 18}}
+            style={{ marginTop: 20, fontSize: 18 }}
             children="Update Your Password"
           />
         </View>
-        <View style={{margin: 20}}>
-          <View style={{marginVertical: 30}}>
+        <View style={{ margin: 20 }}>
+          <View style={{ marginVertical: 30 }}>
             <Input
               secure={true}
               value={password}
@@ -98,7 +105,7 @@ const Accounts = () => {
             placeholder="Confirm Password"
           />
         </View>
-        <View style={{marginVertical: 30, width: '100%', alignItems: 'center'}}>
+        <View style={{ marginVertical: 30, width: '100%', alignItems: 'center' }}>
           <Button
             disable={disable}
             onClick={() => submit()}

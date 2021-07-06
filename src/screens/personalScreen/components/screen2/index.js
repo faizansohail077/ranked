@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -7,22 +7,22 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {styles} from './style';
+import { styles } from './style';
 import male from '../../../../assets/male.png';
 import female from '../../../../assets/female.png';
 import selectedmale from '../../../../assets/selectedmale.png';
 import unselectedfemale from '../../../../assets/unselectedfemale.png';
 import other from '../../../../assets/other.png';
 import DropDownPicker from 'react-native-dropdown-picker';
-import {Button, Typo} from '../../../../components';
-import {colors} from '../../../../style/color';
-import {useDispatch} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { Button, Typo } from '../../../../components';
+import { colors } from '../../../../style/color';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as actions from '../../../../store/actions';
 import GetLocation from 'react-native-get-location';
-import {request, PERMISSIONS} from 'react-native-permissions';
+import { request, PERMISSIONS } from 'react-native-permissions';
 
-const Screen2 = ({onPress}) => {
+const Screen2 = ({ onPress }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [gender, setGender] = useState('others');
@@ -31,8 +31,8 @@ const Screen2 = ({onPress}) => {
   const [long, setLong] = useState('');
   const [lat, setLat] = useState('');
   const [items, setItems] = useState([
-    {label: 'Androgynous', value: 'androgynous'},
-    {label: 'Androgyne', value: 'androgyne'},
+    { label: 'Androgynous', value: 'androgynous' },
+    { label: 'Androgyne', value: 'androgyne' },
   ]);
   const dispatch = useDispatch();
   const action = bindActionCreators(actions, dispatch);
@@ -48,7 +48,7 @@ const Screen2 = ({onPress}) => {
           setLat(location?.latitude);
         })
         .catch(error => {
-          const {code, message} = error;
+          const { code, message } = error;
           console.warn(code, message);
         });
     });
@@ -73,11 +73,11 @@ const Screen2 = ({onPress}) => {
 
   return (
     <View style={styles.screen2__container}>
-      <View style={{marginBottom: 20}}>
+      <View style={{ marginBottom: 20 }}>
         <Typo children="Select Gender" />
       </View>
-      <ScrollView style={{flex: 1}}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+      <ScrollView style={{ flex: 1 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
           <View>
             <TouchableOpacity onPress={() => setGender('male')}>
               <Image source={gender == 'male' ? selectedmale : male} />
@@ -101,12 +101,13 @@ const Screen2 = ({onPress}) => {
         <View style={styles.screen2__dropDownContainer}>
           <Image source={other} />
           <DropDownPicker
-            arrowIconStyle={{tintColor: 'white'}}
+            arrowIconStyle={{ tintColor: 'white' }}
+            onChangeValue={(e) => setGender("others")}
             style={styles.screen2__dropDown}
             open={open}
             placeholder="Select others...."
-            placeholderStyle={{color: colors.gray, fontSize: 20}}
-            textStyle={{color: colors.gray, fontSize: 20}}
+            placeholderStyle={{ color: colors.gray, fontSize: 20 }}
+            textStyle={{ color: colors.gray, fontSize: 20 }}
             value={value}
             items={items}
             setOpen={setOpen}
@@ -114,10 +115,10 @@ const Screen2 = ({onPress}) => {
             setItems={setItems}
           />
         </View>
-        <View style={{marginVertical: 30, width: '100%', alignItems: 'center'}}>
+        <View style={{ marginVertical: 30, width: '100%', alignItems: 'center' }}>
           <Button
             disable={disable}
-            customStyle={{width: '50%'}}
+            customStyle={{ width: '50%' }}
             onClick={() => submit()}
             text={
               <Typo

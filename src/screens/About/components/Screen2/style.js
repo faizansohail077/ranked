@@ -18,6 +18,12 @@ export const styles = StyleSheet.create({
     },
     screen2__centerHeading: {
         textAlign: 'center',
+        marginVertical: 0,
+        fontSize: 30
+    },
+    screen2__centerHeading2: {
+        textAlign: 'center',
+        fontFamily: 'unicodeimpact',
         marginVertical: 10,
         fontSize: 30
     },

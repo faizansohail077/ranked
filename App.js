@@ -22,11 +22,12 @@ import Help from './src/screens/Help';
 import Settings from './src/screens/Settings';
 import RateApp from './src/screens/RateApp';
 import About from './src/screens/About';
+import UpdateSelfScore from './src/screens/UpdateSelfScore';
 
 const Stack = createStackNavigator();
 
 const App = () => {
- 
+
   return (
     <Provider store={store}>
       <NavigationContainer >
@@ -48,6 +49,8 @@ const App = () => {
           <Stack.Screen name="help" component={Help} />
           <Stack.Screen name="setting" component={Settings} />
           <Stack.Screen name="rate" component={RateApp} />
+          <Stack.Screen name="updateSelfScroe" component={UpdateSelfScore} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

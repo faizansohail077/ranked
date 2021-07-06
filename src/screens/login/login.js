@@ -1,23 +1,24 @@
-import React, {useState} from 'react';
-import {Text, View, Image, ScrollView, ActivityIndicator} from 'react-native';
-import {styles} from './style';
+import React, { useState } from 'react';
+import { Text, View, Image, ScrollView, ActivityIndicator } from 'react-native';
+import { styles } from './style';
 import guy from '../../assets/guy.png';
 import logo from '../../assets/logo';
-import {Button, Input, Typo} from '../../components';
-import {SvgXml} from 'react-native-svg';
+import { Button, Input, Typo } from '../../components';
+import { SvgXml } from 'react-native-svg';
 import person from '../../assets/person';
 import facebook from '../../assets/facebook';
 import passwordIcon from '../../assets/password';
 import * as actions from '../../store/actions';
-import {useNavigation, CommonActions} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { useNavigation, CommonActions } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 const Login = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  ("TCL ~ file: login.js ~ line 21 ~ Login ~ error", error)
   const [disable, setDisable] = useState(false);
   const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ const Login = () => {
         setError(false);
       }, 3000);
     } else {
+      setError(false)
       setDisable(true);
       setLoader(true);
       action
@@ -47,7 +49,7 @@ const Login = () => {
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
-              routes: [{name: 'bottomTab'}],
+              routes: [{ name: 'bottomTab' }],
             }),
           );
         })
@@ -61,10 +63,10 @@ const Login = () => {
 
   return (
     <View style={styles.login__container}>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{ flex: 1 }}>
         {error && alert('Check your field ')}
         <View style={styles.login__top}>
-          <View style={{position: 'relative', flex: 1}}>
+          <View style={{ position: 'relative', flex: 1 }}>
             <Image
               style={styles.login__image}
               resizeMode={'cover'}
@@ -74,7 +76,7 @@ const Login = () => {
               <SvgXml xml={logo} />
             </View>
             <Text style={styles.login__heading}>
-              <Typo style={{fontSize: 32}} children={'Sign In'} />
+              <Typo style={{ fontSize: 32 }} children={'Sign In'} />
             </Text>
             <View style={styles.login__inputContainer}>
               <Input
@@ -94,7 +96,7 @@ const Login = () => {
                 <Button
                   disable={disable}
                   onClick={() => submit()}
-                  customStyle={{width: '70%'}}
+                  customStyle={{ width: '70%' }}
                   text={
                     <Typo
                       children={

@@ -40,17 +40,17 @@ export const styles = StyleSheet.create({
         top: 50
     },
     hone__header: {
-
         paddingHorizontal: 15,
+        marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
     },
     home__subHeader: {
         // alignItems: 'flex-end',
-        position : 'absolute',
-        right : -6,
-        top : 60
+        position: 'absolute',
+        right: -6,
+        top: 70
     },
     home__subHeaderIcon: {
         marginHorizontal: 10,
@@ -99,6 +99,8 @@ export const styles = StyleSheet.create({
     },
     home__bottomButton: {
         backgroundColor: 'transparent',
+        alignItems: 'center',
+        justifyContent: 'center',
         minWidth: 170,
         height: 50,
         borderWidth: 2, borderColor: colors.white

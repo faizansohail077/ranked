@@ -10,6 +10,9 @@ import {
   submitSelfie,
   getAnalytics,
   getTimelineData,
+  updateSelfScore,
+  updateProfileData,
+  getSelfScore
 } from './auth';
 
 export {
@@ -24,4 +27,7 @@ export {
   submitSelfie,
   getAnalytics,
   getTimelineData,
+  updateSelfScore,
+  updateProfileData,
+  getSelfScore
 };

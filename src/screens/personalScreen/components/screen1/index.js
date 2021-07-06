@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   Text,
@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {styles} from './style';
-import {Button, Input, Typo} from '../../../../components';
+import { styles } from './style';
+import { Button, Input, Typo } from '../../../../components';
 import zip from '../../../../assets/zip';
 import profile from '../../../../assets/profile';
 import path from '../../../../assets/path';
@@ -15,11 +15,11 @@ import location from '../../../../assets/location';
 import calender from '../../../../assets/calender';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import {useDispatch} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as actions from '../../../../store/actions';
 
-const Screen1 = ({onPress}) => {
+const Screen1 = ({ onPress }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [showdate, setShowDate] = useState('');
 
@@ -44,7 +44,7 @@ const Screen1 = ({onPress}) => {
   const [username, setUserName] = useState('');
   const [city, setCity] = useState('');
   const [zipCode, setZipCode] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
   const [disable, setDisable] = useState(false);
   const [loader, setLoader] = useState(false);
   const [zipError, setZipError] = useState(false);
@@ -83,6 +83,7 @@ const Screen1 = ({onPress}) => {
         setError(false);
       }, 3000);
     } else {
+      setError(false)
       setDisable(true);
       setLoader(true);
       action
@@ -103,11 +104,11 @@ const Screen1 = ({onPress}) => {
   }
   return (
     <View style={styles.screen1__container}>
-      <ScrollView style={{flex: 1}}>
+      <ScrollView style={{ flex: 1 }}>
         <Input
           value={username}
           onChangeText={e => setUserName(e)}
-          customContainerStyle={{marginVertical: 30}}
+          customContainerStyle={{ marginVertical: 30 }}
           icon={profile}
           placeholder={'Full Name'}
         />
@@ -115,7 +116,7 @@ const Screen1 = ({onPress}) => {
           <Input
             editable={false}
             value={showdate}
-            customContainerStyle={{marginVertical: 30}}
+            customContainerStyle={{ marginVertical: 30 }}
             icon={calender}
             placeholder={'Date of birth'}
           />
@@ -123,24 +124,24 @@ const Screen1 = ({onPress}) => {
         <Input
           value={country}
           onChangeText={e => setCountry(e)}
-          customContainerStyle={{marginVertical: 30}}
+          customContainerStyle={{ marginVertical: 30 }}
           icon={path}
           placeholder={'Country'}
         />
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <Input
             value={city}
             onChangeText={e => setCity(e)}
-            customStyle={{width: '60%'}}
-            customContainerStyle={{width: '50%'}}
+            customStyle={{ width: '60%' }}
+            customContainerStyle={{ width: '50%' }}
             icon={location}
             placeholder={'City'}
           />
           <Input
             value={zipCode}
             onChangeText={e => setZipCode(e)}
-            customStyle={{width: '65%'}}
-            customContainerStyle={{width: '50%'}}
+            customStyle={{ width: '65%' }}
+            customContainerStyle={{ width: '50%' }}
             icon={zip}
             placeholder={'Zip code'}
           />
@@ -148,7 +149,7 @@ const Screen1 = ({onPress}) => {
         <View style={styles.screen1__btnContainer}>
           <Button
             disable={disable}
-            customStyle={{width: '60%'}}
+            customStyle={{ width: '60%' }}
             onClick={() => submit()}
             text={
               <Typo

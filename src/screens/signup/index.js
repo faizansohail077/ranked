@@ -52,10 +52,10 @@ const SignUp = () => {
             setTimeout(() => {
                 setError(false)
             }, 3000)
-            setError(false)
         }
 
         else {
+            setError(false)
             setDisable(true)
             setLoader(true)
             action.signUp(email, password, username).then(() => {
@@ -94,7 +94,7 @@ const SignUp = () => {
                             <View style={styles.signpup__button}>
                                 <Button disable={disable} customStyle={{ width: '70%' }} onClick={() => SignUp()} text={<Typo children={loader ? <ActivityIndicator color="white" size="small" /> : "Register"} />} />
                                 <Text style={styles.signpup__Text}>Already have an accoung?</Text>
-                                <Text onPress={()=>navigation.goBack()} style={styles.signpup__signInText}>Sign In</Text>
+                                <Text onPress={() => navigation.goBack()} style={styles.signpup__signInText}>Sign In</Text>
                             </View>
                         </View>
                     </View>

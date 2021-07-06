@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     stepper__text: {
         color: colors.black,
         fontSize: 48,
-        fontWeight: 'bold'
+        fontFamily: 'unicodeimpact'
     },
     personalData__container: {
         flex: 1,

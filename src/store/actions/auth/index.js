@@ -101,6 +101,73 @@ export const profileData = (username, dob, country, city, zipCode) => {
     });
   };
 };
+
+export const updateProfileData = (username, dob, country, city, zipCode) => {
+  return dispatch => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let result = await firestore()
+          .collection('Users')
+          .doc(auth().currentUser.uid)
+          .update({
+            fullname: username,
+            dob: dob,
+            country: country,
+            city: city,
+            zipCode: zipCode,
+            user_id: auth().currentUser.uid,
+          });
+        resolve(result);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+};
+
+
+
+export const updateSelfScore = (score) => {
+  return dispatch => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let result = await firestore()
+          .collection('Users')
+          .doc(auth().currentUser.uid)
+          .get()
+        let selfieDocument = await firestore().collection("Selfies").doc(result?.data()?.selfies[result?.data()?.selfies?.length - 1]).update({
+          self_score: score
+        })
+        resolve()
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+};
+export const getSelfScore = (score) => {
+  return dispatch => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let result = await firestore()
+          .collection('Users')
+          .doc(auth().currentUser.uid)
+          .get()
+        let selfieDocument = await firestore().collection("Selfies").doc(result?.data()?.selfies[result?.data()?.selfies?.length - 1]).get()
+        resolve(selfieDocument?.data())
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+};
+
+
+
+
+
+
+
 export const genderData = (gender, longitude, latitude) => {
   return dispatch => {
     return new Promise(async (resolve, reject) => {
@@ -130,11 +197,11 @@ export const profileImage = (image, score) => {
       try {
         let reference = storage().ref(
           'profilePics/' +
-            auth().currentUser.uid +
-            '/' +
-            auth().currentUser.uid +
-            Date.now() +
-            '.jpg',
+          auth().currentUser.uid +
+          '/' +
+          auth().currentUser.uid +
+          Date.now() +
+          '.jpg',
         );
         if (image.indexOf('https') == -1) {
           let task = reference.putFile(image);
@@ -148,7 +215,7 @@ export const profileImage = (image, score) => {
                 step: null,
               });
             createSelfie(e, score);
-            resolve(upload).catch(e => {});
+            resolve(upload).catch(e => { });
           });
         } else {
           createSelfie(image, score);
@@ -200,7 +267,7 @@ export const getUser = () => {
           .then(documentSnapshot => {
             if (documentSnapshot.exists) {
               resolve(documentSnapshot.data());
-              dispatch({type: 'USER', payload: documentSnapshot.data()});
+              dispatch({ type: 'USER', payload: documentSnapshot.data() });
             }
           });
       } catch (e) {
@@ -245,7 +312,7 @@ export const getProfilePhoto = () => {
                     }
                   });
                 } else {
-                  profileData.push({...doc.data(), rating: null});
+                  profileData.push({ ...doc.data(), rating: null });
                 }
                 if (profileData?.length === querySnapshotSelfies.size) {
                   resolve(profileData);
@@ -264,14 +331,13 @@ export const getProfilePhoto = () => {
 };
 
 export const postSelefieId = async query => {
-  const {data} = await functions()
+  const { data } = await functions()
     .httpsCallable(
-      `helloWorld?selfie_id=${query}&currentUser_id=${
-        auth()?.currentUser?.uid
+      `helloWorld?selfie_id=${query}&currentUser_id=${auth()?.currentUser?.uid
       }`,
     )()
-    .then(response => {})
-    .catch(err => {});
+    .then(response => { })
+    .catch(err => { });
 };
 
 export const getTimelineData = () => {

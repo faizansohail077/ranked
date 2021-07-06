@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly',
         marginHorizontal: 20,
-        marginBottom: 10
+        marginTop: 20
     },
     analytics__porgressTop: {
         alignItems: 'center',
@@ -81,7 +81,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         flex: 1,
-        borderRadius: 30
+        borderRadius: 30,
     },
     analytics__bottomSubView: {
         backgroundColor: colors.black2,

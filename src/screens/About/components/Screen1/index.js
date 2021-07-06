@@ -1,18 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {Text, View, Image, TouchableOpacity} from 'react-native';
-import {Typo, Button} from '../../../../components';
+import React, { useEffect, useState } from 'react';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { Typo, Button } from '../../../../components';
 import LinearGradient from 'react-native-linear-gradient';
 import ToggleSwitch from 'toggle-switch-react-native';
-import {styles} from './style';
-import {SvgXml} from 'react-native-svg';
+import { styles } from './style';
+import { SvgXml } from 'react-native-svg';
 import othersvg from '../../../../assets/othersvg';
 import maleSvg from '../../../../assets/maleSvg';
-import femalesvg from '../../../../assets/femalesvg';
+import femalesvg2 from '../../../../assets/femalesvg';
+import femalesvg from '../../../../assets/femalesvg2';
+
 import allsvg from '../../../../assets/allsvg';
 import * as actions from '../../../../store/actions';
-import {useDispatch} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {ActivityIndicator} from 'react-native-paper';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActivityIndicator } from 'react-native-paper';
 
 const Screen1 = () => {
   const [toggle, setToggle] = useState(false);
@@ -54,12 +56,12 @@ const Screen1 = () => {
   const submit = () => {
     if (toggle && value !== null) {
       setLoader(true);
-      dispatch({type: 'selectedValues', payload: {gender: value}});
+      dispatch({ type: 'selectedValues', payload: { gender: value } });
       action
         .getAnalytics(null, value)
         .then(res => {
           setLoader(false);
-          dispatch({type: 'ANALYTICS', payload: res});
+          dispatch({ type: 'ANALYTICS', payload: res });
         })
         .catch(err => {
           setLoader(false);
@@ -75,7 +77,7 @@ const Screen1 = () => {
           onColor="white"
           offColor="white"
           size="small"
-          thumbOnStyle={{color: 'black', backgroundColor: '#E4576C'}}
+          thumbOnStyle={{ color: 'black', backgroundColor: '#E4576C' }}
           thumbOffStyle={{
             color: 'black',
             backgroundColor: 'gray',
@@ -84,8 +86,8 @@ const Screen1 = () => {
           onToggle={isOn => setToggle(isOn)}
         />
         <Typo
-          children={!toggle ? 'disable' : 'Applied'}
-          style={{fontSize: 10, paddingTop: 10}}
+          children={!toggle ? 'Disable' : 'Applied'}
+          style={{ fontSize: 10, paddingTop: 10 }}
         />
       </View>
       <View style={toggle ? styles.screen1__center : styles.screen1__disable}>
@@ -97,8 +99,8 @@ const Screen1 = () => {
           <TouchableOpacity activeOpacity={0.8} onPress={() => selectAll()}>
             <View style={styles.screen1__imageView}>
               <LinearGradient
-                start={{x: 0.1, y: 0.55}}
-                end={{x: 0.5, y: 1.0}}
+                start={{ x: 0.1, y: 0.55 }}
+                end={{ x: 0.5, y: 1.0 }}
                 locations={[0.5, 0.6]}
                 colors={
                   activeAll ? ['#00a6d1', '#00a6d1'] : ['#676a6b', '#565859']
@@ -113,7 +115,7 @@ const Screen1 = () => {
               </LinearGradient>
               <Typo
                 children="All"
-                style={{fontSize: 18, textAlign: 'center'}}
+                style={{ fontSize: 18, textAlign: 'center' }}
               />
             </View>
           </TouchableOpacity>
@@ -122,8 +124,8 @@ const Screen1 = () => {
             onPress={() => setActiveMale(!activeMale)}>
             <View style={styles.screen1__imageView}>
               <LinearGradient
-                start={{x: 0.1, y: 0.55}}
-                end={{x: 0.5, y: 1.0}}
+                start={{ x: 0.1, y: 0.55 }}
+                end={{ x: 0.5, y: 1.0 }}
                 locations={[0.5, 0.6]}
                 colors={
                   activeMale ? ['#00a6d1', '#00a6d1'] : ['#676a6b', '#565859']
@@ -138,7 +140,7 @@ const Screen1 = () => {
               </LinearGradient>
               <Typo
                 children="Male"
-                style={{fontSize: 18, textAlign: 'center'}}
+                style={{ fontSize: 18, textAlign: 'center' }}
               />
             </View>
           </TouchableOpacity>
@@ -148,8 +150,8 @@ const Screen1 = () => {
             onPress={() => setActiveFemale(!activeFemale)}>
             <View style={styles.screen1__imageView}>
               <LinearGradient
-                start={{x: 0.1, y: 0.55}}
-                end={{x: 0.5, y: 1.0}}
+                start={{ x: 0.1, y: 0.55 }}
+                end={{ x: 0.5, y: 1.0 }}
                 locations={[0.5, 0.6]}
                 colors={
                   activeFemale ? ['#00a6d1', '#00a6d1'] : ['#676a6b', '#565859']
@@ -164,7 +166,7 @@ const Screen1 = () => {
               </LinearGradient>
               <Typo
                 children="Female"
-                style={{fontSize: 18, textAlign: 'center'}}
+                style={{ fontSize: 18, textAlign: 'center' }}
               />
             </View>
           </TouchableOpacity>
@@ -174,8 +176,8 @@ const Screen1 = () => {
             onPress={() => setActiveOther(!activeOther)}>
             <View style={styles.screen1__imageView}>
               <LinearGradient
-                start={{x: 0.1, y: 0.55}}
-                end={{x: 0.5, y: 1.0}}
+                start={{ x: 0.1, y: 0.55 }}
+                end={{ x: 0.5, y: 1.0 }}
                 locations={[0.5, 0.6]}
                 colors={
                   activeOther ? ['#00a6d1', '#00a6d1'] : ['#676a6b', '#565859']
@@ -190,16 +192,16 @@ const Screen1 = () => {
               </LinearGradient>
               <Typo
                 children="Other"
-                style={{fontSize: 18, textAlign: 'center'}}
+                style={{ fontSize: 18, textAlign: 'center' }}
               />
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{marginTop: 20, alignItems: 'center'}}>
+        <View style={{ marginTop: 20, alignItems: 'center' }}>
           <Button
             onClick={() => submit()}
             disable={!toggle && disable}
-            customStyle={{marginTop: 10}}
+            customStyle={{ marginTop: 10 }}
             text={
               loader ? <ActivityIndicator size="small" color="white" /> : 'Done'
             }

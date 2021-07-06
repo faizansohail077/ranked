@@ -1,19 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {Dimensions, FlatList, Text, View, Image} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {SvgXml} from 'react-native-svg';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, FlatList, Text, View, Image } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SvgXml } from 'react-native-svg';
 import arrow from '../../assets/arrow';
 import moment from 'moment';
-import {styles} from './style';
+import { styles } from './style';
 import * as actions from '../../store/actions';
 
-import {Typo} from '../../components';
-import {bindActionCreators} from 'redux';
-import {useNavigation} from '@react-navigation/core';
-import {useDispatch} from 'react-redux';
-import {ActivityIndicator} from 'react-native-paper';
+import { Typo } from '../../components';
+import { bindActionCreators } from 'redux';
+import { useNavigation } from '@react-navigation/core';
+import { useDispatch } from 'react-redux';
+import { ActivityIndicator } from 'react-native-paper';
 
 const ProfileHistory = () => {
+
   const [response, setResponse] = useState('');
   const [loader, setLoader] = useState(true);
   const navigation = useNavigation();
@@ -31,12 +32,12 @@ const ProfileHistory = () => {
           setLoader(false);
         }
       })
-      .catch(err => {});
+      .catch(err => { });
   }, []);
 
   return (
     <View style={styles.profile__container}>
-      <View style={{marginBottom: 15}}>
+      <View style={{ marginBottom: 15 }}>
         <View style={styles.profile__header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <View style={styles.profile__headerLeft}>
@@ -44,9 +45,9 @@ const ProfileHistory = () => {
             </View>
           </TouchableOpacity>
           <View>
-            <Typo children={'Profile'} />
+            <Typo children={'Profile History'} />
           </View>
-          <View style={{width: 13.5, padding: 15}}></View>
+          <View style={{ width: 13.5, padding: 15 }}></View>
         </View>
       </View>
       {loader ? (
@@ -54,21 +55,21 @@ const ProfileHistory = () => {
       ) : (
         <FlatList
           numColumns={2}
-          contentContainerStyle={{alignItems: 'center'}}
+          contentContainerStyle={{ alignItems: 'center' }}
           keyExtractor={item => item.id}
           data={response}
-          renderItem={({item}) => {
+          renderItem={({ item }) => {
             return (
               <View style={styles.profile__ImageContainer}>
                 <Image
                   style={styles.profile__image}
                   resizeMode={'cover'}
-                  source={{uri: item?.selfie_url}}
+                  source={{ uri: item?.selfie_url }}
                 />
                 <View>
                   <Typo
                     style={styles.profile__topText}
-                    children={`UPDATED, ${moment(item?.created_at).format(
+                    children={`UPDATED: ${moment(item?.created_at).format(
                       'Do MMM YY',
                     )}`}
                   />
@@ -98,15 +99,15 @@ const ProfileHistory = () => {
                     bottom: '5%',
                     left: '3%',
                   }}>
-                  <View style={{flexGrow: 1}}>
+                  <View style={{ flexGrow: 1 }}>
                     <Typo
-                      style={{textAlign: 'center', fontSize: 8}}
+                      style={{ textAlign: 'center', fontSize: 8 }}
                       children={'Overall Score'}
                     />
                   </View>
-                  <View style={{flexGrow: 0}}>
+                  <View style={{ flexGrow: 0 }}>
                     <Typo
-                      style={{textAlign: 'center', fontSize: 8}}
+                      style={{ textAlign: 'center', fontSize: 8 }}
                       children={'Self Score'}
                     />
                   </View>

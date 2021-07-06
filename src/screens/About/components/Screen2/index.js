@@ -1,18 +1,18 @@
-import React, {useState} from 'react';
-import {View, TouchableOpacity} from 'react-native';
-import {Typo, Button} from '../../../../components';
+import React, { useState } from 'react';
+import { View, TouchableOpacity } from 'react-native';
+import { Typo, Button } from '../../../../components';
 import ToggleSwitch from 'toggle-switch-react-native';
-import {styles} from './style';
+import { styles } from './style';
 import Slider from 'react-native-custom-slider';
-import {SvgXml} from 'react-native-svg';
+import { SvgXml } from 'react-native-svg';
 import slider from '../../../../assets/slider';
 import plus from '../../../../assets/plus';
 import minus from '../../../../assets/minus';
 import * as actions from '../../../../store/actions';
-import {useDispatch, useSelector} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {useEffect} from 'react';
-import {ActivityIndicator} from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { useEffect } from 'react';
+import { ActivityIndicator } from 'react-native-paper';
 
 const Screen2 = () => {
   const [toggle, setToggle] = useState(false);
@@ -21,7 +21,7 @@ const Screen2 = () => {
   const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const action = bindActionCreators(actions, dispatch);
-  const {selectedValues} = useSelector(state => state.authReducer);
+  const { selectedValues } = useSelector(state => state.authReducer);
 
   const addValue = () => {
     if (value >= 0 && value < 50) {
@@ -38,12 +38,12 @@ const Screen2 = () => {
     setDisable(true);
     dispatch({
       type: 'selectedValues',
-      payload: {...selectedValues, age: value},
+      payload: { ...selectedValues, age: value },
     });
     action
       .getAnalytics(value, null)
       .then(res => {
-        dispatch({type: 'ANALYTICS', payload: res});
+        dispatch({ type: 'ANALYTICS', payload: res });
         setLoader(false);
         setDisable(false);
       })
@@ -61,7 +61,7 @@ const Screen2 = () => {
           onColor="white"
           offColor="white"
           size="small"
-          thumbOnStyle={{color: 'black', backgroundColor: '#E4576C'}}
+          thumbOnStyle={{ color: 'black', backgroundColor: '#E4576C' }}
           thumbOffStyle={{
             color: 'black',
             backgroundColor: 'gray',
@@ -70,8 +70,8 @@ const Screen2 = () => {
           onToggle={isOn => setToggle(isOn)}
         />
         <Typo
-          children={!toggle ? 'disable' : 'Applied'}
-          style={{fontSize: 14, paddingTop: 10}}
+          children={!toggle ? 'Disable' : 'Applied'}
+          style={{ fontSize: 10, paddingTop: 10 }}
         />
       </View>
 
@@ -80,17 +80,17 @@ const Screen2 = () => {
           style={styles.screen2__centerHeading}
           children={'Who can rank you?'}
         />
-        <Typo style={styles.screen2__centerHeading} children={value} />
+        <Typo style={styles.screen2__centerHeading2} children={value} />
 
         <View style={styles.slider__container}>
           <TouchableOpacity>
             <SvgXml
               onPress={() => removeValue()}
-              style={{marginRight: 10}}
+              style={{ marginRight: 10 }}
               xml={minus}
             />
           </TouchableOpacity>
-          <View style={{flexGrow: 1}}>
+          <View style={{ flexGrow: 1 }}>
             <View
               style={{
                 borderTopLeftRadius: 10,
@@ -99,39 +99,39 @@ const Screen2 = () => {
                 backgroundColor: '#FFCACE',
               }}
             />
-            <Typo style={{fontSize: 10, textAlign: 'center'}} children={'18'} />
+            <Typo style={{ fontSize: 10, textAlign: 'center' }} children={'18'} />
           </View>
 
-          <View style={{flexGrow: 1}}>
-            <View style={{height: 20, backgroundColor: '#FFA7AD'}} />
-            <Typo style={{fontSize: 10, textAlign: 'center'}} children={'22'} />
+          <View style={{ flexGrow: 1 }}>
+            <View style={{ height: 20, backgroundColor: '#FFA7AD' }} />
+            <Typo style={{ fontSize: 10, textAlign: 'center' }} children={'22'} />
           </View>
 
-          <View style={{flexGrow: 1}}>
-            <View style={{height: 20, backgroundColor: '#FF848C'}} />
-            <Typo style={{fontSize: 10, textAlign: 'center'}} children={'28'} />
+          <View style={{ flexGrow: 1 }}>
+            <View style={{ height: 20, backgroundColor: '#FF848C' }} />
+            <Typo style={{ fontSize: 10, textAlign: 'center' }} children={'28'} />
           </View>
 
-          <View style={{flexGrow: 1}}>
-            <View style={{height: 20, backgroundColor: '#FF616C'}} />
-            <Typo style={{fontSize: 10, textAlign: 'center'}} children={'30'} />
+          <View style={{ flexGrow: 1 }}>
+            <View style={{ height: 20, backgroundColor: '#FF616C' }} />
+            <Typo style={{ fontSize: 10, textAlign: 'center' }} children={'30'} />
           </View>
 
-          <View style={{flexGrow: 1}}>
-            <View style={{height: 20, backgroundColor: '#FF4F5B'}} />
-            <Typo style={{fontSize: 10, textAlign: 'center'}} children={'35'} />
+          <View style={{ flexGrow: 1 }}>
+            <View style={{ height: 20, backgroundColor: '#FF4F5B' }} />
+            <Typo style={{ fontSize: 10, textAlign: 'center' }} children={'35'} />
           </View>
 
-          <View style={{flexGrow: 1}}>
-            <View style={{height: 20, backgroundColor: '#FF4F5B'}} />
-            <Typo style={{fontSize: 10, textAlign: 'center'}} children={'40'} />
+          <View style={{ flexGrow: 1 }}>
+            <View style={{ height: 20, backgroundColor: '#FF4F5B' }} />
+            <Typo style={{ fontSize: 10, textAlign: 'center' }} children={'40'} />
           </View>
 
-          <View style={{flexGrow: 1}}>
-            <View style={{height: 20, backgroundColor: '#982F36'}} />
-            <Typo style={{fontSize: 10, textAlign: 'center'}} children={'45'} />
+          <View style={{ flexGrow: 1 }}>
+            <View style={{ height: 20, backgroundColor: '#982F36' }} />
+            <Typo style={{ fontSize: 10, textAlign: 'center' }} children={'45'} />
           </View>
-          <View style={{flexGrow: 1}}>
+          <View style={{ flexGrow: 1 }}>
             <View
               style={{
                 borderTopRightRadius: 10,
@@ -140,11 +140,11 @@ const Screen2 = () => {
                 backgroundColor: '#4B171B',
               }}
             />
-            <Typo style={{fontSize: 10, textAlign: 'center'}} children={'50'} />
+            <Typo style={{ fontSize: 10, textAlign: 'center' }} children={'50'} />
           </View>
           <Slider
             value={value}
-            trackStyle={{backgroundColor: 'transparent'}}
+            trackStyle={{ backgroundColor: 'transparent' }}
             minimumValue={18}
             step={1}
             style={{
@@ -178,17 +178,17 @@ const Screen2 = () => {
           <TouchableOpacity>
             <SvgXml
               onPress={() => addValue()}
-              style={{marginLeft: 10}}
+              style={{ marginLeft: 10 }}
               xml={plus}
             />
           </TouchableOpacity>
         </View>
 
-        <View style={{marginTop: 20, alignItems: 'center'}}>
+        <View style={{ marginTop: 20, alignItems: 'center' }}>
           <Button
             onClick={() => submit()}
             disable={!toggle && disable}
-            customStyle={{marginTop: 10}}
+            customStyle={{ marginTop: 10 }}
             text={
               loader ? <ActivityIndicator size="small" color="white" /> : 'Done'
             }

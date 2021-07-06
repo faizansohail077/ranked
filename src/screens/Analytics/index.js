@@ -1,26 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
-import {SvgXml} from 'react-native-svg';
+import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
+import { SvgXml } from 'react-native-svg';
 import filter from '../../assets/filterWhite';
-import {Typo} from '../../components';
-import {styles} from './style';
+import { Typo } from '../../components';
+import { styles } from './style';
 import * as Progress from 'react-native-progress';
 import other from '../../assets/other2';
 import multiple from '../../assets/multiple';
 import calender from '../../assets/starCalender';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as actions from '../../store/actions';
 import About from '../About';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import {useIsFocused} from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 
 const Analytics = () => {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
-  const {selectedValues} = useSelector(state => state.authReducer);
+  const { selectedValues } = useSelector(state => state.authReducer);
   const [rating, setRating] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [selfScore, setSelfScore] = useState('');
@@ -38,13 +38,10 @@ const Analytics = () => {
       .orderBy('created_at', 'desc')
       .limit(1)
       .get();
-    console.log('get analytics started');
     action.getAnalytics().then(res => {
-      console.log('get analytics started response');
       if (res == 'no data is avaliable') {
         alert('no data avaliable');
       } else {
-        console.log('get analytics started else response');
 
         setAnalytics(res);
         let self =
@@ -63,14 +60,12 @@ const Analytics = () => {
   }, [isFocused]);
 
   useEffect(() => {
-    console.log('get analytics started');
     action
       .getAnalytics()
       .then(res => {
         setAnalytics(res);
       })
       .catch(err => {
-        console.log(err, 'ree');
       });
   }, []);
 
@@ -115,11 +110,11 @@ const Analytics = () => {
   return (
     <View style={styles.analytics__container}>
       <View style={styles.analytics__top}>
-        <View style={{width: 29.458}}></View>
+        <View style={{ width: 29.458 }}></View>
         <View>
           <Typo
             children={'Analytics'}
-            style={{fontSize: 38, fontFamily: 'ArialRoundedBold'}}
+            style={{ fontSize: 38, fontFamily: 'ArialRoundedBold' }}
           />
         </View>
         <View>
@@ -135,8 +130,8 @@ const Analytics = () => {
                 analytics?.rating && analytics?.rating
                   ? analytics?.rating
                   : rating && rating
-                  ? rating
-                  : '0'
+                    ? rating
+                    : '0'
               }
             />
             <View style={styles.analytics__subTextView}>
@@ -146,7 +141,7 @@ const Analytics = () => {
           </View>
         </View>
       </View>
-      <View style={{marginTop: 20}}>
+      <View style={{ marginTop: 20 }}>
         <Typo
           style={{
             color: 'white',
@@ -159,7 +154,7 @@ const Analytics = () => {
       <View style={styles.analytics__progrssView}>
         <View>
           <Typo
-            style={{fontFamily: 'ArialRoundedBold'}}
+            style={{ fontFamily: 'ArialRoundedBold' }}
             children={'Self Score'}
           />
         </View>
@@ -190,14 +185,14 @@ const Analytics = () => {
                   width: 80,
                   borderRadius: 100,
                 }}>
-                <Text style={{fontSize: 40, fontFamily: 'unicodeimpact'}}>
+                <Text style={{ fontSize: 40, fontFamily: 'unicodeimpact' }}>
                   {selfScore ? selfScore : 0}
                 </Text>
               </View>
             )}
             borderColor="gray"
             showsText={true}
-            style={{backgroundColor: '#011629', position: 'relative'}}
+            style={{ backgroundColor: '#011629', position: 'relative' }}
             progress={selfScore / 10}
             size={110}>
             <View></View>
@@ -208,21 +203,21 @@ const Analytics = () => {
       <View style={styles.analytics__bottomView}>
         <View style={styles.analytics__bottomSubView}>
           <View style={styles.analytics__bottomViewBottom}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <SvgXml xml={other} />
               <Typo
                 children={gender && gender ? `${gender}` : 'default'}
-                style={{fontSize: 16}}
+                style={{ fontSize: 16 }}
               />
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <SvgXml xml={calender} />
               <Typo
                 children={largest && largest ? `<${largest}` : 'default'}
-                style={{paddingLeft: 2, fontSize: 16}}
+                style={{ paddingLeft: 2, fontSize: 16 }}
               />
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <SvgXml xml={multiple} />
               <Typo
                 children={
@@ -230,7 +225,7 @@ const Analytics = () => {
                     ? selectedValues.miles
                     : 'default'
                 }
-                style={{paddingLeft: 2, fontSize: 12}}
+                style={{ paddingLeft: 2, fontSize: 16 }}
               />
             </View>
           </View>

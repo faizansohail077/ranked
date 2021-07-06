@@ -9,7 +9,6 @@ const customStyles = {
     currentStepIndicatorSize: 80,
     separatorStrokeWidth: 10,
     currentStepStrokeWidth: 1,
-    fontFamily: "unicodeimpact",
     stepStrokeCurrentColor: 'white',
     stepStrokeWidth: 3,
     stepStrokeFinishedColor: 'white',
@@ -25,8 +24,6 @@ const customStyles = {
     stepIndicatorLabelFinishedColor: 'blue',
     stepIndicatorLabelUnFinishedColor: 'gray',
     labelColor: 'red',
-    labelFontFamily:'unicodeimpact',
-    labelSize: 13,
     currentStepLabelColor: 'red'
 }
 
@@ -50,6 +47,7 @@ const PersonalData = ({ route }) => {
         <View style={currentPosition === 2 ? styles.personalDataScreen2__container : styles.personalData__container}>
             <View style={{ marginVertical: 30 }}>
                 <StepIndicator
+
                     customStyles={customStyles}
                     currentPosition={currentPosition}
                     stepCount={3}
