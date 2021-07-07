@@ -32,12 +32,11 @@ import * as actions from '../../store/actions';
 import { bindActionCreators } from 'redux';
 import { ActivityIndicator } from 'react-native-paper';
 import GetLocation from 'react-native-get-location';
+import { request, PERMISSIONS } from 'react-native-permissions';
 
 const Home = () => {
   const { user } = useSelector(state => state.authReducer);
-  const age =
-    new Date().getFullYear() -
-    new Date(user?.dob?.seconds * 1000).getFullYear();
+  const age = new Date().getFullYear() - new Date(user?.dob?.seconds * 1000).getFullYear();
   const [score, setScore] = useState(2);
   const [refreshing, setRefreshing] = useState(false);
   const [filterValue, setFilterValue] = useState(false);
@@ -62,19 +61,23 @@ const Home = () => {
   const CarouselRef2 = useRef(null);
 
   useEffect(() => {
-    GetLocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 15000,
-    })
-      .then(location => {
-        setLong(location?.longitude);
-        setLat(location?.latitude);
+    request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(result => {
+      GetLocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 15000,
       })
-      .catch(error => {
-        const { code, message } = error;
-        console.warn(code, message);
-      });
+        .then(location => {
+          setLong(location?.longitude);
+          setLat(location?.latitude);
+        })
+        .catch(error => {
+          alert("Open Your Location")
+          const { code, message } = error;
+          console.warn(code, message);
+        });
+    })
   }, []);
+
   useEffect(() => {
     getTimelineData();
   }, []);

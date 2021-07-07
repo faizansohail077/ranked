@@ -15,7 +15,6 @@ import { useIsFocused } from '@react-navigation/native';
 
 const Screen3 = () => {
   const isFocused = useIsFocused();
-
   const [toggle, setToggle] = useState(false);
   const [disable, setDisable] = useState(true);
   const [value, setValue] = useState(0);
@@ -25,7 +24,6 @@ const Screen3 = () => {
   const dispatch = useDispatch();
   const action = bindActionCreators(actions, dispatch);
   const { selectedValues } = useSelector(state => state.authReducer);
-
   const minus = () => {
     if (value > 0) {
       setValue(value - 5);
@@ -39,14 +37,13 @@ const Screen3 = () => {
 
   useEffect(() => {
     action.getAnalytics().then(res => {
-      let location = res?.docData?.map(doc => doc?.location);
-      setRatingLocation(res?.docData);
+      let location = res?.analyticsResult?.map(doc => doc?.location);
+      setRatingLocation(res?.analyticsResult);
       action.getUser().then(user => {
         setUserLocation(user?.location);
       });
     });
   }, []);
-
   useEffect(() => {
     ratingLocation?.map(i => {
       const miles = calculateDistance(
@@ -55,14 +52,14 @@ const Screen3 = () => {
         i?.location?.lat,
         i?.location?.long,
       );
-      i.miles = Math.floor(miles);
+      i.miles = Math.ceil(miles);
     });
     let filterdMiles = ratingLocation?.filter(
       x => x?.miles < selectedValues?.miles,
     );
     setFilterMilesData(filterdMiles);
-  }, []);
 
+  }, []);
   useEffect(() => {
     ratingLocation?.map(i => {
       const miles = calculateDistance(
@@ -71,7 +68,7 @@ const Screen3 = () => {
         i?.location?.lat,
         i?.location?.long,
       );
-      i.miles = Math.floor(miles);
+      i.miles = Math.ceil(miles);
     });
     let filterdMiles = ratingLocation?.filter(
       x => x?.miles < selectedValues?.miles || value,
@@ -87,15 +84,13 @@ const Screen3 = () => {
         i?.location?.lat,
         i?.location?.long,
       );
-      i.miles = Math.floor(miles);
+      i.miles = Math.ceil(miles);
     });
     let filterdMiles = ratingLocation?.filter(
-      x => x?.miles < selectedValues?.miles,
+      x => x?.miles <= 1,
     );
-
     setFilterMilesData(filterdMiles);
   }, [value, isFocused]);
-
   const calculateDistance = (lat1, long1, lat2, long2) => {
     var dis = getDistance(
       { latitude: lat1, longitude: long1 },
@@ -111,7 +106,7 @@ const Screen3 = () => {
       } else {
         dispatch({
           type: 'selectedValues',
-          payload: { ...selectedValues, miles: value, fiterMilesData },
+          payload: { miles: value, fiterMilesData },
         });
         alert('miles added');
       }

@@ -19,7 +19,7 @@ import auth from '@react-native-firebase/auth';
 const Analytics = () => {
   const [rating, setRating] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-  const { analytics, age_gender } = useSelector(state => state.authReducer)
+  const { analytics, age_gender, selectedValues } = useSelector(state => state.authReducer)
   const dispatch = useDispatch();
   const action = bindActionCreators(actions, dispatch);
 
@@ -32,7 +32,7 @@ const Analytics = () => {
       alert("No Data Found")
     } else {
       if (analytics && analytics.analyticsResult && analytics.analyticsResult.length) {
-        let self = analytics?.analyticsResult?.map(doc => doc?.rating);
+        let self = selectedValues?.fiterMilesData ? selectedValues?.fiterMilesData.map(doc => doc?.rating) : analytics?.analyticsResult?.map(doc => doc?.rating);
         let count = 0;
         self?.map(item => {
           count += item;
@@ -151,7 +151,7 @@ const Analytics = () => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <SvgXml xml={multiple} />
               <Typo
-                children={'default'}
+                children={selectedValues?.miles ? selectedValues?.miles : 'default'}
                 style={{ paddingLeft: 2, fontSize: 16 }}
               />
             </View>
