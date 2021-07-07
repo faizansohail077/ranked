@@ -11,12 +11,14 @@ import femalesvg2 from '../../../../assets/femalesvg';
 import femalesvg from '../../../../assets/femalesvg2';
 import allsvg from '../../../../assets/allsvg';
 import * as actions from '../../../../store/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActivityIndicator } from 'react-native-paper';
+import { State } from 'react-native-gesture-handler';
 
 const Screen1 = () => {
-  const [toggle, setToggle] = useState(false);
+  const { age_gender } = useSelector(state => state.authReducer)
+  const [toggle, setToggle] = useState(age_gender?.gender ? true : false);
   const [disable, setDisable] = useState(true);
   const [activeMale, setActiveMale] = useState(false);
   const [activeFemale, setActiveFemale] = useState(false);

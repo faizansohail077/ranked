@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
-import { Text, View, Image, TouchableOpacity,Modal } from 'react-native'
+import { Text, View, Image, TouchableOpacity, Modal } from 'react-native'
 import { SvgXml } from 'react-native-svg'
 import arrow from '../../assets/arrow'
 import checkbox from '../../assets/Checkbox'
@@ -39,7 +39,7 @@ const screens = [
     }
 ]
 
-const About = ({openModal,modalToggle}) => {
+const About = ({ openModal, modalToggle }) => {
     const navigation = useNavigation()
     const [activescreen, setActiveScreen] = useState("screen1")
     const [activeTrue, setActiveTrue] = useState('screen1')
@@ -57,42 +57,42 @@ const About = ({openModal,modalToggle}) => {
 
     return (
         <Modal animationType="slide"
-        transparent={true}
-        visible={openModal}
-       >
-        <View style={styles.about__container}>
-            <TouchableOpacity activeOpacity={0.9} onPress={() =>modalToggle()}>
-                <View style={{ padding: 20, width: '10%' }}>
-                    <SvgXml xml={arrow} />
-                </View>
-            </TouchableOpacity>
-            <View style={styles.about__top}>
-                {
-                    screens.map((screen) => (
-                        <TouchableOpacity activeOpacity={0.9} style={{ position: 'relative' }} onPress={() => {
-                            setActiveTrue(screen.name)
-                            setActiveScreen(screen.name)
-                        }
-                        }>
-                            <View>
-                                <View style={{ height: 110 }}>
-                                    {screen.name === activeTrue ?
-                                        <Image resizeMode={"contain"} source={screen?.image2} /> :
-                                        <Image source={screen?.image} />
-                                    }
+            transparent={true}
+            visible={openModal}
+        >
+            <View style={styles.about__container}>
+                <TouchableOpacity activeOpacity={0.9} onPress={() => modalToggle()}>
+                    <View style={{ padding: 20, width: '10%' }}>
+                        <SvgXml xml={arrow} />
+                    </View>
+                </TouchableOpacity>
+                <View style={styles.about__top}>
+                    {
+                        screens.map((screen) => (
+                            <TouchableOpacity activeOpacity={0.9} style={{ position: 'relative' }} onPress={() => {
+                                setActiveTrue(screen.name)
+                                setActiveScreen(screen.name)
+                            }
+                            }>
+                                <View>
+                                    <View style={{ height: 110 }}>
+                                        {screen.name === activeTrue ?
+                                            <Image resizeMode={"contain"} source={screen?.image2} /> :
+                                            <Image source={screen?.image} />
+                                        }
+                                    </View>
                                 </View>
-                            </View>
-                        </TouchableOpacity>
-                    ))
-                }
-            </View>
+                            </TouchableOpacity>
+                        ))
+                    }
+                </View>
 
-            <View style={styles.about__screens}>
-                {
-                    _renderUIScreen(activescreen)
-                }
+                <View style={styles.about__screens}>
+                    {
+                        _renderUIScreen(activescreen)
+                    }
+                </View>
             </View>
-        </View>
         </Modal>
     )
 }

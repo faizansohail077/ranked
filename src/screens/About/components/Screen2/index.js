@@ -15,13 +15,13 @@ import { useEffect } from 'react';
 import { ActivityIndicator } from 'react-native-paper';
 
 const Screen2 = () => {
-  const [toggle, setToggle] = useState(false);
+  const { selectedValues, age_gender } = useSelector(state => state.authReducer);
+  const [toggle, setToggle] = useState(age_gender?.age ? true : false);
   const [disable, setDisable] = useState(true);
   const [value, setValue] = useState(18);
   const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const action = bindActionCreators(actions, dispatch);
-  const { selectedValues, age_gender } = useSelector(state => state.authReducer);
 
   const addValue = () => {
     if (value >= 0 && value < 50) {
