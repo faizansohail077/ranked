@@ -14,8 +14,9 @@ import { getDistance, convertDistance } from 'geolib';
 import { useIsFocused } from '@react-navigation/native';
 
 const Screen3 = () => {
+  const { selectedValues } = useSelector(state => state.authReducer);
   const isFocused = useIsFocused();
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(selectedValues?.miles ? true : false);
   const [disable, setDisable] = useState(true);
   const [value, setValue] = useState(0);
   const [fiterMilesData, setFilterMilesData] = useState(null);
@@ -23,7 +24,6 @@ const Screen3 = () => {
   const [userLocation, setUserLocation] = useState(null);
   const dispatch = useDispatch();
   const action = bindActionCreators(actions, dispatch);
-  const { selectedValues } = useSelector(state => state.authReducer);
   const minus = () => {
     if (value > 0) {
       setValue(value - 5);
