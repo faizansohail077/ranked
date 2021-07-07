@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import CountryPicker, { DARK_THEME } from 'react-native-country-picker-modal'
 import { SvgXml } from 'react-native-svg';
 import arrow from '../../assets/arrow';
 import calender from '../../assets/calender';
@@ -41,6 +42,7 @@ const EditProfile = () => {
   const [error, setError] = useState(false);
   const [loader, setLoader] = useState(false);
   const [disable, setDisable] = useState(false);
+  const [openCountryPicker, setOpenCountryPicker] = useState(false)
   const dispatch = useDispatch();
   const action = bindActionCreators(actions, dispatch);
 
@@ -144,13 +146,16 @@ const EditProfile = () => {
               placeholder={`${moment(dob).format('YYYY/M/DD')}`}
             />
           </TouchableOpacity>
-          <Input
-            value={country}
-            onChangeText={e => setCountry(e)}
-            customContainerStyle={{ marginVertical: 30 }}
-            icon={path}
-            placeholder={'United States of America'}
-          />
+          <CountryPicker containerButtonStyle={{ position: 'absolute', top: 0, bottom: 100 }} visible={openCountryPicker} onSelect={(e) => setCountry(e?.name)} theme={DARK_THEME} />
+          <TouchableOpacity activeOpacity={0.8} onPress={() => setOpenCountryPicker(!openCountryPicker)}>
+            <Input
+              value={country}
+              editable={false}
+              customContainerStyle={{ marginVertical: 30 }}
+              icon={path}
+              placeholder={'United States of America'}
+            />
+          </TouchableOpacity>
           <View style={{ flexDirection: 'row' }}>
             <Input
               onChangeText={e => setCity(e)}

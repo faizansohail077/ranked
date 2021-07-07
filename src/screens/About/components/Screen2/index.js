@@ -21,7 +21,7 @@ const Screen2 = () => {
   const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const action = bindActionCreators(actions, dispatch);
-  const { selectedValues } = useSelector(state => state.authReducer);
+  const { selectedValues, age_gender } = useSelector(state => state.authReducer);
 
   const addValue = () => {
     if (value >= 0 && value < 50) {
@@ -36,14 +36,9 @@ const Screen2 = () => {
   const submit = () => {
     setLoader(true);
     setDisable(true);
-    dispatch({
-      type: 'selectedValues',
-      payload: { ...selectedValues, age: value },
-    });
-    action
-      .getAnalytics(value, null)
+    action.getAnalytics(value, null)
       .then(res => {
-        dispatch({ type: 'ANALYTICS', payload: res });
+        dispatch({ type: 'age_gender', payload: { ...age_gender, age: value } });
         setLoader(false);
         setDisable(false);
       })

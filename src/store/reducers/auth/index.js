@@ -1,8 +1,8 @@
 const initialState = {
     user: {},
     analytics: {},
-    selectedValues: {}
-
+    selectedValues: {},
+    age_gender: {}
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -13,6 +13,8 @@ export const authReducer = (state = initialState, action) => {
             return { ...state, analytics: action.payload }
         case 'selectedValues':
             return { ...state, selectedValues: action.payload }
+        case 'age_gender':
+            return { ...state, age_gender: action.payload }
         default:
             return state
     }

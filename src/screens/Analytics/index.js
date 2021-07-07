@@ -17,96 +17,32 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 const Analytics = () => {
-  const navigation = useNavigation();
-  const { selectedValues } = useSelector(state => state.authReducer);
-  const [rating, setRating] = useState('');
+  const [rating, setRating] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-  const [selfScore, setSelfScore] = useState('');
-  const [analytics, setAnalytics] = useState([]);
-  console.log("TCL ~ file: index.js ~ line 28 ~ Analytics ~ analytics", analytics)
-  const [largest, setLargest] = useState('');
-  const [gender, setGender] = useState('');
-
+  const { analytics, age_gender } = useSelector(state => state.authReducer)
   const dispatch = useDispatch();
   const action = bindActionCreators(actions, dispatch);
 
-  // useEffect(async () => {
-  //   action.getAnalytics().then(res => {
-  //     if (res == 'no data is avaliable') {
-  //       alert('no data avaliable');
-  //     } else {
-  //       setAnalytics(res);
-  //       let self = analytics?.docData?.map(doc => doc?.rating);
-  //       setSelfScore(res?.self_score);
-  //       let count = 0;
-  //       self?.map(item => {
-  //         count += item;
-  //       });
-  //       let avg = count / self?.length
-  //       setRating(Math.floor(avg));
-  //     }
-  //   });
-  // }, [isFocused, openModal]);
-
   useEffect(() => {
-    navigation.addListener('focus', () => {
-      console.log('action started 1')
-      action
-        .getAnalytics()
-        .then(res => {
-          setAnalytics(res);
-          setSelfScore(res?.self_score)
-        })
-        .catch(err => {
-        });
-    })
+    action.getAnalytics()
   }, []);
 
   useEffect(() => {
-    navigation.addListener('focus', () => {
-      console.log('action started 2')
-      action.getAnalytics().then(res => {
-        setAnalytics(res);
-        setSelfScore(res?.self_score)
-      });
-    })
-  }, [openModal]);
-
-  useEffect(() => {
-    navigation.addListener('focus', () => {
-      if (analytics && analytics.docData && analytics.docData.length) {
-        setSelfScore(analytics?.self_score);
-        let age = analytics?.docData?.map(doc => doc.age);
-        let self = selectedValues && selectedValues?.fiterMilesData
-          ? selectedValues?.fiterMilesData?.map(doc => doc?.rating)
-          : analytics?.docData?.map(doc => doc?.rating);
-        console.log("TCL ~ file: index.js ~ line 81 ~ navigation.addListener ~ self", self)
-        let genderData = analytics?.docData?.map(doc => doc?.gender);
+    if (analytics && analytics?.err) {
+      alert("No Data Found")
+    } else {
+      if (analytics && analytics.analyticsResult && analytics.analyticsResult.length) {
+        let self = analytics?.analyticsResult?.map(doc => doc?.rating);
         let count = 0;
         self?.map(item => {
           count += item;
         });
         let avg = count / self?.length;
         setRating(Math.floor(avg));
-        let foundGender = genderData.find(
-          value => value == selectedValues?.gender,
-        );
-        let foundAge = age.find(value => value <= selectedValues?.age);
-        if (!foundGender) {
-          // alert('no gender found');
-        }
-        if (!foundAge) {
-          // alert('no age found');
-          setLargest('default');
-        } else {
-          setLargest(selectedValues?.age);
-        }
-        setGender(foundGender ? foundGender : 'default');
       } else {
       }
-    })
-
-  }, [openModal]);
+    }
+  }, [analytics]);
 
   return (
     <View style={styles.analytics__container}>
@@ -127,13 +63,7 @@ const Analytics = () => {
           <View style={styles.analytics__viewInside}>
             <Typo
               style={styles.analytics__viewText}
-              children={
-                analytics?.rating && analytics?.rating
-                  ? analytics?.rating
-                  : rating && rating
-                    ? rating
-                    : '0'
-              }
+              children={rating ? rating : '0'}
             />
             <View style={styles.analytics__subTextView}>
               <Typo style={styles.analytics__subText} children={'/'} />
@@ -187,14 +117,14 @@ const Analytics = () => {
                   borderRadius: 100,
                 }}>
                 <Text style={{ fontSize: 40, fontFamily: 'unicodeimpact' }}>
-                  {selfScore ? selfScore : 0}
+                  {analytics?.self_score ? analytics?.self_score : 0}
                 </Text>
               </View>
             )}
             borderColor="gray"
             showsText={true}
             style={{ backgroundColor: '#011629', position: 'relative' }}
-            progress={selfScore / 10}
+            progress={analytics?.self_score && analytics?.self_score / 10}
             size={110}>
             <View></View>
           </Progress.Circle>
@@ -207,25 +137,21 @@ const Analytics = () => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <SvgXml xml={other} />
               <Typo
-                children={gender && gender ? `${gender}` : 'default'}
+                children={age_gender?.gender ? age_gender?.gender : 'default'}
                 style={{ fontSize: 16 }}
               />
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <SvgXml xml={calender} />
               <Typo
-                children={largest && largest ? `<${largest}` : 'default'}
+                children={age_gender?.age ? `<${age_gender?.age}` : 'default'}
                 style={{ paddingLeft: 2, fontSize: 16 }}
               />
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <SvgXml xml={multiple} />
               <Typo
-                children={
-                  selectedValues && selectedValues?.miles
-                    ? selectedValues.miles
-                    : 'default'
-                }
+                children={'default'}
                 style={{ paddingLeft: 2, fontSize: 16 }}
               />
             </View>

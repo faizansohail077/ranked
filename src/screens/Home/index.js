@@ -180,7 +180,6 @@ const Home = () => {
         selfieId[CarouselRef2?.current?._activeItem],
       )
       .then(async () => {
-
         alert('rating successfully submitted');
         const data1 = await firestore().collection('Users').get();
         data1.docs.forEach(async doc => {

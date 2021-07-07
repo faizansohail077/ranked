@@ -9,7 +9,6 @@ import othersvg from '../../../../assets/othersvg';
 import maleSvg from '../../../../assets/maleSvg';
 import femalesvg2 from '../../../../assets/femalesvg';
 import femalesvg from '../../../../assets/femalesvg2';
-
 import allsvg from '../../../../assets/allsvg';
 import * as actions from '../../../../store/actions';
 import { useDispatch } from 'react-redux';
@@ -56,12 +55,11 @@ const Screen1 = () => {
   const submit = () => {
     if (toggle && value !== null) {
       setLoader(true);
-      dispatch({ type: 'selectedValues', payload: { gender: value } });
       action
         .getAnalytics(null, value)
         .then(res => {
           setLoader(false);
-          dispatch({ type: 'ANALYTICS', payload: res });
+          dispatch({ type: 'age_gender', payload: { gender: value } });
         })
         .catch(err => {
           setLoader(false);

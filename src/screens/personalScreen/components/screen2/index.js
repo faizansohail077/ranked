@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
+
 } from 'react-native';
 import { styles } from './style';
 import male from '../../../../assets/male.png';
@@ -34,6 +35,8 @@ const Screen2 = ({ onPress }) => {
     { label: 'Androgynous', value: 'androgynous' },
     { label: 'Androgyne', value: 'androgyne' },
   ]);
+
+
   const dispatch = useDispatch();
   const action = bindActionCreators(actions, dispatch);
 
