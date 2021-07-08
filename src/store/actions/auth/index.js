@@ -437,6 +437,7 @@ export const getAnalytics = (age, gender) => {
         let obj;
         const data1 = await firestore().collection("Users").doc(auth().currentUser.uid).get()
         const data2 = await firestore().collection("Selfies").doc(data1?.data().selfies[data1?.data().selfies?.length - 1]).get()
+        resolve(data2.data()?.self_score)
         let data3 = firestore().collection('Rating').where('selfie_id', '==', data1?.data().selfies[data1?.data().selfies?.length - 1])
         if (gender) {
           data3 = data3.where('gender', '==', gender)

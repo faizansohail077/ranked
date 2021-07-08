@@ -47,11 +47,11 @@ const About = ({ openModal, modalToggle }) => {
     const _renderUIScreen = (screen) => {
         switch (screen) {
             case 'screen1':
-                return <Screen1 />
+                return <Screen1 modalToggle={modalToggle} />
             case 'screen2':
-                return <Screen2 />
+                return <Screen2 modalToggle={modalToggle} />
             default:
-                return <Screen3 />
+                return <Screen3 modalToggle={modalToggle} />
         }
     }
 

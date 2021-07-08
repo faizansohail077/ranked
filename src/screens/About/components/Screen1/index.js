@@ -14,9 +14,8 @@ import * as actions from '../../../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ActivityIndicator } from 'react-native-paper';
-import { State } from 'react-native-gesture-handler';
 
-const Screen1 = () => {
+const Screen1 = ({ modalToggle }) => {
   const { age_gender } = useSelector(state => state.authReducer)
   const [toggle, setToggle] = useState(age_gender?.gender ? true : false);
   const [disable, setDisable] = useState(true);
@@ -40,7 +39,9 @@ const Screen1 = () => {
       setValue(null);
     }
   }, [activeMale, activeFemale, activeOther]);
-
+  const closeModal = () => {
+    return () => modalToggle()
+  }
   const selectAll = () => {
     setActiveAll(!activeAll);
     if (!activeAll) {
@@ -61,7 +62,10 @@ const Screen1 = () => {
         .getAnalytics(null, value)
         .then(res => {
           setLoader(false);
+          // closeModal()
+          modalToggle()
           dispatch({ type: 'age_gender', payload: { gender: value } });
+
         })
         .catch(err => {
           setLoader(false);

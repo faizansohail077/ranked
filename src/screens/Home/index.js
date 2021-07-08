@@ -71,7 +71,6 @@ const Home = () => {
           setLat(location?.latitude);
         })
         .catch(error => {
-          alert("Open Your Location")
           const { code, message } = error;
           console.warn(code, message);
         });

@@ -20,16 +20,19 @@ const Analytics = () => {
   const [rating, setRating] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const { analytics, age_gender, selectedValues } = useSelector(state => state.authReducer)
+  const [selfScore, setSelfScore] = useState("")
   const dispatch = useDispatch();
   const action = bindActionCreators(actions, dispatch);
 
   useEffect(() => {
-    action.getAnalytics()
+    action.getAnalytics().then((res) => {
+      setSelfScore(res)
+    })
   }, []);
 
   useEffect(() => {
     if (analytics && analytics?.err) {
-      alert("No Data Found")
+      setRating(0)
     } else {
       if (analytics && analytics.analyticsResult && analytics.analyticsResult.length) {
         let self = selectedValues?.fiterMilesData ? selectedValues?.fiterMilesData.map(doc => doc?.rating) : analytics?.analyticsResult?.map(doc => doc?.rating);
@@ -117,14 +120,14 @@ const Analytics = () => {
                   borderRadius: 100,
                 }}>
                 <Text style={{ fontSize: 40, fontFamily: 'unicodeimpact' }}>
-                  {analytics?.self_score ? analytics?.self_score : 0}
+                  {selfScore ? selfScore : 0}
                 </Text>
               </View>
             )}
             borderColor="gray"
             showsText={true}
             style={{ backgroundColor: '#011629', position: 'relative' }}
-            progress={analytics?.self_score && analytics?.self_score / 10}
+            progress={selfScore && selfScore / 10}
             size={110}>
             <View></View>
           </Progress.Circle>

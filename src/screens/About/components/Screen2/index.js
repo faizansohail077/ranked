@@ -14,7 +14,7 @@ import { bindActionCreators } from 'redux';
 import { useEffect } from 'react';
 import { ActivityIndicator } from 'react-native-paper';
 
-const Screen2 = () => {
+const Screen2 = ({ modalToggle }) => {
   const { selectedValues, age_gender } = useSelector(state => state.authReducer);
   const [toggle, setToggle] = useState(age_gender?.age ? true : false);
   const [disable, setDisable] = useState(true);
@@ -39,6 +39,7 @@ const Screen2 = () => {
     action.getAnalytics(value, null)
       .then(res => {
         dispatch({ type: 'age_gender', payload: { ...age_gender, age: value } });
+        modalToggle()
         setLoader(false);
         setDisable(false);
       })
