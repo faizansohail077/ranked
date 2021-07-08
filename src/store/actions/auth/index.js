@@ -5,7 +5,7 @@ import functions from '@react-native-firebase/functions';
 import axios from 'axios';
 
 if (__DEV__) {
-  // functions().useFunctionsEmulator('http://192.168.18.65:5000');
+  // functions().useFunctionsEmulator('http://localhost:5000');
 }
 
 export const signUp = (email, password, username) => {
@@ -460,6 +460,28 @@ export const getAnalytics = (age, gender) => {
         }
       } catch (error) {
         reject(error)
+      }
+    })
+  }
+}
+
+export const askQuery = (message) => {
+  return dispatch => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const email = auth()?.currentUser?.email
+        const data = await axios
+          .get(
+            `https://us-central1-ranked-89d7d.cloudfunctions.net/askQuery?subject=${email}&message=${message}`,
+          )
+          .then(res => {
+            resolve(res.data);
+          })
+          .catch(e => {
+            reject(e);
+          });
+      } catch (error) {
+        reject(e)
       }
     })
   }

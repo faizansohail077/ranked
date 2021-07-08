@@ -12,7 +12,8 @@ import {
   getTimelineData,
   updateSelfScore,
   updateProfileData,
-  getSelfScore
+  getSelfScore,
+  askQuery
 } from './auth';
 
 export {
@@ -29,5 +30,6 @@ export {
   getTimelineData,
   updateSelfScore,
   updateProfileData,
-  getSelfScore
+  getSelfScore,
+  askQuery
 };

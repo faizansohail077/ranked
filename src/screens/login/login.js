@@ -83,7 +83,7 @@ const Login = () => {
                 value={email}
                 onChangeText={e => setEmail(e)}
                 icon={person}
-                placeholder={'Username'}
+                placeholder={'Email'}
               />
               <Input
                 secure={true}

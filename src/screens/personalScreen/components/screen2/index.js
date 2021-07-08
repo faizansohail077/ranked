@@ -41,38 +41,49 @@ const Screen2 = ({ onPress }) => {
   const action = bindActionCreators(actions, dispatch);
 
   useEffect(() => {
+    checkUserLocation()
+  }, []);
+
+  const checkUserLocation = () => {
     request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(result => {
       GetLocation.getCurrentPosition({
         enableHighAccuracy: true,
         timeout: 15000,
       })
         .then(location => {
+          ("TCL ~ file: index.js ~ line 50 ~ request ~ location", location)
           setLong(location?.longitude);
           setLat(location?.latitude);
         })
         .catch(error => {
-          alert("Open Your Location")
           const { code, message } = error;
           console.warn(code, message);
         });
     });
-  }, []);
+  }
 
   const submit = () => {
     setLoader(true);
     setDisable(true);
-    action
-      .genderData(gender, long, lat)
-      .then(() => {
-        onPress();
-        setLoader(false);
-        setDisable(false);
-      })
-      .catch(err => {
-        err;
-        setLoader(false);
-        setDisable(false);
-      });
+    checkUserLocation()
+    if (long == '' || lat == '') {
+      alert("Open your location to proceed")
+      setLoader(false);
+      setDisable(false);
+    } else {
+      action
+        .genderData(gender, long, lat)
+        .then(() => {
+          onPress();
+          setLoader(false);
+          setDisable(false);
+        })
+        .catch(err => {
+          err;
+          setLoader(false);
+          setDisable(false);
+        });
+    }
   };
 
   return (
